@@ -36,7 +36,7 @@
                                         <p>Please login to your account</p>
                                         <div class="form-outline mb-4">
                                             <label class="form-label" for="form2Example11">Email</label>
-                                            <input type="email" id="emailinput" name="email" class="form-control"
+                                            <input type="email" id="emailinput" name="EMAIL_PEGAWAI" class="form-control"
                                                 placeholder="Please enter your email address" />
                                         </div>
 
