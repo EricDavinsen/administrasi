@@ -131,10 +131,10 @@
                         <tbody>
                             @foreach ($disposisi as $item)
                             <tr>
-                            <td>1</td>
-                            <td>2</td>
+                            <td>{{ $item->suratmasuk->NOMOR_SURAT }}</td>
+                            <td>{{ $item->suratmasuk->TANGGAL_SURAT }}</td>
                             <td>{{ $item->NAMA }}</td>
-                            <td>4</td>
+                            <td><td>{{ $item->suratmasuk->PERIHAL }}</td></td>
                             <td>
                                 <div class="action-buttons d-flex w-100  justify-content-center gap-2">
                                 <a href="{{ url('/editdisposisi/'.$item->id) }}" class="btn btn-info">Edit</a> 
@@ -144,7 +144,7 @@
                                             <button type="submit" class="btn btn-danger">Delete</button>
                                         </form>
                                     <a href="{{ url('/tampildisposisi/'.$item->id) }}" class="btn btn-warning" style="color:white">Laporan</a> 
-                                    <a href="{{ url('/lembardisposisi') }}" class="btn btn-success"> Dispo</a>
+                                    <a href="{{ url('/lembardisposisi') }}" class="btn btn-success">Lembar</a>
                                 </div>
                             </td>
                             </tr>

@@ -59,5 +59,10 @@ class SuratMasuk extends Model
             );
         }
     }
+
+    public function dispo()
+    {
+        return $this->hasOne('App\Models\Disposisi');
+    }
     
 }

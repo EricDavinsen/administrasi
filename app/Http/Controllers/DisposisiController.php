@@ -11,7 +11,7 @@ class DisposisiController extends Controller
 {
 
     public function index(){
-        $disposisi = Disposisi::with("surat")->paginate(5);
+        $disposisi = Disposisi::paginate(5);
 
         return view("disposisi", compact("disposisi"));
      
@@ -28,7 +28,7 @@ class DisposisiController extends Controller
             $request,
             [
                 "NAMA" => ["required"],
-                "surat_masuk_id" => ["required"],
+
                 "HASIL_LAPORAN" => ["required"],
             ],
         );
@@ -45,9 +45,9 @@ class DisposisiController extends Controller
         $disposisi = Disposisi::create([
             'NAMA' => $request->NAMA,
             'TANGGAL_SURAT' => $request->TANGGAL_SURAT,
-            'surat_masuk_id' => $request->surat_masuk_id,
             'HASIL_LAPORAN' => $disposisidata,
         ]);
+
 
         if ($disposisi) {
             return redirect()

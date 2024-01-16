@@ -15,8 +15,10 @@ return new class extends Migration
     {
         Schema::create('disposisi', function (Blueprint $table) {
             $table->id('id');
+            $table->bigInteger('id_surat_masuk');
             $table->string('NAMA');
             $table->string('HASIL_LAPORAN');
+            $table->foreign('id')->references('id')->on('surat_masuks')->onDelete('cascade');
             $table->timestamps();
         });
     }

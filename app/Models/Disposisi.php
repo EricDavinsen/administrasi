@@ -35,6 +35,7 @@ class Disposisi extends Model
 
     protected $fillable = [
         "NAMA",
+        "id_surat_masuk",
         "HASIL_LAPORAN",
     ];
     
@@ -56,9 +57,9 @@ class Disposisi extends Model
         }
     }
     
-    public function surat()
+    public function suratmasuk()
     {
-        return $this->belongsTo('App\Models\SuratMasuk', 'id');
+        return $this->belongsTo('App\Models\SuratMasuk');
     }
     
 }
