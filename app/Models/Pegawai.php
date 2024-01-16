@@ -32,10 +32,15 @@ class Pegawai extends Authenticatable
         "email_verified_at" => "datetime",
     ];
     protected $fillable = [
-        "USERNAME_PEGAWAI",
+        "USERNAME",
         "EMAIL_PEGAWAI",
         "password",
     ];
+
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = bcrypt($value);
+    }
 
     public function getCreatedAtAttribute()
     {
@@ -54,4 +59,5 @@ class Pegawai extends Authenticatable
             );
         }
     }
+    
 }

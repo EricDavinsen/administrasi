@@ -8297,3 +8297,17 @@ a[data-toggle="collapse"] {
     color:#bd4b04;
     text-align: center;
   }
+
+  .btn-logout{
+    background-color: red;
+    padding: 18px 105px;
+    color: white;
+    border-radius: 10px;
+  }
+
+  .btn-logout:hover{
+    color:#f8b739;
+    background-color: #a80808;
+  }
+
+  

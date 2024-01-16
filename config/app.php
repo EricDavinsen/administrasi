@@ -42,7 +42,8 @@ return [
     */
 
     'debug' => (bool) env('APP_DEBUG', false),
-
+    'date_format' => 'd/m/Y',
+        'date_format_javascript' => 'DD/MM/YYYY',
     /*
     |--------------------------------------------------------------------------
     | Application URL
@@ -181,7 +182,8 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-
+        Mckenziearts\Notify\LaravelNotifyServiceProvider::class,
+        RealRashid\SweetAlert\SweetAlertServiceProvider::class,
         /*
          * Package Service Providers...
          */
@@ -210,6 +212,8 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
+        'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
+
     ])->toArray(),
 
 ];

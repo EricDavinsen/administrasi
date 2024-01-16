@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Pegawai;
 use Illuminate\Http\Request;
-use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\RegisterRequest;
 use App\Providerss\RouteServiceProvider;
@@ -24,6 +23,13 @@ class LoginController extends Controller
         return view("registerpage");
     }
 
+    public function forgotpassword() : View
+    {
+    return view('forgotpassword')->with([
+        'pegawais' => null,
+    ]);
+    }
+
     public function login(Request $request) : RedirectResponse
     {
         $this->validate($request, [
@@ -37,22 +43,25 @@ class LoginController extends Controller
             $user = Auth::guard('pegawais')->user();
 
             return redirect()->intended('/dashboardpage')->with([
+                notify()->success('Login Success'),
                 'success' => 'Login Success',
                 'user' => $user
             ]);
+        }else{
+            return redirect()->intended('/')->with([
+                'error', 'Failed to Login',
+            ]);
         }
 
-        return redirect()->intended('/')->with('error', 'Email/Password Salah');
-
-
     }
-    public function store(RegisterRequest $request)
+    public function register(RegisterRequest $request)
     {
-        $pegawai = Pegawai::create($request->validated());
+        $pegawais = Pegawai::create($request->validated());
 
-        if ($pegawai) {
-            Auth::login($pegawai);
-            return redirect()->route('home')->with('success', 'Berhasil Melakukan Registrasi');
+        if ($pegawais) {
+            Auth::login($pegawais);
+            
+            return redirect()->intended('/home')->with('success', 'Register Successfully!');
         }
         return redirect()->back()->with('error', 'Failed Create Account');
     }
@@ -63,7 +72,7 @@ class LoginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/')->with('success', 'You have successfully logged out');
+        return redirect('/home')->with('success', 'Logout Successfully!');
     }
 
     /**
@@ -72,42 +81,43 @@ class LoginController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
-    }
+    public function changepassword(Request $request) : RedirectResponse
+     {
+            $validate = Validator::make($request->all(),[
+                'EMAIL_PEGAWAI' => ['required'],
+                'password' => ['required'],
+                'repassword' => ['required'],
+            ],[
+                'EMAIL_PEGAWAI.required' => 'Email field is required / Email not found!',
+                'password.required' => 'The password field is required',
+                'repassword.required' => 'The re-password field is required'
+            ]);
+    
+            $pegawais = Pegawai::where('EMAIL_PEGAWAI', $request->EMAIL_PEGAWAI)->first();
+    
+            if($validate->fails()) {
+                return redirect()->back()->withErrors($validate)->with([
+                    'pegawais' => $pegawais
+                ]);
+            }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+            if($pegawais) {
+                if($request->password == $request->repassword){
+                    $pegawais->password = $request->password;
+                    $pegawais->update();
+                    return redirect()->intended('/home')->with('success', 'Change Password Successfully!');
+                }else {
+                    return redirect()->intended('/forgotpassword')->with([
+                        'error' => 'Password doesnt match',
+                        'pegawais' => $pegawais
+                    ]);
+                }
+            }else {
+                return redirect()->intended('/forgotpassword')->with([
+                    'error' => 'Email not found',
+                    'pegawais' => null
+                ]);
+            }
+        } 
 }
+
