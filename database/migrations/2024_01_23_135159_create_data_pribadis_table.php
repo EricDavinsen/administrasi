@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('GOLONGAN_DARAH');
             $table->string('ALAMAT_RUMAH');
             $table->string('KODE_POS');
+            $table->string('TELPON_RUMAH');
             $table->string('NO_HP');
             $table->string('EMAIL');
             $table->timestamps();
