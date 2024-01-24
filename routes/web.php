@@ -103,5 +103,5 @@ Route::get("/createdatapribadi/{id}", [DataPribadiController::class, "indexcreat
 Route::get('/editdatapribadi/{id}', [DataPribadiController::class, "edit"])->middleware('auth:admin');
 Route::put("/updatedatapribadi/{id}", [DataPribadiController::class, "update"])->middleware('auth:admin');
 Route::delete("/deletedatapribadi/{id}", [DataPribadiController::class, "destroy"])->middleware('auth:admin');
-Route::post('/adddatapribadi', [DataPribadiController::class, "store"])->middleware('auth:admin');
+Route::post('/adddatapribadi/{id}', [DataPribadiController::class, "store"])->middleware('auth:admin');
 Route::get('/tampildatapribadi/{id}', [DataPribadiController::class, "view"])->middleware('auth:admin');

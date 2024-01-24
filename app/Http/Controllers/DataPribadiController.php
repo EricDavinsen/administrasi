@@ -29,8 +29,10 @@ class DataPribadiController extends Controller
             'admin' => Auth::guard('admin')->user() 
         ]);
     }
-    public function store( Request $request)
+    public function store( Request $request, $id)
     {
+
+        $pegawai = Pegawai::where('id', $request->id)->first();
         $this->validate($request,
             [
                 "NO_KTP" => ["required"],
@@ -49,6 +51,7 @@ class DataPribadiController extends Controller
         );
 
         $datapribadi = DataPribadi::create([
+            'pegawai_id' => $pegawai,
             'NO_KTP' => $request->NO_KTP,
             'NO_BPJS' => $request->NO_BPJS,
             'NO_NPWP' => $request->NO_NPWP,

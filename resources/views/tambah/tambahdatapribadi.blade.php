@@ -112,7 +112,7 @@
                         </div>
                     </nav>
 
-                    <form action="{{ url('/adddatapribadi') }}"method="post" enctype="multipart/form-data">
+                    <form action="{{ url('/adddatapribadi/'.$pegawai->id) }}"method="post" enctype="multipart/form-data">
                          @csrf
                         <div class="form-group">
                             <label for="formGroupExampleInput">NO KTP</label>
@@ -120,7 +120,7 @@
                         </div>
                         <div class="form-group">
                             <label for="formGroupExampleInput2">NO BPJS</label>
-                            <input type="text" class="form-control" id="formGroupExampleInput2" name="NIK" placeholder="Masukan Nomor BPJS">
+                            <input type="text" class="form-control" id="formGroupExampleInput2" name="NO_BPJS" placeholder="Masukan Nomor BPJS">
                         </div>
                         <div class="form-group">
                             <label for="formGroupExampleInput2">NO NPWP</label>
@@ -144,7 +144,7 @@
                         </div>
                         <div class="form-group">
                             <label for="formGroupExampleInput2">Alamat</label>
-                            <input type="text" class="form-control" id="formGroupExampleInput2" name="ALAMAT" placeholder="Masukan Alamat">
+                            <input type="text" class="form-control" id="formGroupExampleInput2" name="ALAMAT_RUMAH" placeholder="Masukan Alamat">
                         </div>
                         <div class="form-group">
                             <label for="formGroupExampleInput2">Kode Pos</label>
