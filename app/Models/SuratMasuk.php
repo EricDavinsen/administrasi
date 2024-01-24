@@ -62,7 +62,7 @@ class SuratMasuk extends Model
 
     public function dispo()
     {
-        return $this->hasOne('App\Models\Disposisi');
+        return $this->hasOne(Disposisi::class, 'id' , 'surat_masuk_id');
     }
     
 }

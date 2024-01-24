@@ -3,16 +3,18 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Passport\HasApiTokens;
 use Carbon\Carbon;
 use Illuminate\Notifications\Notifiable;
 
-class Pegawai extends Model
+class Admin  extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    protected $table = 'pegawai';
-    protected $guard = 'pegawai';
+    protected $table = 'admin';
+    protected $guard = 'admin';
 
     /**
      * The attributes that should be hidden for serialization.
@@ -30,21 +32,10 @@ class Pegawai extends Model
         "email_verified_at" => "datetime",
     ];
     protected $fillable = [
-        "NAMA_PEGAWAI",
-        "NIK",
-        "TANGGAL_LAHIR",
-        "JENIS_KELAMIN",
-        "AGAMA",
-        "INSTANSI",
-        "UNIT",
-        "SUB_UNIT",
-        "JABATAN",
-        "JENIS_PEGAWAI",
-        "PENDIDIKAN_TERAKHIR",
-        "STATUS_PEGAWAI",
-        "KEDUDUKAN",
+        "USERNAME",
+        "EMAIL_ADMIN",
+        "password",
     ];
-
 
     public function setPasswordAttribute($value)
     {
@@ -68,5 +59,4 @@ class Pegawai extends Model
             );
         }
     }
-    
 }

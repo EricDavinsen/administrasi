@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Surat Masuk</title>
+        <title>PUSDALOPS-PB</title>
         @notifyCss
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
@@ -40,6 +40,10 @@
                                 <a href="{{ url('dashboardpage') }}">Dashboard</a>
                             </li>
 
+                            <li>
+                                <a href="{{ url('datapegawai') }}">Pegawai</a>
+                            </li>
+
                             <li class="nav-item active">
                                 <a href="{{ url('suratmasuk') }}">Surat Masuk</a>
                             </li>
@@ -49,7 +53,7 @@
                             </li>
 
                             <li>
-                                <a href="#">Surat Cuti</a>
+                                <a href="{{ url('suratcuti') }}">Surat Cuti</a>
                             </li>
 
                             <li>
@@ -63,7 +67,7 @@
                         
                             <a href="{{ url('logout') }}" class="btn-logout"> Logout </a>
 
-                        
+                    </div>                 
                 </nav>
 
                 <!-- Page Content  -->
@@ -86,6 +90,9 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ url('dashboardpage') }}">Dashboard</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url('datapegawai') }}">Pegawai</a>
+                                </li>
                                 <li class="nav-item active">
                                     <a class="nav-link" href="{{ url('suratmasuk') }}">Surat Masuk</a>
                                 </li>
@@ -93,7 +100,7 @@
                                     <a class="nav-link" href="{{ url('suratkeluar') }}">Surat Keluar</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Surat Cuti</a>
+                                    <a class="nav-link" href="{{ url('suratcuti') }}">Surat Cuti</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ url('spt') }}">SPT</a>
@@ -107,7 +114,7 @@
                     </nav>
                     
                     <h1 class="h3 mb-0 text-gray-800 mb-2">Surat Masuk</h1>
-                    <form class="navbar-search mr-2 ml-2" action="{{ url('/carisuratmasuk') }}" method="GET">
+                    <form class="navbar-search" action="{{ url('/carisuratmasuk') }}" method="GET">
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Cari Surat" aria-label="Search" name="search">
                             <div class="input-group-append">
@@ -132,7 +139,7 @@
                             <th colspan ="2" scope="col">Aksi</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="text-center">
                             @foreach ($suratmasuk as $item)
                                 <tr>
                                 <td>{{ $item->KODE_SURAT }}</td>
@@ -151,8 +158,8 @@
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger">Delete</button>
                                         </form>
-                                        <a href="{{ url('/createdisposisi') }}" class="btn btn-success"> Disposisi</a>
-                                        <a href="{{ url('/tampilsuratmasuk/'.$item->id) }}" class="btn btn-warning" style="color:white"> Review</a>
+                                        <a href="{{ url('/createdisposisi') }}" class="btn btn-success">Disposisi</a>
+                                        <a href="{{ url('/tampilsuratmasuk/'.$item->id) }}" class="btn btn-warning" style="color:white">Review</a>
                                     </div>
                                 </td>
                                 </tr>

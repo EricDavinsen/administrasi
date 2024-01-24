@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Dashboard</title>
+        <title>PUSDALOPS-PB</title>
         @notifyCss
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
@@ -43,7 +43,11 @@
                                 <a href="{{ url('dashboardpage') }}">Dashboard</a>
                             </li>
 
-                            <li class="nav-item active">
+                            <li>
+                                <a href="{{ url('datapegawai') }}">Pegawai</a>
+                            </li>
+
+                            <li>
                                 <a href="{{ url('suratmasuk') }}">Surat Masuk</a>
                             </li>
 
@@ -52,7 +56,7 @@
                             </li>
 
                             <li>
-                                <a href="#">Surat Cuti</a>
+                                <a href="{{ url('suratcuti') }}">Surat Cuti</a>
                             </li>
 
                             <li>
@@ -60,7 +64,7 @@
                             </li>
                          
                             
-                            <li>
+                            <li class="nav-item active">
                                 <a href="{{ url('disposisi') }}">Disposisi</a>
                             </li>
                         </ul>
@@ -85,19 +89,22 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ url('dashboardpage') }}">Dashboard</a>
                                 </li>
-                                <li class="nav-item active">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url('datapegawai') }}">Pegawai</a>
+                                </li>
+                                <li class="nav-item">
                                     <a class="nav-link" href="{{ url('suratmasuk') }}">Surat Masuk</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ url('suratkeluar') }}">Surat Keluar</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Surat Cuti</a>
+                                    <a class="nav-link" href="{{ url('suratcuti') }}">Surat Cuti</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ url('spt') }}">SPT</a>
                                 </li>
-                                <li class="nav-item">
+                                <li class="nav-item active">
                                     <a class="nav-link" href="{{ url('disposisi') }}">Disposisi</a>
                                 </li>
                             </ul>
@@ -107,6 +114,14 @@
 
                     <form action="{{ url('/adddisposisi') }}"method="post" enctype="multipart/form-data">
                          @csrf
+                        <div class="form-group">
+                            <label for="formGroupExampleInput">Kode Surat</label>
+                            <select name="surat_masuk_id" class="form-control">
+                                @foreach ($suratmasuk as $item)
+                                    <option value="{{ $item->id }}">{{ $item->KODE_SURAT }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                         <div class="form-group">
                             <label for="formGroupExampleInput">Nama</label>
                             <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Masukan Nama dan Instruksi" name="NAMA">
@@ -127,6 +142,5 @@
         <script src="js/bootstrap.min.js"></script>
         <script src="js/main.js"></script>
         @notifyJs
-        @include('sweetalert::alert')
     </body>
 </html>

@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Dashboard</title>
+        <title>PUSDALOPS-PB</title>
         @notifyCss
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
@@ -41,6 +41,10 @@
                             </li>
 
                             <li>
+                                <a href="{{ url('datapegawai') }}">Pegawai</a>
+                            </li>
+
+                            <li>
                                 <a href="{{ url('suratmasuk') }}">Surat Masuk</a>
                             </li>
 
@@ -49,7 +53,7 @@
                             </li>
 
                             <li>
-                                <a href="#">Surat Cuti</a>
+                                <a href="{{ url('suratcuti') }}">Surat Cuti</a>
                             </li>
 
                             <li>
@@ -64,7 +68,7 @@
                         
                             <a href="{{ url('logout') }}" class="btn-logout"> Logout </a>
 
-                        
+                    </div>    
                 </nav>
 
                 <!-- Page Content  -->
@@ -85,13 +89,16 @@
                                     <a class="nav-link" href="{{ url('dashboardpage') }}">Dashboard</a>
                                 </li>
                                 <li class="nav-item">
+                                    <a class="nav-link" href="{{ url('datapegawai') }}">Pegawai</a>
+                                </li>
+                                <li class="nav-item">
                                     <a class="nav-link" href="{{ url('suratmasuk') }}">Surat Masuk</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ url('suratkeluar') }}">Surat Keluar</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Surat Cuti</a>
+                                    <a class="nav-link" href="{{ url('suratcuti') }}">Surat Cuti</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ url('spt') }}">SPT</a>
@@ -105,13 +112,12 @@
                     </nav>
 
                     <div class="container-fluid">
-
                         <!-- Page Heading -->
                         <div class="notification">
                             <x-notify::notify />
                         </div>
                         <div class="d-sm-flex align-items-center justify-content-center mb-4">
-                            <h1 class="h3 mb-0 text-gray-800">Welcome, {{ $pegawais->USERNAME }}</h1>
+                            <h1 class="h3 mb-0" style="color:green">Welcome, {{ $admin->USERNAME }} !</h1>
                         </div>
                         <h1 class="h3 mb-0 text-gray-800 mb-2">Dashboard</h1>
 
@@ -119,7 +125,7 @@
                         <div class="row">
                                 <div class="col-xl-3 col-md-6 mb-4">
                                     <a href = "{{ url('suratmasuk') }}">
-                                        <div class="card border-left-primary shadow h-100 py-2" style="background-color: #6df207">
+                                        <div class="dashboard-card card border-left-primary shadow h-100 py-2" style="background-color: #6df207">
                                             <div class="card-body">
                                                 <div class="row no-gutters align-items-center">
                                                     <div class="col mr-2">
@@ -135,12 +141,10 @@
                                         </div>
                                     </a>
                                 </div>
-                            
-
                         
                             <div class="col-xl-3 col-md-6 mb-4">
                                 <a href = "{{ url('suratkeluar') }}">
-                                    <div class="card border-left-success shadow h-100 py-2" style="background-color: #fc0341">
+                                    <div class="dashboard-card card border-left-success shadow h-100 py-2" style="background-color: #fc0341">
                                         <div class="card-body">
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col mr-2">
@@ -157,28 +161,29 @@
                                 </a>
                             </div>
 
-                        
                             <div class="col-xl-3 col-md-6 mb-4">
-                                <div class="card border-left-info shadow h-100 py-2" style="background-color: #5fd9d4">
-                                    <div class="card-body">
-                                        <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                                <div class="text-xs font-weight-bold text-uppercase mb-1">
-                                                    Surat Cuti</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $suratkeluar }}</div>
-                                            </div>
-                                            <div class="col-auto">
-                                                <i class="fa-regular fa-envelope fa-2x text-gray-300"></i>
+                                <a href = "{{ url('suratcuti') }}">
+                                    <div class="dashboard-card card border-left-info shadow h-100 py-2" style="background-color: #5fd9d4">
+                                        <div class="card-body">
+                                            <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                    <div class="text-xs font-weight-bold text-uppercase mb-1">
+                                                        Surat Cuti</div>
+                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $suratcuti }}</div>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <i class="fa-regular fa-envelope fa-2x text-gray-300"></i>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
 
                             <!-- Pending Requests Card Example -->
                             <div class="col-xl-3 col-md-6 mb-4">
                                 <a href = "{{ url('spt') }}">
-                                    <div class="card border-left-warning shadow h-100 py-2" style="background-color: #ff5e00">
+                                    <div class="dashboard-card card border-left-warning shadow h-100 py-2" style="background-color: #ff5e00">
                                         <div class="card-body">
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col mr-2">
@@ -199,13 +204,10 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
         @notifyJs
         <script src="js/jquery.min.js"></script>
         <script src="js/popper.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/main.js"></script>
-       
     </body>
 </html>

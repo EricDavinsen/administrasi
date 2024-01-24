@@ -39,11 +39,11 @@
                         </div>
                         <h2 class="sidebar-title">PUSDALOPS-PB</h2>
                         <ul class="list-unstyled components mb-5">
-                            <li>
+                             <li>
                                 <a href="{{ url('dashboardpage') }}">Dashboard</a>
                             </li>
 
-                            <li>
+                            <li class="nav-item active">
                                 <a href="{{ url('datapegawai') }}">Pegawai</a>
                             </li>
 
@@ -51,7 +51,7 @@
                                 <a href="{{ url('suratmasuk') }}">Surat Masuk</a>
                             </li>
 
-                            <li class="nav-item active">
+                            <li>
                                 <a href="{{ url('suratkeluar') }}">Surat Keluar</a>
                             </li>
 
@@ -62,16 +62,14 @@
                             <li>
                                 <a href="{{ url('spt') }}">SPT</a>
                             </li>
-
+                         
+                            
                             <li>
                                 <a href="{{ url('disposisi') }}">Disposisi</a>
                             </li>
-                         
                         </ul>
                         
                             <a href="{{ url('logout') }}" class="btn-logout"> Logout </a>
-
-                        
                 </nav>
 
                 <!-- Page Content  -->
@@ -91,13 +89,13 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ url('dashboardpage') }}">Dashboard</a>
                                 </li>
-                                <li class="nav-item">
+                                <li class="nav-item active">
                                     <a class="nav-link" href="{{ url('datapegawai') }}">Pegawai</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ url('suratmasuk') }}">Surat Masuk</a>
                                 </li>
-                                <li class="nav-item active">
+                                <li class="nav-item">
                                     <a class="nav-link" href="{{ url('suratkeluar') }}">Surat Keluar</a>
                                 </li>
                                 <li class="nav-item">
@@ -114,47 +112,58 @@
                         </div>
                     </nav>
 
-                    <form action="{{ url('/updatesuratkeluar/' . $suratkeluar->id) }}"method="post" enctype="multipart/form-data">
+                    <form action="{{ url('/adddatapribadi') }}"method="post" enctype="multipart/form-data">
                          @csrf
-                         @method('put')
                         <div class="form-group">
-                            <label for="formGroupExampleInput2">Nomor Surat</label>
-                            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Masukan Nomor Surat" name="NOMOR_SURAT" value="{{ $suratkeluar->NOMOR_SURAT }}">
+                            <label for="formGroupExampleInput">NO KTP</label>
+                            <input type="text" class="form-control" id="formGroupExampleInput" name="NO_KTP" placeholder="Masukan Nomor KTP">
                         </div>
                         <div class="form-group">
-                            <label for="formGroupExampleInput2">Tanggal Surat</label>
-                            <input type="date" class="form-control" id="formGroupExampleInput2" name="TANGGAL_SURAT" value="{{ $suratkeluar->TANGGAL_SURAT }}">
+                            <label for="formGroupExampleInput2">NO BPJS</label>
+                            <input type="text" class="form-control" id="formGroupExampleInput2" name="NIK" placeholder="Masukan Nomor BPJS">
                         </div>
                         <div class="form-group">
-                            <label for="formGroupExampleInput2">Jenis Surat</label>
-                            <select class="form-control" name="JENIS_SURAT">
-                                <option value="" disabled selected hidden>Pilih Jenis Surat</option>
-                                <option>Undangan</option>
-                                <option>Permohonan</option>
-                                <option>Pemberitahuan</option>
-                                <option>Laporan Kejadian</option>
-                                <option>Surat Edaran</option>
-                            </select>
+                            <label for="formGroupExampleInput2">NO NPWP</label>
+                            <input type="text" class="form-control" id="formGroupExampleInput2" name="NO_NPWP" placeholder="Masukan Nomor NPWP">
                         </div>
                         <div class="form-group">
-                            <label for="formGroupExampleInput2">Tujuan</label>
-                            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Masukan Tujuan" name="TUJUAN_SURAT" value="{{ $suratkeluar->TUJUAN_SURAT }}">
+                            <label for="formGroupExampleInput2">Tinggi Badan</label>
+                            <input type="text" class="form-control" id="formGroupExampleInput2" name="TINGGI_BADAN" placeholder="Masukan Tinggi Badan">
                         </div>
                         <div class="form-group">
-                            <label for="formGroupExampleInput2">Sifat</label>
-                            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Masukan Sifat" name="SIFAT_SURAT" value="{{ $suratkeluar->SIFAT_SURAT }}">
+                            <label for="formGroupExampleInput2">Berat Badan</label>
+                            <input type="text" class="form-control" id="formGroupExampleInput2" name="BERAT_BADAN" placeholder="Masukan Berat Badan">
                         </div>
                         <div class="form-group">
-                            <label for="formGroupExampleInput2">Perihal</label>
-                            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Masukan Perihal" name="PERIHAL_SURAT" value="{{ $suratkeluar->PERIHAL_SURAT }}">
+                            <label for="formGroupExampleInput2">Warna Kulit</label>
+                            <input type="text" class="form-control" id="formGroupExampleInput2" name="WARNA_KULIT" placeholder="Masukan Warna Kulit">
                         </div>
                         <div class="form-group">
-                            <label for="formGroupExampleInput2">File</label>
-                            <input type="file" class="form-control" id="formGroupExampleInput2" name="FILE_SURAT" value="{{ $suratkeluar->FILE_SURAT }}">
+                            <label for="formGroupExampleInput2">Golongan Darah</label>
+                            <input type="text" class="form-control" id="formGroupExampleInput2" name="GOLONGAN_DARAH" placeholder="Masukan Golongan Darah">
                         </div>
-
-                        <button type="submit" name="edit" class="btn btn-primary">Submit</button>
-                        <a href="{{ url('/suratkeluar') }}" class="btn btn-danger"> Kembali</a>
+                        <div class="form-group">
+                            <label for="formGroupExampleInput2">Alamat</label>
+                            <input type="text" class="form-control" id="formGroupExampleInput2" name="ALAMAT" placeholder="Masukan Alamat">
+                        </div>
+                        <div class="form-group">
+                            <label for="formGroupExampleInput2">Kode Pos</label>
+                            <input type="text" class="form-control" id="formGroupExampleInput2" name="KODE_POS" placeholder="Masukan Kode Pos">
+                        </div>
+                        <div class="form-group">
+                            <label for="formGroupExampleInput2">Telpon Rumah</label>
+                            <input type="text" class="form-control" id="formGroupExampleInput2" name="TELPON_RUMAH" placeholder="Masukan Nomor Telpon Rumah">
+                        </div>
+                        <div class="form-group">
+                            <label for="formGroupExampleInput2">No. Hp</label>
+                            <input type="text" class="form-control" id="formGroupExampleInput2" name="NO_HP" placeholder="Masukan Nomor Handphone">
+                        </div>
+                        <div class="form-group">
+                            <label for="formGroupExampleInput2">Email</label>
+                            <input type="email" class="form-control" id="formGroupExampleInput2" name="EMAIL" placeholder="Masukan Email">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <a href="{{ url('/datapegawai') }}" class="btn btn-danger"> Kembali</a>
                     </form>
                 </div>
             </div>

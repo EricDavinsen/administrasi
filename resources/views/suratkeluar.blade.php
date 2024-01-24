@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Surat Keluar</title>
+        <title>PUSDALOPS-PB</title>
         @notifyCss
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
@@ -41,6 +41,10 @@
                             </li>
 
                             <li>
+                                <a href="{{ url('datapegawai') }}">Pegawai</a>
+                            </li>
+
+                            <li>
                                 <a href="{{ url('suratmasuk') }}">Surat Masuk</a>
                             </li>
 
@@ -49,7 +53,7 @@
                             </li>
 
                             <li>
-                                <a href="#">Surat Cuti</a>
+                                <a href="{{ url('suratcuti') }}">Surat Cuti</a>
                             </li>
 
                             <li>
@@ -64,7 +68,7 @@
                         
                             <a href="{{ url('logout') }}" class="btn-logout"> Logout </a>
 
-                        
+                    </div>              
                 </nav>
 
                 <!-- Page Content  -->
@@ -88,13 +92,16 @@
                                     <a class="nav-link" href="{{ url('dashboardpage') }}">Dashboard</a>
                                 </li>
                                 <li class="nav-item">
+                                    <a class="nav-link" href="{{ url('datapegawai') }}">Pegawai</a>
+                                </li>
+                                <li class="nav-item">
                                     <a class="nav-link" href="{{ url('suratmasuk') }}">Surat Masuk</a>
                                 </li>
                                 <li class="nav-item active">
                                     <a class="nav-link" href="{{ url('suratkeluar') }}">Surat Keluar</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Surat Cuti</a>
+                                    <a class="nav-link" href="{{ url('suratcuti') }}">Surat Cuti</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ url('spt') }}">SPT</a>
@@ -107,7 +114,7 @@
                         </div>
                     </nav>
                     <h1 class="h3 mb-0 text-gray-800 mb-2">Surat Keluar</h1>
-                    <form class="navbar-search mr-2 ml-2" action="{{ url('/carisuratkeluar') }}" method="GET">
+                    <form class="navbar-search" action="{{ url('/carisuratkeluar') }}" method="GET">
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Cari Surat" aria-label="Search" name="search">
                             <div class="input-group-append">
@@ -130,7 +137,7 @@
                             <th scope="col">Aksi</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="text-center">
                             @foreach ($suratkeluar as $item)
                             <tr>
                             <td>{{ $item->NOMOR_SURAT }}</td>

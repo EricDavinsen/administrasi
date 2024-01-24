@@ -27,9 +27,6 @@
     </head>
 
     <body>
-        <div class="notification">
-            <x-notify::notify />
-        </div>
         <div class="wrapper d-flex align-items-stretch">
                 <nav id="sidebar">
                     <div class="p-4 pt-5 ">
@@ -43,7 +40,7 @@
                                 <a href="{{ url('dashboardpage') }}">Dashboard</a>
                             </li>
 
-                            <li>
+                            <li class="nav-item active">
                                 <a href="{{ url('datapegawai') }}">Pegawai</a>
                             </li>
 
@@ -51,7 +48,7 @@
                                 <a href="{{ url('suratmasuk') }}">Surat Masuk</a>
                             </li>
 
-                            <li class="nav-item active">
+                            <li>
                                 <a href="{{ url('suratkeluar') }}">Surat Keluar</a>
                             </li>
 
@@ -71,7 +68,7 @@
                         
                             <a href="{{ url('logout') }}" class="btn-logout"> Logout </a>
 
-                        
+                    </div>
                 </nav>
 
                 <!-- Page Content  -->
@@ -91,13 +88,13 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ url('dashboardpage') }}">Dashboard</a>
                                 </li>
-                                <li class="nav-item">
+                                <li class="nav-item active">
                                     <a class="nav-link" href="{{ url('datapegawai') }}">Pegawai</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ url('suratmasuk') }}">Surat Masuk</a>
                                 </li>
-                                <li class="nav-item active">
+                                <li class="nav-item">
                                     <a class="nav-link" href="{{ url('suratkeluar') }}">Surat Keluar</a>
                                 </li>
                                 <li class="nav-item">
@@ -113,56 +110,94 @@
                             </div>
                         </div>
                     </nav>
+                    
+                    <div class="container-fluid category">
+                        <h2 class="d-flex w-100 justify-content-center" style="font-weight: bold">Menu Pegawai</h2>
+                        <div class="d-flex justify-content-center gap-5 w-100 mt-3 flex-wrap">
+                            <div class="kategori_items">
+                                <div class="card kategori_card">
+                                    <a href="{{ url('/datapribadi/'.$pegawai->id) }}" class="nav-link d-flex justify-content-center flex-column align-items-center">
+                                    <i class="kategori_icon fa-solid fa-id-card"></i>
+                                    <h5 class="text-center">DATA PRIBADI</h5>
+                                    </a> 
+                                </div>
+                            </div>
+                            <div class="kategori_items">
+                                <div class="card kategori_card">
+                                    <a href="#/kategorialam" class="nav-link d-flex justify-content-center flex-column align-items-center">
+                                    <i class="kategori_icon fa-solid fa-user"></i>
+                                    <h5 class="text-center">RIWAYAT SK</h5>
+                                    </a> 
+                                </div>
+                            </div>
+                            <div class="kategori_items">
+                                <div class="card kategori_card">
+                                    <a href="#/kategorialam" class="nav-link d-flex justify-content-center flex-column align-items-center">
+                                    <i class="kategori_icon fa-solid fa-user-graduate"></i>
+                                    <h5 class="text-center">RIWAYAT PENDIDIKAN</h5>
+                                    </a> 
+                                </div>
+                            </div>
+                            <div class="kategori_items">
+                                <div class="card kategori_card">
+                                    <a href="#/kategorialam" class="nav-link d-flex justify-content-center flex-column align-items-center">
+                                    <i class="kategori_icon fa-solid fa-book"></i>
+                                    <h5 class="text-center">DIKLAT/PELATIHAN</h5>
+                                    </a> 
+                                </div>
+                            </div>
 
-                    <form action="{{ url('/updatesuratkeluar/' . $suratkeluar->id) }}"method="post" enctype="multipart/form-data">
-                         @csrf
-                         @method('put')
-                        <div class="form-group">
-                            <label for="formGroupExampleInput2">Nomor Surat</label>
-                            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Masukan Nomor Surat" name="NOMOR_SURAT" value="{{ $suratkeluar->NOMOR_SURAT }}">
-                        </div>
-                        <div class="form-group">
-                            <label for="formGroupExampleInput2">Tanggal Surat</label>
-                            <input type="date" class="form-control" id="formGroupExampleInput2" name="TANGGAL_SURAT" value="{{ $suratkeluar->TANGGAL_SURAT }}">
-                        </div>
-                        <div class="form-group">
-                            <label for="formGroupExampleInput2">Jenis Surat</label>
-                            <select class="form-control" name="JENIS_SURAT">
-                                <option value="" disabled selected hidden>Pilih Jenis Surat</option>
-                                <option>Undangan</option>
-                                <option>Permohonan</option>
-                                <option>Pemberitahuan</option>
-                                <option>Laporan Kejadian</option>
-                                <option>Surat Edaran</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="formGroupExampleInput2">Tujuan</label>
-                            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Masukan Tujuan" name="TUJUAN_SURAT" value="{{ $suratkeluar->TUJUAN_SURAT }}">
-                        </div>
-                        <div class="form-group">
-                            <label for="formGroupExampleInput2">Sifat</label>
-                            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Masukan Sifat" name="SIFAT_SURAT" value="{{ $suratkeluar->SIFAT_SURAT }}">
-                        </div>
-                        <div class="form-group">
-                            <label for="formGroupExampleInput2">Perihal</label>
-                            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Masukan Perihal" name="PERIHAL_SURAT" value="{{ $suratkeluar->PERIHAL_SURAT }}">
-                        </div>
-                        <div class="form-group">
-                            <label for="formGroupExampleInput2">File</label>
-                            <input type="file" class="form-control" id="formGroupExampleInput2" name="FILE_SURAT" value="{{ $suratkeluar->FILE_SURAT }}">
-                        </div>
+                            <div class="kategori_items">
+                                <div class="card kategori_card">
+                                    <a href="#/kategorialam" class="nav-link d-flex justify-content-center flex-column align-items-center">
+                                    <i class="kategori_icon fa-solid fa-hospital-user"></i>
+                                    <h5 class="text-center">DATA BPJS</h5>
+                                    </a> 
+                                </div>
+                            </div>
 
-                        <button type="submit" name="edit" class="btn btn-primary">Submit</button>
-                        <a href="{{ url('/suratkeluar') }}" class="btn btn-danger"> Kembali</a>
-                    </form>
-                </div>
-            </div>
-        
+                            <div class="kategori_items">
+                                <div class="card kategori_card">
+                                    <a href="#/kategorialam" class="nav-link d-flex justify-content-center flex-column align-items-center">
+                                    <i class="kategori_icon fa-solid fa-restroom"></i>
+                                    <h5 class="text-center">DATA ISTRI/SUAMI</h5>
+                                    </a> 
+                                </div>
+                            </div>
+
+                            <div class="kategori_items">
+                                <div class="card kategori_card">
+                                    <a href="#/kategorialam" class="nav-link d-flex justify-content-center flex-column align-items-center">
+                                    <i class="kategori_icon fa-solid fa-child"></i>
+                                    <h5 class="text-center">DATA ANAK</h5>
+                                    </a> 
+                                </div>
+                            </div>
+
+                            <div class="kategori_items">
+                                <div class="card kategori_card">
+                                    <a href="#/kategorialam" class="nav-link d-flex justify-content-center flex-column align-items-center">
+                                    <i class="kategori_icon fa-solid fa-user-group"></i>
+                                    <h5 class="text-center">DATA ORANG TUA</h5>
+                                    </a> 
+                                </div>
+                            </div>
+
+                            <div class="kategori_items">
+                                <div class="card kategori_card">
+                                    <a href="#/kategorialam" class="nav-link d-flex justify-content-center flex-column align-items-center">
+                                    <i class="kategori_icon fa-solid fa-file-lines"></i>
+                                    <h5 class="text-center">PENILAIAN TAHUNAN</h5>
+                                    </a> 
+                                </div>
+                            </div>
+                        </div>
+                    <div>
+        @notifyJs
         <script src="js/jquery.min.js"></script>
         <script src="js/popper.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/main.js"></script>
-        @notifyJs
+       
     </body>
 </html>

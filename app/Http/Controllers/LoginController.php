@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pegawai;
+use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\RegisterRequest;
@@ -26,44 +26,46 @@ class LoginController extends Controller
     public function forgotpassword() : View
     {
     return view('forgotpassword')->with([
-        'pegawais' => null,
+        'admin' => null,
     ]);
     }
 
     public function login(Request $request) : RedirectResponse
     {
         $this->validate($request, [
-            'EMAIL_PEGAWAI' => ['required', 'email:rfc,dns'],
+            'EMAIL_ADMIN' => ['required', 'email:rfc,dns'],
             'password' => ['required'],
         ]);
-        $credential = $request->only('EMAIL_PEGAWAI', 'password');
+        $credential = $request->only('EMAIL_ADMIN', 'password');
 
-        if (Auth::guard('pegawais')->attempt($credential)) {
+        if (Auth::guard('admin')->attempt($credential)) {
             $request->session()->regenerate();
-            $user = Auth::guard('pegawais')->user();
+            $user = Auth::guard('admin')->user();
 
             return redirect()->intended('/dashboardpage')->with([
-                notify()->success('Login Success'),
+                emotify('success', 'Successfully Login, Welcome to Dashboard!'),
                 'success' => 'Login Success',
                 'user' => $user
             ]);
         }else{
-            return redirect()->intended('/')->with([
-                'error', 'Failed to Login',
-            ]);
+            return back()->withErrors([
+                'error' => 'Email or password wrong.',
+            ])->onlyInput('email','password');
         }
 
     }
     public function register(RegisterRequest $request)
     {
-        $pegawais = Pegawai::create($request->validated());
+        $admin = Admin::create($request->validated());
 
-        if ($pegawais) {
-            Auth::login($pegawais);
+        if ($admin) {
+            Auth::login($admin);
             
             return redirect()->intended('/home')->with('success', 'Register Successfully!');
         }
-        return redirect()->back()->with('error', 'Failed Create Account');
+        return redirect('/register')->back()->withErrors([
+            'error' => "Username/Email/Password Cant be Empty",
+        ])->onlyInput('USERNAME','EMAIL_ADMIN','password');
     }
 
     public function logout(Request $request) : RedirectResponse
@@ -84,40 +86,35 @@ class LoginController extends Controller
     public function changepassword(Request $request) : RedirectResponse
      {
             $validate = Validator::make($request->all(),[
-                'EMAIL_PEGAWAI' => ['required'],
+                'EMAIL_ADMIN' => ['required'],
                 'password' => ['required'],
                 'repassword' => ['required'],
-            ],[
-                'EMAIL_PEGAWAI.required' => 'Email field is required / Email not found!',
-                'password.required' => 'The password field is required',
-                'repassword.required' => 'The re-password field is required'
             ]);
+          
     
-            $pegawais = Pegawai::where('EMAIL_PEGAWAI', $request->EMAIL_PEGAWAI)->first();
+            $admin = Admin::where('EMAIL_ADMIN', $request->EMAIL_ADMIN)->first();
     
             if($validate->fails()) {
                 return redirect()->back()->withErrors($validate)->with([
-                    'pegawais' => $pegawais
+                    'admin' => $admin
                 ]);
             }
 
-            if($pegawais) {
+            if($admin) {
                 if($request->password == $request->repassword){
-                    $pegawais->password = $request->password;
-                    $pegawais->update();
+                    $admin->password = $request->password;
+                    $admin->update();
                     return redirect()->intended('/home')->with('success', 'Change Password Successfully!');
                 }else {
-                    return redirect()->intended('/forgotpassword')->with([
-                        'error' => 'Password doesnt match',
-                        'pegawais' => $pegawais
-                    ]);
+                    return redirect()->intended('/forgotpassword')->withErrors([
+                        'password' => 'Password doesnt match',
+                    ])->onlyInput('password','repassword');
                 }
             }else {
-                return redirect()->intended('/forgotpassword')->with([
-                    'error' => 'Email not found',
-                    'pegawais' => null
-                ]);
+                return redirect()->intended('/forgotpassword')->withErrors([
+                    'email' => 'Email not found',
+                    'admin' => null
+                ])->onlyInput('email');
             }
-        } 
+    } 
 }
-

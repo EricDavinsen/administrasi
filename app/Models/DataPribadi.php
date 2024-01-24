@@ -2,17 +2,25 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use App\Models\Pegawai;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Pegawai extends Model
+class DataPribadi extends Model
 {
+    public function pegawai():BelongsTo
+{
+    return $this->belongsTo(Pegawai::class, 'pegawai_id', 'id');
+}
+ 
     use HasFactory, Notifiable;
 
-    protected $table = 'pegawai';
-    protected $guard = 'pegawai';
+    protected $table = 'data_pribadi';
+    protected $primaryKey = 'id';
+    protected $guard = 'data_pribadi';
 
     /**
      * The attributes that should be hidden for serialization.
@@ -29,28 +37,23 @@ class Pegawai extends Model
     protected $casts = [
         "email_verified_at" => "datetime",
     ];
+
     protected $fillable = [
-        "NAMA_PEGAWAI",
-        "NIK",
-        "TANGGAL_LAHIR",
-        "JENIS_KELAMIN",
-        "AGAMA",
-        "INSTANSI",
-        "UNIT",
-        "SUB_UNIT",
-        "JABATAN",
-        "JENIS_PEGAWAI",
-        "PENDIDIKAN_TERAKHIR",
-        "STATUS_PEGAWAI",
-        "KEDUDUKAN",
+        "pegawai_id",
+        "NO_KTP",
+        "NO_BPJS",
+        "NO_NPWP",
+        "TINGGI_BADAN",
+        "BERAT_BADAN",
+        "WARNA_KULIT",
+        "GOLONGAN_DARAH",
+        "ALAMAT_RUMAH",
+        "KODE_POS",
+        "TELPON_RUMAH",
+        "NO_HP",
+        "EMAIL",
     ];
-
-
-    public function setPasswordAttribute($value)
-    {
-        $this->attributes['password'] = bcrypt($value);
-    }
-
+    
     public function getCreatedAtAttribute()
     {
         if (!is_null($this->attributes["created_at"])) {
@@ -68,5 +71,4 @@ class Pegawai extends Model
             );
         }
     }
-    
 }

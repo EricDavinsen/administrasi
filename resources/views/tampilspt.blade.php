@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>SPT</title>
+        <title>PUSDALOPS-PB</title>
         @notifyCss
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
@@ -41,6 +41,10 @@
                             </li>
 
                             <li>
+                                <a href="{{ url('datapegawai') }}">Pegawai</a>
+                            </li>
+
+                            <li>
                                 <a href="{{ url('suratmasuk') }}">Surat Masuk</a>
                             </li>
 
@@ -49,7 +53,7 @@
                             </li>
 
                             <li>
-                                <a href="#">Surat Cuti</a>
+                                <a href="{{ url('suratcuti') }}">Surat Cuti</a>
                             </li>
 
                             <li class="nav-item active">
@@ -64,7 +68,7 @@
                         
                             <a href="{{ url('logout') }}" class="btn-logout"> Logout </a>
 
-                        
+                    </div>                    
                 </nav>
 
                 <!-- Page Content  -->
@@ -88,13 +92,16 @@
                                     <a class="nav-link" href="{{ url('dashboardpage') }}">Dashboard</a>
                                 </li>
                                 <li class="nav-item">
+                                    <a class="nav-link" href="{{ url('datapegawai') }}">Pegawai</a>
+                                </li>
+                                <li class="nav-item">
                                     <a class="nav-link" href="{{ url('suratmasuk') }}">Surat Masuk</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ url('suratkeluar') }}">Surat Keluar</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Surat Cuti</a>
+                                    <a class="nav-link" href="{{ url('suratcuti') }}">Surat Cuti</a>
                                 </li>
                                 <li class="nav-item active">
                                     <a class="nav-link" href="{{ url('spt') }}">SPT</a>
@@ -107,6 +114,7 @@
                         </div>
                     </nav>
                     <a href="{{ url('/spt') }}" class="btn btn-md btn-success m-2"> Kembali</a>
+                    <h1 class="text-center m-2" style="font-size: 30px">FILE SPT</h1>
                     <iframe src="/document/{{$data->FILE_SURAT}}" style="width: 100%; height: 1000px;"></iframe>
                 </div>
             </div>

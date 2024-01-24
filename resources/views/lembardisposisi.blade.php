@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>SPT</title>
+        <title>PUSDALOPS-PB</title>
         @notifyCss
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
@@ -36,8 +36,12 @@
                         </div>
                         <h2 class="sidebar-title">PUSDALOPS-PB</h2>
                         <ul class="list-unstyled components mb-5">
-                             <li>
+                            <li>
                                 <a href="{{ url('dashboardpage') }}">Dashboard</a>
+                            </li>
+
+                            <li>
+                                <a href="{{ url('datapegawai') }}">Pegawai</a>
                             </li>
 
                             <li>
@@ -49,7 +53,7 @@
                             </li>
 
                             <li>
-                                <a href="#">Surat Cuti</a>
+                                <a href="{{ url('suratcuti') }}">Surat Cuti</a>
                             </li>
                             
                             <li>
@@ -64,7 +68,7 @@
                         
                             <a href="{{ url('logout') }}" class="btn-logout"> Logout </a>
 
-                        
+                    </div>   
                 </nav>
 
                 <!-- Page Content  -->
@@ -88,13 +92,16 @@
                                     <a class="nav-link" href="{{ url('dashboardpage') }}">Dashboard</a>
                                 </li>
                                 <li class="nav-item">
+                                    <a class="nav-link" href="{{ url('datapegawai') }}">Pegawai</a>
+                                </li>
+                                <li class="nav-item">
                                     <a class="nav-link" href="{{ url('suratmasuk') }}">Surat Masuk</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ url('suratkeluar') }}">Surat Keluar</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Surat Cuti</a>
+                                    <a class="nav-link" href="{{ url('suratcuti') }}">Surat Cuti</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ url('spt') }}">SPT</a>
@@ -107,31 +114,32 @@
                         </div>
                     </nav>
                     <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                        <th colspan="12" class="text-center">LEMBAR DISPOSISI</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td colspan="4" >Kode:</td>
-                            <td colspan="4">Sifat:</td>
-                            <td colspan="4">Jenis:</td>
-                        </tr>
-                        <tr>
-                            <td colspan="12" >Perihal:</td>
-                        </tr>
-                        <tr>
-                            <td colspan="4" >Asal:</td>
-                            <td colspan="4" >Tanggal:</td>
-                            <td colspan="4" >Nomor:</td>
-                        </tr>
-                        <tr>
-                            <td colspan="12" >Instruksi:</td>
-                        </tr>
-                    </tbody>
+                        <thead>
+                            <tr>
+                            <th colspan="12" class="text-center"><b style="font-size:18px;">LEMBAR DISPOSISI<b></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="4" >Kode: </br> {{ $disposisi->surat->KODE_SURAT }}</td>
+                                <td colspan="4">Sifat: </br>{{ $disposisi->surat->SIFAT_SURAT }}</td>
+                                <td colspan="4">Jenis: </br>{{ $disposisi->surat->JENIS_SURAT }}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="12" >Perihal: </br>{{ $disposisi->surat->PERIHAL_SURAT }}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" >Asal: </br>{{ $disposisi->surat->ASAL_SURAT }}</td>
+                                <td colspan="4" >Tanggal: </br>{{ $disposisi->surat->TANGGAL_SURAT }}</td>
+                                <td colspan="4" >Nomor: </br>{{ $disposisi->surat->NOMOR_SURAT }}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="12" >Nama & Instruksi: </br>{{ $disposisi->NAMA }}</td>
+                            </tr>
+                        </tbody>
                     </table>
                     <button type="submit" class="btn btn-info no-print" value="print" onclick="window.print()">Print</button>
+                    <a href="{{ url('/disposisi') }}" class="btn btn-danger no-print"> Kembali</a>
                 </div>
             </div>
         

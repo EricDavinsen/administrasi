@@ -24,12 +24,14 @@
             <link href="{{ asset('css/styles.css') }}" rel="stylesheet" type="text/css" />
             <link href="{{ asset('css/sidebar.css') }}" rel="stylesheet" type="text/css" />
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+            <script src="js/jquery.min.js"></script>
+            <script src="js/popper.js"></script>
+            <script src="js/bootstrap.min.js"></script>
+            <script src="js/main.js"></script>
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     </head>
 
     <body>
-        <div class="notification">
-            <x-notify::notify />
-        </div>
         <div class="wrapper d-flex align-items-stretch">
                 <nav id="sidebar">
                     <div class="p-4 pt-5 ">
@@ -51,11 +53,11 @@
                                 <a href="{{ url('suratmasuk') }}">Surat Masuk</a>
                             </li>
 
-                            <li class="nav-item active">
+                            <li>
                                 <a href="{{ url('suratkeluar') }}">Surat Keluar</a>
                             </li>
 
-                            <li>
+                            <li class="nav-item active">
                                 <a href="{{ url('suratcuti') }}">Surat Cuti</a>
                             </li>
 
@@ -97,10 +99,10 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ url('suratmasuk') }}">Surat Masuk</a>
                                 </li>
-                                <li class="nav-item active">
+                                <li class="nav-item">
                                     <a class="nav-link" href="{{ url('suratkeluar') }}">Surat Keluar</a>
                                 </li>
-                                <li class="nav-item">
+                                <li class="nav-item active">
                                     <a class="nav-link" href="{{ url('suratcuti') }}">Surat Cuti</a>
                                 </li>
                                 <li class="nav-item">
@@ -114,55 +116,60 @@
                         </div>
                     </nav>
 
-                    <form action="{{ url('/updatesuratkeluar/' . $suratkeluar->id) }}"method="post" enctype="multipart/form-data">
+                    <div class="notification">
+                        <x-notify::notify />
+                    </div>
+
+                    <form action="{{url('/updatesuratcuti/' . $suratcuti->id) }}"method="post" enctype="multipart/form-data">
                          @csrf
                          @method('put')
                         <div class="form-group">
-                            <label for="formGroupExampleInput2">Nomor Surat</label>
-                            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Masukan Nomor Surat" name="NOMOR_SURAT" value="{{ $suratkeluar->NOMOR_SURAT }}">
+                            <label for="formGroupExampleInput2">Nomor Cuti</label>
+                            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Masukan Nomor Cuti" name="NO_CUTI" value="{{ $suratcuti->NO_CUTI }}">
                         </div>
                         <div class="form-group">
-                            <label for="formGroupExampleInput2">Tanggal Surat</label>
-                            <input type="date" class="form-control" id="formGroupExampleInput2" name="TANGGAL_SURAT" value="{{ $suratkeluar->TANGGAL_SURAT }}">
+                            <label for="formGroupExampleInput2">Nama</label>
+                            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Masukan Nama" name="NAMA" value="{{ $suratcuti->NAMA }}">
                         </div>
                         <div class="form-group">
-                            <label for="formGroupExampleInput2">Jenis Surat</label>
-                            <select class="form-control" name="JENIS_SURAT">
-                                <option value="" disabled selected hidden>Pilih Jenis Surat</option>
-                                <option>Undangan</option>
-                                <option>Permohonan</option>
-                                <option>Pemberitahuan</option>
-                                <option>Laporan Kejadian</option>
-                                <option>Surat Edaran</option>
+                            <label for="formGroupExampleInput2">Jenis Cuti</label>
+                            <select class="form-control" name="JENIS_CUTI" value="{{ $suratcuti->JENIS_CUTI }}">
+                                <option value="" disabled selected hidden>Pilih Jenis Cuti</option>
+                                <option>Cuti Tahunan</option>
+                                <option>Cuti Besar</option>
+                                <option>Cuti Sakit</option>
+                                <option>Cuti Melahirkan</option>
+                                <option>Cuti Karena Alasan Penting</option>
+                                <option>Cuti di Luar Tanggungan Negara</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="formGroupExampleInput2">Tujuan</label>
-                            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Masukan Tujuan" name="TUJUAN_SURAT" value="{{ $suratkeluar->TUJUAN_SURAT }}">
+                            <label for="formGroupExampleInput2">Alasan</label>
+                            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Masukan Alasan" name="ALASAN_CUTI" value="{{ $suratcuti->ALASAN_CUTI }}">
                         </div>
                         <div class="form-group">
-                            <label for="formGroupExampleInput2">Sifat</label>
-                            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Masukan Sifat" name="SIFAT_SURAT" value="{{ $suratkeluar->SIFAT_SURAT }}">
+                            <label for="formGroupExampleInput2">Tanggal Mulai</label>
+                            <input type="date" class="form-control" id="TANGGAL_MULAI" name="TANGGAL_MULAI" value="{{ $suratcuti->TANGGAL_MULAI }}">
                         </div>
                         <div class="form-group">
-                            <label for="formGroupExampleInput2">Perihal</label>
-                            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Masukan Perihal" name="PERIHAL_SURAT" value="{{ $suratkeluar->PERIHAL_SURAT }}">
+                            <label for="formGroupExampleInput2">Tanggal Selesai</label>
+                            <input type="date" class="form-control" id="TANGGAL_SELESAI" name="TANGGAL_SELESAI" value="{{ $suratcuti->TANGGAL_SELESAI }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="formGroupExampleInput2">Sisa Cuti Tahunan</label>
+                            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Masukan Sisa Cuti Tahunan" name="SISA_CUTI_TAHUNAN" value="{{ $suratcuti->SISA_CUTI_TAHUNAN }}">
                         </div>
                         <div class="form-group">
                             <label for="formGroupExampleInput2">File</label>
-                            <input type="file" class="form-control" id="formGroupExampleInput2" name="FILE_SURAT" value="{{ $suratkeluar->FILE_SURAT }}">
+                            <input type="file" class="form-control" id="formGroupExampleInput2" name="FILE_SURAT" value="{{ $suratcuti->FILE_SURAT }}">
                         </div>
 
                         <button type="submit" name="edit" class="btn btn-primary">Submit</button>
-                        <a href="{{ url('/suratkeluar') }}" class="btn btn-danger"> Kembali</a>
+                        <a href="{{ url('/suratcuti') }}" class="btn btn-danger"> Kembali</a>
                     </form>
+                    </div>
                 </div>
             </div>
-        
-        <script src="js/jquery.min.js"></script>
-        <script src="js/popper.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        <script src="js/main.js"></script>
-        @notifyJs
+            @notifyJs
     </body>
 </html>

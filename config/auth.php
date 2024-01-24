@@ -40,9 +40,9 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-        'pegawais' => [
+        'admin' => [
             'driver' => 'session',
-            'provider' => 'pegawais',
+            'provider' => 'admin',
         ]
     ],
 
@@ -68,9 +68,9 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
-        'pegawais' => [
+        'admin' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Pegawai::class,
+            'model' => App\Models\Admin::class,
         ]
     ],
 
@@ -96,8 +96,8 @@ return [
             'expire' => 60,
             'throttle' => 60,
         ],
-        'pegawais' => [
-            'provider' => 'pegawais',
+        'admin' => [
+            'provider' => 'admin',
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,

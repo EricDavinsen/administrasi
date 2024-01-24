@@ -27,9 +27,6 @@
     </head>
 
     <body>
-        <div class="notification">
-            <x-notify::notify />
-        </div>
         <div class="wrapper d-flex align-items-stretch">
                 <nav id="sidebar">
                     <div class="p-4 pt-5 ">
@@ -43,7 +40,7 @@
                                 <a href="{{ url('dashboardpage') }}">Dashboard</a>
                             </li>
 
-                            <li>
+                            <li class="nav-item active">
                                 <a href="{{ url('datapegawai') }}">Pegawai</a>
                             </li>
 
@@ -51,7 +48,7 @@
                                 <a href="{{ url('suratmasuk') }}">Surat Masuk</a>
                             </li>
 
-                            <li class="nav-item active">
+                            <li>
                                 <a href="{{ url('suratkeluar') }}">Surat Keluar</a>
                             </li>
 
@@ -67,14 +64,18 @@
                                 <a href="{{ url('disposisi') }}">Disposisi</a>
                             </li>
                          
+                         
                         </ul>
                         
                             <a href="{{ url('logout') }}" class="btn-logout"> Logout </a>
 
-                        
+                    </div>
                 </nav>
 
                 <!-- Page Content  -->
+                <div class="notification">
+                    <x-notify::notify />
+                </div>
                 <div id="content" class="p-4 p-md-5">
                     <nav class="navbar navbar-expand-lg navbar-light bg-light">
                         <div class="container-fluid">
@@ -91,13 +92,13 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ url('dashboardpage') }}">Dashboard</a>
                                 </li>
-                                <li class="nav-item">
+                                <li class="nav-item active">
                                     <a class="nav-link" href="{{ url('datapegawai') }}">Pegawai</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ url('suratmasuk') }}">Surat Masuk</a>
                                 </li>
-                                <li class="nav-item active">
+                                <li class="nav-item">
                                     <a class="nav-link" href="{{ url('suratkeluar') }}">Surat Keluar</a>
                                 </li>
                                 <li class="nav-item">
@@ -113,49 +114,62 @@
                             </div>
                         </div>
                     </nav>
-
-                    <form action="{{ url('/updatesuratkeluar/' . $suratkeluar->id) }}"method="post" enctype="multipart/form-data">
-                         @csrf
-                         @method('put')
-                        <div class="form-group">
-                            <label for="formGroupExampleInput2">Nomor Surat</label>
-                            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Masukan Nomor Surat" name="NOMOR_SURAT" value="{{ $suratkeluar->NOMOR_SURAT }}">
+                    <h1 class="h3 mb-0 text-gray-800 mb-2">Data Pegawai</h1>
+                    <form class="navbar-search" action="{{ url('/caripegawai') }}" method="GET">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Cari Pegawai" aria-label="Search" name="search">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="fas fa-search fa-sm"></i>
+                                </button>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="formGroupExampleInput2">Tanggal Surat</label>
-                            <input type="date" class="form-control" id="formGroupExampleInput2" name="TANGGAL_SURAT" value="{{ $suratkeluar->TANGGAL_SURAT }}">
-                        </div>
-                        <div class="form-group">
-                            <label for="formGroupExampleInput2">Jenis Surat</label>
-                            <select class="form-control" name="JENIS_SURAT">
-                                <option value="" disabled selected hidden>Pilih Jenis Surat</option>
-                                <option>Undangan</option>
-                                <option>Permohonan</option>
-                                <option>Pemberitahuan</option>
-                                <option>Laporan Kejadian</option>
-                                <option>Surat Edaran</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="formGroupExampleInput2">Tujuan</label>
-                            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Masukan Tujuan" name="TUJUAN_SURAT" value="{{ $suratkeluar->TUJUAN_SURAT }}">
-                        </div>
-                        <div class="form-group">
-                            <label for="formGroupExampleInput2">Sifat</label>
-                            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Masukan Sifat" name="SIFAT_SURAT" value="{{ $suratkeluar->SIFAT_SURAT }}">
-                        </div>
-                        <div class="form-group">
-                            <label for="formGroupExampleInput2">Perihal</label>
-                            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Masukan Perihal" name="PERIHAL_SURAT" value="{{ $suratkeluar->PERIHAL_SURAT }}">
-                        </div>
-                        <div class="form-group">
-                            <label for="formGroupExampleInput2">File</label>
-                            <input type="file" class="form-control" id="formGroupExampleInput2" name="FILE_SURAT" value="{{ $suratkeluar->FILE_SURAT }}">
-                        </div>
-
-                        <button type="submit" name="edit" class="btn btn-primary">Submit</button>
-                        <a href="{{ url('/suratkeluar') }}" class="btn btn-danger"> Kembali</a>
                     </form>
+                    <div class="d-flex w-100 justify-content-end pegawai-button">
+                        <a href="{{ url('/createpegawai') }}" class="btn btn-md btn-success m-3"> Tambah</a>
+                        <a href="{{ url('/cetakpegawai') }}" class="btn btn-md btn-warning m-3" style="color:white"> Cetak</a>
+                        <a href="{{ url('/cetakpegawai') }}" class="btn btn-md btn-info m-3" style="color:white"> Download</a>
+                    </div>
+                    <table class="table table-bordered">
+                        <thead class="text-center">
+                            <tr>
+                            <th scope="col">Nama</th>
+                            <th scope="col">Tanggal Lahir</th>
+                            <th scope="col">Jenis Kelamin</th>
+                            <th scope="col">Instansi</th>
+                            <th scope="col">Jabatan</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-center">
+                            @foreach ($pegawai as $item)
+                            <tr>
+                            <td>{{ $item->NAMA_PEGAWAI }}</td>
+                            <td>{{ \Carbon\Carbon::parse($item->TANGGAL_LAHIR)->format('d-m-Y') }}</td>
+                            <td>{{ $item->JENIS_KELAMIN }}</td>
+                            <td>{{ $item->INSTANSI }}</td>
+                            <td>{{ $item->JABATAN }}</td>
+                            <td>{{ $item->STATUS_PEGAWAI }}</td>
+                            <td>
+                                <div class="action-buttons d-flex w-100  justify-content-center gap-2">
+                                <a href="{{ url('/editpegawai/'.$item->id) }}" class="btn btn-info">Edit</a> 
+                                    <form action="{{ url('/deletepegawai/'.$item->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                    </form>
+                                    <a href="{{ url('/dashboardpegawai/'.$item->id) }}" class="btn btn-warning" style="color:white">Preview</a> 
+                                </div>
+                            </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+
+                    <div class="d-flex justify-content-center">
+                        {!! $pegawai->links() !!}
+                    </div>
                 </div>
             </div>
         

@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Disposisi</title>
+        <title>PUSDALOPS-PB</title>
         @notifyCss
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
@@ -41,6 +41,10 @@
                             </li>
 
                             <li>
+                                <a href="{{ url('datapegawai') }}">Pegawai</a>
+                            </li>
+
+                            <li>
                                 <a href="{{ url('suratmasuk') }}">Surat Masuk</a>
                             </li>
 
@@ -49,7 +53,7 @@
                             </li>
 
                             <li>
-                                <a href="#">Surat Cuti</a>
+                                <a href="{{ url('suratcuti') }}">Surat Cuti</a>
                             </li>
 
                             <li>
@@ -64,7 +68,7 @@
                         
                             <a href="{{ url('logout') }}" class="btn-logout"> Logout </a>
 
-                        
+                    </div>
                 </nav>
 
                 <!-- Page Content  -->
@@ -88,13 +92,16 @@
                                     <a class="nav-link" href="{{ url('dashboardpage') }}">Dashboard</a>
                                 </li>
                                 <li class="nav-item">
+                                    <a class="nav-link" href="{{ url('datapegawai') }}">Pegawai</a>
+                                </li>
+                                <li class="nav-item">
                                     <a class="nav-link" href="{{ url('suratmasuk') }}">Surat Masuk</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ url('suratkeluar') }}">Surat Keluar</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Surat Cuti</a>
+                                    <a class="nav-link" href="{{ url('suratcuti') }}">Surat Cuti</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ url('spt') }}">SPT</a>
@@ -107,34 +114,22 @@
                         </div>
                     </nav>
                     <h1 class="h3 mb-0 text-gray-800 mb-2">Disposisi</h1>
-                    <form class="navbar-search mr-2 ml-2 mb-3" action="{{ url('/caridisposisi') }}" method="GET">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Cari Surat" aria-label="Search" name="search">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="submit">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
                 
                     <table class="table table-bordered">
                         <thead class="text-center">
                             <tr>
-                            <th scope="col">No Surat</th>
-                            <th scope="col">Tanggal Surat</th>
+                            <th scope="col">Kode Surat</th>
+                            <th scope="col">Nomor Surat</th>
                             <th scope="col">Nama</th>
-                            <th scope="col">Perihal</th>
                             <th scope="col">Aksi</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="text-center">
                             @foreach ($disposisi as $item)
                             <tr>
-                            <td>{{ $item->suratmasuk->NOMOR_SURAT }}</td>
-                            <td>{{ $item->suratmasuk->TANGGAL_SURAT }}</td>
+                            <td>{{ $item->surat->KODE_SURAT }}</td>
+                            <td>{{ $item->surat->NOMOR_SURAT }}</td>
                             <td>{{ $item->NAMA }}</td>
-                            <td><td>{{ $item->suratmasuk->PERIHAL }}</td></td>
                             <td>
                                 <div class="action-buttons d-flex w-100  justify-content-center gap-2">
                                 <a href="{{ url('/editdisposisi/'.$item->id) }}" class="btn btn-info">Edit</a> 
@@ -143,8 +138,8 @@
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger">Delete</button>
                                         </form>
-                                    <a href="{{ url('/tampildisposisi/'.$item->id) }}" class="btn btn-warning" style="color:white">Laporan</a> 
-                                    <a href="{{ url('/lembardisposisi') }}" class="btn btn-success">Lembar</a>
+                                    <a href="{{ url('/tampildisposisi/'.$item->id) }}" class="btn btn-warning" style="color:white">Hasil</a> 
+                                    <a href="{{ url('/lembardisposisi/' . $item->id) }}" class="btn btn-success">Lembar Disposisi</a>
                                 </div>
                             </td>
                             </tr>

@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Register</title>
+        <title>PUSDALOPS-PB</title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
             <!-- Bootstrap icons-->
@@ -48,7 +48,7 @@
 
                       <div class="form-outline mb-4">
                       <label class="form-label" for="form2Example11">Email</label>
-                        <input type="email" class="form-control" name="EMAIL_PEGAWAI"
+                        <input type="email" class="form-control" name="EMAIL_ADMIN"
                           placeholder="Please enter your email address" />
                       </div>
 

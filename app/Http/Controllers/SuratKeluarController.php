@@ -2,17 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\SuratKeluar;
 use Illuminate\View\View;
+use App\Models\SuratKeluar;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SuratKeluarController extends Controller
 {
     public function index() : View
     {
-        $suratkeluar = SuratKeluar::paginate(5);
+        $suratkeluar = SuratKeluar::latest()->paginate(5);
         return view("suratkeluar")->with([
-            'suratkeluar' => $suratkeluar
+            'suratkeluar' => $suratkeluar,
+            'admin' => Auth::guard('admin')->user()
         ]);
         
     }

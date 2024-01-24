@@ -25,7 +25,7 @@ class RegisterRequest extends FormRequest
     {
         return [
             'USERNAME' => ['required', 'string', 'max:255'],
-            'EMAIL_PEGAWAI' => ['required', 'email:rfc,dns', 'string', 'max:255'],
+            'EMAIL_ADMIN' => ['required', 'email:rfc,dns', 'string', 'max:255'],
             'password' => ['required', 'string', 'max:255']
         ];
     }

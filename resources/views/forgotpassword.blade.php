@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Forgot Password</title>
+    <title>PUSDALOPS-PB</title>
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <!-- Bootstrap icons-->
@@ -36,7 +36,7 @@
                                         @csrf
                                         <div class="form-outline mb-4">
                                             <label class="form-label" for="form2Example11">Email</label>
-                                            <input type="email" id="EMAIL_PEGAWAI" name="EMAIL_PEGAWAI" class="form-control"
+                                            <input type="email" id="EMAIL_ADMIN" name="EMAIL_ADMIN" class="form-control"
                                                 placeholder="Please enter your email address" />
                                         </div>
 

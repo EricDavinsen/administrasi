@@ -5,14 +5,16 @@ namespace App\Http\Controllers;
 use Illuminate\View\View;
 use App\Models\SuratMasuk;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SuratMasukController extends Controller
 {
     public function index() : View
     {
-        $suratmasuk = SuratMasuk::paginate(5);
+        $suratmasuk = SuratMasuk::latest()->paginate(5);
         return view("suratmasuk")->with([
-            'suratmasuk' => $suratmasuk
+            'suratmasuk' => $suratmasuk,
+            'admin' => Auth::guard('admin')->user()
         ]);
     }
 
@@ -63,6 +65,15 @@ class SuratMasukController extends Controller
                 notify()->error('Gagal Menambah Surat Masuk'),
                 "error" => "Gagal Menambah Surat Masuk"]);
     
+    }
+
+    public function storedispo(Request $request)
+    {
+        $suratmasuk = SuratMasuk::all();
+        $suratmasuk->dispo()->create([
+            'NAMA' => $request->NAMA,
+            'HASIL_LAPORAN' => $request->HASIL_LAPORAN,
+        ]);
     }
 
     public function destroy($id)

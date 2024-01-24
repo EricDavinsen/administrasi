@@ -13,11 +13,21 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('pegawais', function (Blueprint $table) {
+        Schema::create('pegawai', function (Blueprint $table) {
             $table->id();
-            $table->string('USERNAME');
-            $table->string('EMAIL_PEGAWAI');
-            $table->string('password');
+            $table->string('NAMA_PEGAWAI');
+            $table->string('NIK');
+            $table->date('TANGGAL_LAHIR');
+            $table->string('JENIS_KELAMIN');
+            $table->string('AGAMA');
+            $table->string('INSTANSI');
+            $table->string('UNIT');
+            $table->string('SUB_UNIT');
+            $table->string('JABATAN');
+            $table->string('JENIS_PEGAWAI');
+            $table->string('PENDIDIKAN_TERAKHIR');
+            $table->string('STATUS_PEGAWAI');
+            $table->string('KEDUDUKAN');
             $table->timestamps();
         });
     }

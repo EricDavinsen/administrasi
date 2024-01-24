@@ -2,17 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\SuratPanggilanTugas;
 use Illuminate\View\View;
+use Nette\Utils\DateTime;
 use Illuminate\Http\Request;
+use App\Models\SuratPanggilanTugas;
+use Illuminate\Support\Facades\Auth;
 
 class SuratPanggilanTugasController extends Controller
 {
     public function index() : View
     {
-        $spt = SuratPanggilanTugas::paginate(5);
+        $spt = SuratPanggilanTugas::latest()->paginate(5);
         return view("spt")->with([
-            'spt' => $spt
+            'spt' => $spt,
+            'admin' => Auth::guard('admin')->user()
         ]);
     }
 
@@ -40,13 +43,21 @@ class SuratPanggilanTugasController extends Controller
         $file = $request->file("FILE_SURAT");
         $fileName = $request->file("FILE_SURAT")->getClientOriginalName();
         $file->move('document/', $fileName);
-        
-        $sptdata = $request->all();
-        if($request->has('FILE_SURAT')){
-            $sptdata['FILE_SURAT'] = $fileName;
-        }
 
-        $spt = SuratPanggilanTugas::create($sptdata);
+        $tanggalmulai = new DateTime("$request->TANGGAL_MULAI");
+        $tanggalselesai = new DateTime("$request->TANGGAL_SELESAI");
+        $jarak = $tanggalselesai->diff($tanggalmulai);
+
+        $spt = SuratPanggilanTugas::create([
+            'NO_SPT' => $request->NO_SPT,
+            'TANGGAL_SPT' => $request->TANGGAL_SPT,
+            'NAMA' => $request->NAMA,
+            'TANGGAL_MULAI' => $request->TANGGAL_MULAI,
+            'TANGGAL_SELESAI' => $request->TANGGAL_SELESAI,
+            'LAMA_TUGAS' => $jarak->days,
+            'KEPERLUAN' => $request->KEPERLUAN,
+            'FILE_SURAT' => $fileName
+        ]);
 
         if ($spt) {
             return redirect()
@@ -136,6 +147,11 @@ class SuratPanggilanTugasController extends Controller
             ),
         );
 
+        $tanggalmulai = new DateTime("$request->TANGGAL_MULAI");
+        $tanggalselesai = new DateTime("$request->TANGGAL_SELESAI");
+        $jarak = $tanggalselesai->diff($tanggalmulai);
+        $updatejarak = SuratPanggilanTugas::where('id', $id);
+        $updatejarak->update(['LAMA_TUGAS' => $jarak->days]);
  
         if ($request->hasFile('FILE_SURAT')) {
             $updatefile = SuratPanggilanTugas::find($id);
@@ -168,6 +184,7 @@ class SuratPanggilanTugasController extends Controller
             ->orWhere('NAMA', 'like', '%' . $request->search . '%')
             ->orWhere('TANGGAL_MULAI', 'like', '%' . $request->search . '%')
             ->orWhere('TANGGAL_SELESAI', 'like', '%' . $request->search . '%')
+            ->orWhere('LAMA_TUGAS', 'like', '%' . $request->search . '%')
             ->orWhere('KEPERLUAN', 'like', '%' . $request->search . '%')
             ->paginate(5);
         $spt->appends(['search' => $request->search]);

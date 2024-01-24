@@ -2,17 +2,16 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Pegawai extends Model
+class SuratCuti extends Model
 {
     use HasFactory, Notifiable;
 
-    protected $table = 'pegawai';
-    protected $guard = 'pegawai';
+    protected $table = 'surat_cutis';
 
     /**
      * The attributes that should be hidden for serialization.
@@ -30,26 +29,16 @@ class Pegawai extends Model
         "email_verified_at" => "datetime",
     ];
     protected $fillable = [
-        "NAMA_PEGAWAI",
-        "NIK",
-        "TANGGAL_LAHIR",
-        "JENIS_KELAMIN",
-        "AGAMA",
-        "INSTANSI",
-        "UNIT",
-        "SUB_UNIT",
-        "JABATAN",
-        "JENIS_PEGAWAI",
-        "PENDIDIKAN_TERAKHIR",
-        "STATUS_PEGAWAI",
-        "KEDUDUKAN",
+        "NO_CUTI",
+        "NAMA",
+        "JENIS_CUTI",
+        "ALASAN_CUTI",
+        "TANGGAL_MULAI",
+        "TANGGAL_SELESAI",
+        "LAMA_CUTI",
+        "SISA_CUTI_TAHUNAN",
+        "FILE_SURAT"
     ];
-
-
-    public function setPasswordAttribute($value)
-    {
-        $this->attributes['password'] = bcrypt($value);
-    }
 
     public function getCreatedAtAttribute()
     {
@@ -68,5 +57,4 @@ class Pegawai extends Model
             );
         }
     }
-    
 }

@@ -11391,3 +11391,52 @@ button:active {
   transform: translateY(4px);
 }
 
+@media print {
+    .no-print {
+       visibility: hidden;
+    }
+}
+
+.dashboard-card{
+    transition: transform .2s; 
+}
+
+.dashboard-card:hover{
+    transform: scale(1.1); 
+}
+
+.kategori_card {
+    min-height: 120px;
+    width: 250px;
+    background-color: var(--bg-secondary);
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s;
+  }
+  
+  .kategori_items :hover {
+    transform: scale(1.2);
+    cursor: pointer;
+    background-color: #6df207;
+  }
+  
+  .kategori_card a:hover,
+  .kategori_card h5:hover,
+  .kategori_card img:hover {
+    transform: scale(1);
+  }
+  
+
+  .kategori_card h5 {
+    color: var(--txt-third);
+    margin-top: 15px;
+    margin-bottom: 0;
+    font-weight: 600;
+    font-size: 18px;
+  }
+
+  .kategori_icon{
+    font-size: 32px;
+  }

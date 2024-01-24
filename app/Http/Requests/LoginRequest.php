@@ -24,7 +24,7 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'EMAIL_PEGAWAI' => ['required', 'email:rfc,dns', 'string', 'max:255'],
+            'EMAIL_ADMIN' => ['required', 'email:rfc,dns', 'string', 'max:255'],
             'password' => ['required', 'string', 'min:8', 'max:255']
         ];
     }

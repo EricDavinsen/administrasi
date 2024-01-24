@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use App\Models\SuratMasuk;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Notifications\Notifiable;
@@ -11,6 +10,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Disposisi extends Model
 {
+
+    public function surat(): BelongsTo
+    {
+        return $this->belongsTo(SuratMasuk::class, 'surat_masuk_id' , 'id');
+    }
+
     use HasFactory, Notifiable;
 
     protected $table = 'disposisi';
@@ -34,8 +39,8 @@ class Disposisi extends Model
     ];
 
     protected $fillable = [
+        "surat_masuk_id",
         "NAMA",
-        "id_surat_masuk",
         "HASIL_LAPORAN",
     ];
     
@@ -55,11 +60,6 @@ class Disposisi extends Model
                 "Y-m-d H:i:s"
             );
         }
-    }
-    
-    public function suratmasuk()
-    {
-        return $this->belongsTo('App\Models\SuratMasuk');
     }
     
 }

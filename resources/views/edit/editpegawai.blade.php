@@ -39,11 +39,11 @@
                         </div>
                         <h2 class="sidebar-title">PUSDALOPS-PB</h2>
                         <ul class="list-unstyled components mb-5">
-                            <li>
+                             <li>
                                 <a href="{{ url('dashboardpage') }}">Dashboard</a>
                             </li>
 
-                            <li>
+                            <li class="nav-item active">
                                 <a href="{{ url('datapegawai') }}">Pegawai</a>
                             </li>
 
@@ -51,7 +51,7 @@
                                 <a href="{{ url('suratmasuk') }}">Surat Masuk</a>
                             </li>
 
-                            <li class="nav-item active">
+                            <li>
                                 <a href="{{ url('suratkeluar') }}">Surat Keluar</a>
                             </li>
 
@@ -62,16 +62,14 @@
                             <li>
                                 <a href="{{ url('spt') }}">SPT</a>
                             </li>
-
+                         
+                            
                             <li>
                                 <a href="{{ url('disposisi') }}">Disposisi</a>
                             </li>
-                         
                         </ul>
                         
                             <a href="{{ url('logout') }}" class="btn-logout"> Logout </a>
-
-                        
                 </nav>
 
                 <!-- Page Content  -->
@@ -91,13 +89,13 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ url('dashboardpage') }}">Dashboard</a>
                                 </li>
-                                <li class="nav-item">
+                                <li class="nav-item active">
                                     <a class="nav-link" href="{{ url('datapegawai') }}">Pegawai</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ url('suratmasuk') }}">Surat Masuk</a>
                                 </li>
-                                <li class="nav-item active">
+                                <li class="nav-item">
                                     <a class="nav-link" href="{{ url('suratkeluar') }}">Surat Keluar</a>
                                 </li>
                                 <li class="nav-item">
@@ -114,47 +112,67 @@
                         </div>
                     </nav>
 
-                    <form action="{{ url('/updatesuratkeluar/' . $suratkeluar->id) }}"method="post" enctype="multipart/form-data">
+                    <form action="{{ url('/updatepegawai/'. $pegawai->id) }}"method="post" enctype="multipart/form-data">
                          @csrf
                          @method('put')
                         <div class="form-group">
-                            <label for="formGroupExampleInput2">Nomor Surat</label>
-                            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Masukan Nomor Surat" name="NOMOR_SURAT" value="{{ $suratkeluar->NOMOR_SURAT }}">
+                            <label for="formGroupExampleInput">Nama</label>
+                            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Masukan Nama Pegawai" name="NAMA_PEGAWAI" value="{{ $pegawai->NAMA_PEGAWAI }}">
                         </div>
                         <div class="form-group">
-                            <label for="formGroupExampleInput2">Tanggal Surat</label>
-                            <input type="date" class="form-control" id="formGroupExampleInput2" name="TANGGAL_SURAT" value="{{ $suratkeluar->TANGGAL_SURAT }}">
+                            <label for="formGroupExampleInput2">NIK</label>
+                            <input type="text" class="form-control" id="formGroupExampleInput2" name="NIK" placeholder="Masukan NIK" value="{{ $pegawai->NIK }}">
                         </div>
                         <div class="form-group">
-                            <label for="formGroupExampleInput2">Jenis Surat</label>
-                            <select class="form-control" name="JENIS_SURAT">
-                                <option value="" disabled selected hidden>Pilih Jenis Surat</option>
-                                <option>Undangan</option>
-                                <option>Permohonan</option>
-                                <option>Pemberitahuan</option>
-                                <option>Laporan Kejadian</option>
-                                <option>Surat Edaran</option>
+                            <label for="formGroupExampleInput2">Tanggal Lahir</label>
+                            <input type="date" class="form-control" id="formGroupExampleInput2" name="TANGGAL_LAHIR" value="{{ $pegawai->TANGGAL_LAHIR }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="formGroupExampleInput2">Jenis Kelamin</label>
+                            <select class="form-control" name="JENIS_KELAMIN" value="{{ $pegawai->JENIS_KELAMIN }}">
+                                <option value="" disabled selected hidden>Pilih Jenis Kelamin</option>
+                                <option>Laki-laki</option>
+                                <option>Perempuan</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="formGroupExampleInput2">Tujuan</label>
-                            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Masukan Tujuan" name="TUJUAN_SURAT" value="{{ $suratkeluar->TUJUAN_SURAT }}">
+                            <label for="formGroupExampleInput2">Agama</label>
+                            <input type="text" class="form-control" id="formGroupExampleInput2" name="AGAMA" placeholder="Masukan Agama" value="{{ $pegawai->AGAMA }}">
                         </div>
                         <div class="form-group">
-                            <label for="formGroupExampleInput2">Sifat</label>
-                            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Masukan Sifat" name="SIFAT_SURAT" value="{{ $suratkeluar->SIFAT_SURAT }}">
+                            <label for="formGroupExampleInput2">Instansi</label>
+                            <input type="text" class="form-control" id="formGroupExampleInput2" name="INSTANSI" placeholder="Masukan Instansi" value="{{ $pegawai->INSTANSI }}">
                         </div>
                         <div class="form-group">
-                            <label for="formGroupExampleInput2">Perihal</label>
-                            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Masukan Perihal" name="PERIHAL_SURAT" value="{{ $suratkeluar->PERIHAL_SURAT }}">
+                            <label for="formGroupExampleInput2">Unit</label>
+                            <input type="text" class="form-control" id="formGroupExampleInput2" name="UNIT" placeholder="Masukan Unit" value="{{ $pegawai->UNIT }}">
                         </div>
                         <div class="form-group">
-                            <label for="formGroupExampleInput2">File</label>
-                            <input type="file" class="form-control" id="formGroupExampleInput2" name="FILE_SURAT" value="{{ $suratkeluar->FILE_SURAT }}">
+                            <label for="formGroupExampleInput2">Sub Unit</label>
+                            <input type="text" class="form-control" id="formGroupExampleInput2" name="SUB UNIT" placeholder="Masukan Sub Unit" value="{{ $pegawai->SUB_UNIT }}">
                         </div>
-
-                        <button type="submit" name="edit" class="btn btn-primary">Submit</button>
-                        <a href="{{ url('/suratkeluar') }}" class="btn btn-danger"> Kembali</a>
+                        <div class="form-group">
+                            <label for="formGroupExampleInput2">Jabatan</label>
+                            <input type="text" class="form-control" id="formGroupExampleInput2" name="JABATAN" placeholder="Masukan Jabatan" value="{{ $pegawai->JABATAN }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="formGroupExampleInput2">Jenis Pegawai</label>
+                            <input type="text" class="form-control" id="formGroupExampleInput2" name="JENIS_PEGAWAI" placeholder="Masukan Jenis Pegawai" value="{{ $pegawai->JENIS_PEGAWAI }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="formGroupExampleInput2">Pendidikan Terakhir</label>
+                            <input type="text" class="form-control" id="formGroupExampleInput2" name="PENDIDIKAN_TERAKHIR" placeholder="Masukan Pendidikan" value="{{ $pegawai->PENDIDIKAN_TERAKHIR }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="formGroupExampleInput2">Status Pegawai</label>
+                            <input type="text" class="form-control" id="formGroupExampleInput2" name="STATUS_PEGAWAI" placeholder="Masukan Status Pegawai" value="{{ $pegawai->STATUS_PEGAWAI }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="formGroupExampleInput2">Kedudukan</label>
+                            <input type="text" class="form-control" id="formGroupExampleInput2" name="KEDUDUKAN" placeholder="Masukan Kedudukan" value="{{ $pegawai->KEDUDUKAN }}">
+                        </div>
+                        <button type="submit" name="add" class="btn btn-primary">Submit</button>
+                        <a href="{{ url('/datapegawai') }}" class="btn btn-danger"> Kembali</a>
                     </form>
                 </div>
             </div>

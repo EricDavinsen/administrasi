@@ -3,32 +3,36 @@
 namespace App\Http\Controllers;
 
 use App\Models\Disposisi;
-use App\Models\SuratMasuk;
 use Illuminate\View\View;
+use App\Models\SuratMasuk;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DisposisiController extends Controller
 {
 
     public function index(){
-        $disposisi = Disposisi::paginate(5);
-
-        return view("disposisi", compact("disposisi"));
-     
+        $disposisi = Disposisi::latest()->paginate(5);
+        $suratmasuk = SuratMasuk::all();
+        return view('disposisi')->with([
+            'disposisi' => $disposisi,
+            'suratmasuk' => $suratmasuk,
+            'admin' => Auth::guard('admin')->user() 
+        ]);
     }
 
     public function indexcreate() : View
     {
-        return view("tambah/tambahdisposisi");
+        $suratmasuk = SuratMasuk::all();
+        return view("tambah/tambahdisposisi", compact("suratmasuk"));
     }
-    public function store(Request $request)
+    public function store( Request $request)
     {
 
-        $this->validate(
-            $request,
+        $this->validate($request,
             [
+                "surat_masuk_id" => "required",
                 "NAMA" => ["required"],
-
                 "HASIL_LAPORAN" => ["required"],
             ],
         );
@@ -36,16 +40,11 @@ class DisposisiController extends Controller
         $file = $request->file("HASIL_LAPORAN");
         $fileName = $request->file("HASIL_LAPORAN")->getClientOriginalName();
         $file->move('document/', $fileName);
-        
-        $disposisidata = $request->all();
-        if($request->has('HASIL_LAPORAN')){
-            $disposisidata['HASIL_LAPORAN'] = $fileName;
-        }
 
         $disposisi = Disposisi::create([
+            'surat_masuk_id' => $request->surat_masuk_id,
             'NAMA' => $request->NAMA,
-            'TANGGAL_SURAT' => $request->TANGGAL_SURAT,
-            'HASIL_LAPORAN' => $disposisidata,
+            'HASIL_LAPORAN' => $fileName
         ]);
 
 
@@ -67,7 +66,7 @@ class DisposisiController extends Controller
     public function destroy($id)
     {
         $deletefile = Disposisi::findorfail($id);
-        $file = public_path('document/'.$deletefile->FILE_SURAT);
+        $file = public_path('document/'.$deletefile->HASIL_LAPORAN);
 
         if (file_exists($file)) {
             @unlink($file);
@@ -143,25 +142,16 @@ class DisposisiController extends Controller
 
     }
 
-    public function find(Request $request)
-    {
-        $disposisi = Disposisi::where('NAMA', 'like', '%' . $request->search . '%')
-            ->paginate(5);
-        $disposisi->appends(['search' => $request->search]);
-
-        return view("disposisi")->with([
-            'disposisi' => $disposisi
-        ]);
-    }
-
     public function view($id){
         $data = Disposisi::find($id);
 
         return view("tampildisposisi",compact("data"));
     }
 
-    public function create(){
-
-        return view("lembardisposisi");
+    public function create($id){
+        $disposisi = Disposisi::where('id', $id)->first();
+        return view('lembardisposisi')->with([
+            'disposisi' => $disposisi,
+        ]);
     }
 }

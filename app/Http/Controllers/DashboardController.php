@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\SuratCuti;
 use App\Models\SuratMasuk;
 use App\Models\SuratKeluar;
 use Illuminate\Http\Request;
@@ -15,10 +16,11 @@ class DashboardController extends Controller
     {
         $suratmasuk = SuratMasuk::count();
         $suratkeluar = SuratKeluar::count();
+        $suratcuti = SuratCuti::count();
         $spt = SuratPanggilanTugas::count();
     
-        return view('dashboardpage', compact('suratmasuk','suratkeluar','spt'))->with([
-            'pegawais' => Auth::guard('pegawais')->user(),
+        return view('dashboardpage', compact('suratmasuk','suratkeluar','suratcuti','spt'))->with([
+            'admin' => Auth::guard('admin')->user(),
             
         ]);
      

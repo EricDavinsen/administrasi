@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>PUSDALOPS-PB</title>
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <!-- Bootstrap icons-->
@@ -36,7 +36,7 @@
                                         <p>Please login to your account</p>
                                         <div class="form-outline mb-4">
                                             <label class="form-label" for="form2Example11">Email</label>
-                                            <input type="email" id="emailinput" name="EMAIL_PEGAWAI" class="form-control"
+                                            <input type="email" id="emailinput" name="EMAIL_ADMIN" class="form-control"
                                                 placeholder="Please enter your email address" />
                                         </div>
 
@@ -63,7 +63,7 @@
                             <div class="col-lg-6 col-sm-6 d-flex align-items-center gradient-custom-2">
                                 <div class="w-100">    
                                     <h5 class="bpbd-title mb-1">ADMINISTRATOR WEBSITE</h5>
-                                    <h1 class="bpbd-subtitle mb-4">PUSDALOPS-PB</h1>
+                                    <h1 class="bpbd-subtitle">PUSDALOPS-PB</h1>
                                 </div>
                             </div>
                         </div>
