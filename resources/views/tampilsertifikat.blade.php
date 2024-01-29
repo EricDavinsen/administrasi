@@ -31,7 +31,7 @@
                 <nav id="sidebar">
                     <div class="p-4 pt-5 ">
                         <div class="sidebar-logo">
-                            <img src="{{ ('img/logo.png') }}" 
+                            <img src="{{ ('/img/logo.png') }}" 
                                     style="width: 185px;" alt="logo">
                         </div>
                         <h2 class="sidebar-title">PUSDALOPS-PB</h2>
@@ -40,11 +40,11 @@
                                 <a href="{{ url('dashboardpage') }}">Dashboard</a>
                             </li>
 
-                            <li>
+                            <li class="nav-item active">
                                 <a href="{{ url('datapegawai') }}">Pegawai</a>
                             </li>
 
-                            <li class="nav-item active">
+                            <li>
                                 <a href="{{ url('suratmasuk') }}">Surat Masuk</a>
                             </li>
 
@@ -59,15 +59,16 @@
                             <li>
                                 <a href="{{ url('spt') }}">SPT</a>
                             </li>
-                         
+
                             <li>
                                 <a href="{{ url('disposisi') }}">Disposisi</a>
                             </li>
+                         
                         </ul>
                         
                             <a href="{{ url('logout') }}" class="btn-logout"> Logout </a>
 
-                    </div>                 
+                    </div>                    
                 </nav>
 
                 <!-- Page Content  -->
@@ -90,10 +91,10 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ url('dashboardpage') }}">Dashboard</a>
                                 </li>
-                                <li class="nav-item">
+                                <li class="nav-item active">
                                     <a class="nav-link" href="{{ url('datapegawai') }}">Pegawai</a>
                                 </li>
-                                <li class="nav-item active">
+                                <li class="nav-item">
                                     <a class="nav-link" href="{{ url('suratmasuk') }}">Surat Masuk</a>
                                 </li>
                                 <li class="nav-item">
@@ -112,64 +113,9 @@
                             </div>
                         </div>
                     </nav>
-                    
-                    <h1 class="h3 mb-0 text-gray-800 mb-2">Surat Masuk</h1>
-                    <form class="navbar-search" action="{{ url('/carisuratmasuk') }}" method="GET">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Cari Surat" aria-label="Search" name="search">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="submit">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                    <a href="{{ url('/createsuratmasuk') }}" class="btn btn-md btn-success m-2"> Tambah</a>
-                    <table class="table table-bordered">
-                        <thead class="text-center">
-                            <tr>
-                            <th scope="col">Kode Surat</th>
-                            <th scope="col">Nomor Surat</th>
-                            <th scope="col">Tanggal Surat</th>
-                            <th scope="col">Tanggal Masuk</th>
-                            <th scope="col">Jenis Surat</th>
-                            <th scope="col">Asal Surat</th>
-                            <th scope="col">Sifat</th>
-                            <th scope="col">Perihal</th>
-                            <th colspan ="2" scope="col">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-center">
-                            @foreach ($suratmasuk as $item)
-                                <tr>
-                                <td>{{ $item->KODE_SURAT }}</td>
-                                <td>{{ $item->NOMOR_SURAT }}</td>
-                                <td>{{ \Carbon\Carbon::parse($item->TANGGAL_SURAT)->format('d-m-Y') }}</td>
-                                <td>{{ \Carbon\Carbon::parse($item->TANGGAL_MASUK)->format('d-m-Y') }}</td>
-                                <td>{{ $item->JENIS_SURAT }}</td>
-                                <td>{{ $item->ASAL_SURAT }}</td>
-                                <td>{{ $item->SIFAT_SURAT }}</td>
-                                <td>{{ $item->PERIHAL_SURAT }}</td>
-                                <td>
-                                <div class="action-buttons d-flex w-100  justify-content-center gap-2">
-                                    <a href="{{ url('/editsuratmasuk/'.$item->id) }}" class="btn btn-info">Edit</a> 
-                                        <form action="{{ url('/deletesuratmasuk/'.$item->id) }}" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger">Delete</button>
-                                        </form>
-                                        <a href="{{ url('/createdisposisi/'.$item->id) }}" class="btn btn-success">Disposisi</a>
-                                        <a href="{{ url('/tampilsuratmasuk/'.$item->id) }}" class="btn btn-warning" style="color:white">Review</a>
-                                    </div>
-                                </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-
-                    <div class="d-flex justify-content-center">
-                        {!! $suratmasuk->links() !!}
-                    </div>
+                    <a href="{{ url('/diklat/'.$diklat->pegawai_id) }}" class="btn btn-md btn-success m-2"> Kembali</a>
+                    <h1 class="text-center m-2" style="font-size: 30px">SERTIFIKAT DIKLAT</h1>
+                    <iframe src="/document/{{$data->SERTIFIKAT}}" style="width: 100%; height: 1000px;"></iframe>
                 </div>
             </div>
         

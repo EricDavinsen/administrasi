@@ -114,9 +114,17 @@
                     <div class="container-fluid category">
                         <h2 class="d-flex w-100 justify-content-center" style="font-weight: bold">Menu Pegawai</h2>
                         <div class="d-flex justify-content-center gap-5 w-100 mt-3 flex-wrap">
+                        <div class="kategori_items">
+                                <div class="card kategori_card">
+                                    <a href="{{ url('/datapegawai')  }}" class="nav-link d-flex justify-content-center flex-column align-items-center">
+                                    <i class="kategori_icon fa-solid fa-users"></i>
+                                    <h5 class="text-center">DATA PEGAWAI</h5>
+                                    </a> 
+                                </div>
+                            </div>
                             <div class="kategori_items">
                                 <div class="card kategori_card">
-                                    <a href="{{ url('/datapribadi/'.$pegawai->id) }}" class="nav-link d-flex justify-content-center flex-column align-items-center">
+                                    <a href="{{ url('/createdatapribadi/'.$pegawai->id)  }}" class="nav-link d-flex justify-content-center flex-column align-items-center">
                                     <i class="kategori_icon fa-solid fa-id-card"></i>
                                     <h5 class="text-center">DATA PRIBADI</h5>
                                     </a> 
@@ -132,7 +140,7 @@
                             </div>
                             <div class="kategori_items">
                                 <div class="card kategori_card">
-                                    <a href="#/kategorialam" class="nav-link d-flex justify-content-center flex-column align-items-center">
+                                    <a href="{{ url('/riwayatpendidikan/'.$pegawai->id) }}" class="nav-link d-flex justify-content-center flex-column align-items-center">
                                     <i class="kategori_icon fa-solid fa-user-graduate"></i>
                                     <h5 class="text-center">RIWAYAT PENDIDIKAN</h5>
                                     </a> 
@@ -140,21 +148,21 @@
                             </div>
                             <div class="kategori_items">
                                 <div class="card kategori_card">
-                                    <a href="#/kategorialam" class="nav-link d-flex justify-content-center flex-column align-items-center">
+                                    <a href="{{ url('/diklat/'.$pegawai->id) }}" class="nav-link d-flex justify-content-center flex-column align-items-center">
                                     <i class="kategori_icon fa-solid fa-book"></i>
-                                    <h5 class="text-center">DIKLAT/PELATIHAN</h5>
+                                    <h5 class="text-center">DIKLAT</h5>
                                     </a> 
                                 </div>
                             </div>
 
-                            <div class="kategori_items">
+                            <!-- <div class="kategori_items">
                                 <div class="card kategori_card">
                                     <a href="#/kategorialam" class="nav-link d-flex justify-content-center flex-column align-items-center">
                                     <i class="kategori_icon fa-solid fa-hospital-user"></i>
                                     <h5 class="text-center">DATA BPJS</h5>
                                     </a> 
                                 </div>
-                            </div>
+                            </div> -->
 
                             <div class="kategori_items">
                                 <div class="card kategori_card">
@@ -198,6 +206,5 @@
         <script src="js/popper.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/main.js"></script>
-       
     </body>
 </html>

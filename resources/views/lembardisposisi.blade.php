@@ -130,7 +130,7 @@
                             </tr>
                             <tr>
                                 <td colspan="4" >Asal: </br>{{ $disposisi->surat->ASAL_SURAT }}</td>
-                                <td colspan="4" >Tanggal: </br>{{ $disposisi->surat->TANGGAL_SURAT }}</td>
+                                <td colspan="4" >Tanggal: </br> {{ \Carbon\Carbon::parse($disposisi->surat->TANGGAL_SURAT)->format('d-m-Y') }}</td>
                                 <td colspan="4" >Nomor: </br>{{ $disposisi->surat->NOMOR_SURAT }}</td>
                             </tr>
                             <tr>

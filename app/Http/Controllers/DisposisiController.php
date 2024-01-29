@@ -21,17 +21,21 @@ class DisposisiController extends Controller
         ]);
     }
 
-    public function indexcreate() : View
+    public function indexcreate($id) : View
     {
-        $suratmasuk = SuratMasuk::all();
-        return view("tambah/tambahdisposisi", compact("suratmasuk"));
+        $suratmasuk = SuratMasuk::where('id',$id)->first();
+        $disposisi = Disposisi::all();
+        return view("tambah/tambahdisposisi")->with([
+            'suratmasuk' => $suratmasuk,
+            'disposisi' => $disposisi,
+            'admin' => Auth::guard('admin')->user() 
+        ]);
     }
-    public function store( Request $request)
+    public function store( Request $request ,$id)
     {
-
+        $suratmasuk = SuratMasuk::where('id', $id)->first();
         $this->validate($request,
             [
-                "surat_masuk_id" => "required",
                 "NAMA" => ["required"],
                 "HASIL_LAPORAN" => ["required"],
             ],
@@ -42,7 +46,7 @@ class DisposisiController extends Controller
         $file->move('document/', $fileName);
 
         $disposisi = Disposisi::create([
-            'surat_masuk_id' => $request->surat_masuk_id,
+            'surat_masuk_id' => $suratmasuk->id,
             'NAMA' => $request->NAMA,
             'HASIL_LAPORAN' => $fileName
         ]);

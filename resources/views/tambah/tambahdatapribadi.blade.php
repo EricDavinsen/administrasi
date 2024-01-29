@@ -63,13 +63,12 @@
                                 <a href="{{ url('spt') }}">SPT</a>
                             </li>
                          
-                            
                             <li>
                                 <a href="{{ url('disposisi') }}">Disposisi</a>
                             </li>
                         </ul>
-                        
                             <a href="{{ url('logout') }}" class="btn-logout"> Logout </a>
+                    </div>
                 </nav>
 
                 <!-- Page Content  -->
@@ -85,29 +84,29 @@
                             </button>
 
                             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                            <ul class="nav navbar-nav ml-auto">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('dashboardpage') }}">Dashboard</a>
-                                </li>
-                                <li class="nav-item active">
-                                    <a class="nav-link" href="{{ url('datapegawai') }}">Pegawai</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('suratmasuk') }}">Surat Masuk</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('suratkeluar') }}">Surat Keluar</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('suratcuti') }}">Surat Cuti</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('spt') }}">SPT</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('disposisi') }}">Disposisi</a>
-                                </li>
-                            </ul>
+                                <ul class="nav navbar-nav ml-auto">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ url('dashboardpage') }}">Dashboard</a>
+                                    </li>
+                                    <li class="nav-item active">
+                                        <a class="nav-link" href="{{ url('datapegawai') }}">Pegawai</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ url('suratmasuk') }}">Surat Masuk</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ url('suratkeluar') }}">Surat Keluar</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ url('suratcuti') }}">Surat Cuti</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ url('spt') }}">SPT</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ url('disposisi') }}">Disposisi</a>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </nav>
@@ -163,7 +162,7 @@
                             <input type="email" class="form-control" id="formGroupExampleInput2" name="EMAIL" placeholder="Masukan Email">
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
-                        <a href="{{ url('/datapegawai') }}" class="btn btn-danger"> Kembali</a>
+                        <a href="{{ url('/dashboardpegawai/'.$pegawai->id)  }}" class="btn btn-danger"> Kembali</a>
                     </form>
                 </div>
             </div>

@@ -115,80 +115,16 @@
                         </div>
                     </nav>
                     <h1 class="h3 mb-0 text-gray-800 mb-2">Data Pribadi</h1>
-                    <form class="navbar-search" action="{{ url('/caripegawai') }}" method="GET">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Cari Pegawai" aria-label="Search" name="search">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="submit">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
                     <div class="d-flex w-100 justify-content-end pegawai-button">
-                        <a href="{{ url('/createdatapribadi/'.$pegawai->id) }}" class="btn btn-md btn-success m-3"> Tambah</a>
-                        <a href="{{ url('/cetakpegawai') }}" class="btn btn-md btn-warning m-3" style="color:white"> Edit</a>
-                        <a href="{{ url('/cetakpegawai') }}" class="btn btn-md btn-danger m-3" style="color:white"> Hapus</a>
+                        <a href="{{ url('/editdatapribadi/' . $datapribadi->pegawai_id) }}" class="btn btn-md btn-warning m-2" style="color:white"> Edit</a>
+                        <form action="{{ url('/deletedatapribadi/' .$datapribadi->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger m-2">Delete</button>
+                        </form>
+                        <a href="{{ url('/dashboardpegawai/' . $datapribadi->pegawai_id) }}" class="btn btn-md btn-info m-2" style="color:white"> Back</a>
                     </div>
-                    <table class="table table-bordered">
-                        <thead class="text-center">
-                            <tr>
-                            <th colspan="2">DATA PRIBADI</th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-center">
-                         
-                            <tr>
-                                <td scope="col" width="30%">KTP</th>
-                                <td>-</td>
-                            </tr>
-                            <tr>
-                                <td scope="col">BPJS</th>
-                                <td>-</td>
-                            </tr>
-                            <tr>
-                                <td scope="col">NPWP</th>
-                                <td>-</td>
-                            </tr>
-                            <tr>
-                                <td scope="col">TINGGI BADAN</th>
-                                <td>-</td>
-                            </tr>
-                            <tr>
-                                <td scope="col">BERAT BADAN</th>
-                                <td>-</td>
-                            </tr>
-                            <tr>
-                                <td scope="col">WARNA KULIT</th>
-                                <td>-</td>
-                            </tr>
-                            <tr>
-                                <td scope="col">GOLONGAN DARAH</th>
-                                <td scope="col">-</td>
-                            </tr>
-                            <tr>
-                                <td scope="col">ALAMAT RUMAH</th>
-                                <td>-</td>
-                            </tr>
-                            <tr>
-                                <td scope="col">KODE POS</th>
-                                <td>-</td>
-                            </tr>
-                            <tr>
-                                <td scope="col">TELPON RUMAH</th>
-                                <td>-</td>
-                            </tr>
-                            <tr>
-                                <td scope="col">NO HP</th>
-                                <td>-</td>
-                            </tr>
-                            <tr>
-                                <td scope="col">EMAIL</th>
-                                <td>-</td>
-                            </tr>
-                      
-                        </tbody>
-                    </table>
+                    @include ('tabeldatapribadi', $datapribadi)
                 </div>
             </div>
         

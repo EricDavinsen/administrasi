@@ -43,7 +43,7 @@
                                 <a href="{{ url('dashboardpage') }}">Dashboard</a>
                             </li>
 
-                            <li>
+                            <li class="nav-item active">
                                 <a href="{{ url('datapegawai') }}">Pegawai</a>
                             </li>
 
@@ -62,15 +62,12 @@
                             <li>
                                 <a href="{{ url('spt') }}">SPT</a>
                             </li>
-
-                            <li class="nav-item active">
+                         
+                            <li>
                                 <a href="{{ url('disposisi') }}">Disposisi</a>
                             </li>
-                         
                         </ul>
-                        
                             <a href="{{ url('logout') }}" class="btn-logout"> Logout </a>
-
                     </div>
                 </nav>
 
@@ -87,48 +84,61 @@
                             </button>
 
                             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                            <ul class="nav navbar-nav ml-auto">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('dashboardpage') }}">Dashboard</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('datapegawai') }}">Pegawai</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('suratmasuk') }}">Surat Masuk</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('suratkeluar') }}">Surat Keluar</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('suratcuti') }}">Surat Cuti</a>
-                                </li>
-                                <li>
-                                    <a class="nav-link" href="{{ url('spt') }}">SPT</a>
-                                </li>
-                                <li class="nav-item active">
-                                    <a class="nav-link" href="{{ url('disposisi') }}">Disposisi</a>
-                                </li>
-                            </ul>
+                                <ul class="nav navbar-nav ml-auto">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ url('dashboardpage') }}">Dashboard</a>
+                                    </li>
+                                    <li class="nav-item active">
+                                        <a class="nav-link" href="{{ url('datapegawai') }}">Pegawai</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ url('suratmasuk') }}">Surat Masuk</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ url('suratkeluar') }}">Surat Keluar</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ url('suratcuti') }}">Surat Cuti</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ url('spt') }}">SPT</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ url('disposisi') }}">Disposisi</a>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </nav>
 
-                    <form action="{{ url('/updatedisposisi/' . $disposisi->id) }}"method="post" enctype="multipart/form-data">
+                    <form action="{{ url('/adddiklat/'. $pegawai->id) }}"method="post" enctype="multipart/form-data">
                          @csrf
-                         @method('put')
-                         <div class="form-group">
-                            <label for="formGroupExampleInput">Nama</label>
-                            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Masukan Nama dan Instruksi" name="NAMA" value="{{ $disposisi->NAMA }}">
+                        <div class="form-group">
+                            <label for="formGroupExampleInput">Nama Diklat</label>
+                            <input type="text" class="form-control" id="formGroupExampleInput" name="NAMA_DIKLAT" placeholder="Masukan Nama Diklat">
                         </div>
                         <div class="form-group">
-                            <label for="formGroupExampleInput2">Hasil Disposisi</label>
-                            <input type="file" class="form-control" id="formGroupExampleInput2" name="HASIL_LAPORAN">
+                            <label for="formGroupExampleInput2">Tanggal Mulai</label>
+                            <input type="date" class="form-control" id="formGroupExampleInput2" name="TANGGAL_MULAI" placeholder="Masukan Tanggal Mulai">
                         </div>
-
-                        <button type="submit" name="add" class="btn btn-primary">Submit</button>
-                        <a href="{{ url('/disposisi') }}" class="btn btn-danger"> Kembali</a>
-                        
+                        <div class="form-group">
+                            <label for="formGroupExampleInput2">Tahun Lulus</label>
+                            <input type="date" class="form-control" id="formGroupExampleInput2" name="TANGGAL_SELESAI" placeholder="Masukan Tahun Lulus">
+                        </div>
+                        <div class="form-group">
+                            <label for="formGroupExampleInput2">Jumlah Jam</label>
+                            <input type="text" class="form-control" id="formGroupExampleInput2" name="JUMLAH_JAM" placeholder="Masukan Jumlah Jam">
+                        </div>
+                        <div class="form-group">
+                            <label for="formGroupExampleInput2">Penyelenggara</label>
+                            <input type="text" class="form-control" id="formGroupExampleInput2" name="PENYELENGGARA" placeholder="Masukan Penyelenggara">
+                        </div>
+                        <div class="form-group">
+                            <label for="formGroupExampleInput2">Sertifikat</label>
+                            <input type="file" class="form-control" id="formGroupExampleInput2" name="SERTIFIKAT" placeholder="Masukan Sertifikat">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <a href="{{ url('/dashboardpegawai/'.$pegawai->id)  }}" class="btn btn-danger"> Kembali</a>
                     </form>
                 </div>
             </div>

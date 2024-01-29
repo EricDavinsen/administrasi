@@ -34,7 +34,7 @@
                 <nav id="sidebar">
                     <div class="p-4 pt-5 ">
                         <div class="sidebar-logo">
-                            <img src="{{ ('img/logo.png') }}" 
+                            <img src="{{ ('/img/logo.png') }}" 
                                     style="width: 185px;" alt="logo">
                         </div>
                         <h2 class="sidebar-title">PUSDALOPS-PB</h2>
@@ -63,13 +63,13 @@
                                 <a href="{{ url('spt') }}">SPT</a>
                             </li>
                          
-                            
                             <li class="nav-item active">
                                 <a href="{{ url('disposisi') }}">Disposisi</a>
                             </li>
                         </ul>
                         
                             <a href="{{ url('logout') }}" class="btn-logout"> Logout </a>
+                    </div>
                 </nav>
 
                 <!-- Page Content  -->
@@ -85,43 +85,35 @@
                             </button>
 
                             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                            <ul class="nav navbar-nav ml-auto">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('dashboardpage') }}">Dashboard</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('datapegawai') }}">Pegawai</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('suratmasuk') }}">Surat Masuk</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('suratkeluar') }}">Surat Keluar</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('suratcuti') }}">Surat Cuti</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('spt') }}">SPT</a>
-                                </li>
-                                <li class="nav-item active">
-                                    <a class="nav-link" href="{{ url('disposisi') }}">Disposisi</a>
-                                </li>
-                            </ul>
+                                <ul class="nav navbar-nav ml-auto">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ url('dashboardpage') }}">Dashboard</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ url('datapegawai') }}">Pegawai</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ url('suratmasuk') }}">Surat Masuk</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ url('suratkeluar') }}">Surat Keluar</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ url('suratcuti') }}">Surat Cuti</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ url('spt') }}">SPT</a>
+                                    </li>
+                                    <li class="nav-item active">
+                                        <a class="nav-link" href="{{ url('disposisi') }}">Disposisi</a>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </nav>
 
-                    <form action="{{ url('/adddisposisi') }}"method="post" enctype="multipart/form-data">
+                    <form action="{{ url('/adddisposisi/' . $suratmasuk->id) }}"method="post" enctype="multipart/form-data">
                          @csrf
-                        <div class="form-group">
-                            <label for="formGroupExampleInput">Kode Surat</label>
-                            <select name="surat_masuk_id" class="form-control">
-                                @foreach ($suratmasuk as $item)
-                                    <option value="{{ $item->id }}">{{ $item->KODE_SURAT }}</option>
-                                @endforeach
-                            </select>
-                        </div>
                         <div class="form-group">
                             <label for="formGroupExampleInput">Nama</label>
                             <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Masukan Nama dan Instruksi" name="NAMA">
@@ -136,7 +128,7 @@
                     </form>
                 </div>
             </div>
-        
+
         <script src="js/jquery.min.js"></script>
         <script src="js/popper.js"></script>
         <script src="js/bootstrap.min.js"></script>

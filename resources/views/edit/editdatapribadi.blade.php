@@ -37,36 +37,36 @@
                             <img src="{{ ('/img/logo.png') }}" 
                                     style="width: 185px;" alt="logo">
                         </div>
-                        <h2 class="sidebar-title">PUSDALOPS-PB</h2>
-                        <ul class="list-unstyled components mb-5">
-                             <li>
-                                <a href="{{ url('dashboardpage') }}">Dashboard</a>
-                            </li>
+                            <h2 class="sidebar-title">PUSDALOPS-PB</h2>
+                            <ul class="list-unstyled components mb-5">
+                                <li>
+                                    <a href="{{ url('dashboardpage') }}">Dashboard</a>
+                                </li>
 
-                            <li class="nav-item active">
-                                <a href="{{ url('datapegawai') }}">Pegawai</a>
-                            </li>
+                                <li class="nav-item active">
+                                    <a href="{{ url('datapegawai') }}">Pegawai</a>
+                                </li>
 
-                            <li>
-                                <a href="{{ url('suratmasuk') }}">Surat Masuk</a>
-                            </li>
+                                <li>
+                                    <a href="{{ url('suratmasuk') }}">Surat Masuk</a>
+                                </li>
 
-                            <li>
-                                <a href="{{ url('suratkeluar') }}">Surat Keluar</a>
-                            </li>
+                                <li>
+                                    <a href="{{ url('suratkeluar') }}">Surat Keluar</a>
+                                </li>
 
-                            <li>
-                                <a href="{{ url('suratcuti') }}">Surat Cuti</a>
-                            </li>
+                                <li>
+                                    <a href="{{ url('suratcuti') }}">Surat Cuti</a>
+                                </li>
 
-                            <li>
-                                <a href="{{ url('spt') }}">SPT</a>
-                            </li>
-                         
-                            <li>
-                                <a href="{{ url('disposisi') }}">Disposisi</a>
-                            </li>
-                        </ul>
+                                <li>
+                                    <a href="{{ url('spt') }}">SPT</a>
+                                </li>
+                            
+                                <li>
+                                    <a href="{{ url('disposisi') }}">Disposisi</a>
+                                </li>
+                            </ul>
                         
                             <a href="{{ url('logout') }}" class="btn-logout"> Logout </a>
                     </div>
@@ -112,71 +112,62 @@
                         </div>
                     </nav>
 
-                    <form action="{{ url('/updatepegawai/'. $pegawai->id) }}"method="post" enctype="multipart/form-data">
+                    <form action="{{ url('/updatedatapribadi/'. $datapribadi->id) }}"method="post" enctype="multipart/form-data">
                          @csrf
                          @method('put')
-                        <div class="form-group">
-                            <label for="formGroupExampleInput">Nama</label>
-                            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Masukan Nama Pegawai" name="NAMA_PEGAWAI" value="{{ $pegawai->NAMA_PEGAWAI }}">
+                         <div class="form-group">
+                            <label for="formGroupExampleInput">NO KTP</label>
+                            <input type="text" class="form-control" id="formGroupExampleInput" name="NO_KTP" placeholder="Masukan Nomor KTP" value="{{ $datapribadi->NO_KTP }}">
                         </div>
                         <div class="form-group">
-                            <label for="formGroupExampleInput2">NIK</label>
-                            <input type="text" class="form-control" id="formGroupExampleInput2" name="NIK" placeholder="Masukan NIK" value="{{ $pegawai->NIK }}">
+                            <label for="formGroupExampleInput2">NO BPJS</label>
+                            <input type="text" class="form-control" id="formGroupExampleInput2" name="NO_BPJS" placeholder="Masukan Nomor BPJS" value="{{ $datapribadi->NO_BPJS }}">
                         </div>
                         <div class="form-group">
-                            <label for="formGroupExampleInput2">Tanggal Lahir</label>
-                            <input type="date" class="form-control" id="formGroupExampleInput2" name="TANGGAL_LAHIR" value="{{ $pegawai->TANGGAL_LAHIR }}">
+                            <label for="formGroupExampleInput2">NO NPWP</label>
+                            <input type="text" class="form-control" id="formGroupExampleInput2" name="NO_NPWP" placeholder="Masukan Nomor NPWP" value="{{ $datapribadi->NO_NPWP }}">
                         </div>
                         <div class="form-group">
-                            <label for="formGroupExampleInput2">Jenis Kelamin</label>
-                            <select class="form-control" name="JENIS_KELAMIN" value="{{ $pegawai->JENIS_KELAMIN }}">
-                                <option value="" disabled selected hidden>Pilih Jenis Kelamin</option>
-                                <option>Laki-laki</option>
-                                <option>Perempuan</option>
-                            </select>
+                            <label for="formGroupExampleInput2">Tinggi Badan</label>
+                            <input type="text" class="form-control" id="formGroupExampleInput2" name="TINGGI_BADAN" placeholder="Masukan Tinggi Badan" value="{{ $datapribadi->TINGGI_BADAN }}">
                         </div>
                         <div class="form-group">
-                            <label for="formGroupExampleInput2">Agama</label>
-                            <input type="text" class="form-control" id="formGroupExampleInput2" name="AGAMA" placeholder="Masukan Agama" value="{{ $pegawai->AGAMA }}">
+                            <label for="formGroupExampleInput2">Berat Badan</label>
+                            <input type="text" class="form-control" id="formGroupExampleInput2" name="BERAT_BADAN" placeholder="Masukan Berat Badan" value="{{ $datapribadi->BERAT_BADAN }}">
                         </div>
                         <div class="form-group">
-                            <label for="formGroupExampleInput2">Instansi</label>
-                            <input type="text" class="form-control" id="formGroupExampleInput2" name="INSTANSI" placeholder="Masukan Instansi" value="{{ $pegawai->INSTANSI }}">
+                            <label for="formGroupExampleInput2">Warna Kulit</label>
+                            <input type="text" class="form-control" id="formGroupExampleInput2" name="WARNA_KULIT" placeholder="Masukan Warna Kulit" value="{{ $datapribadi->WARNA_KULIT }}">
                         </div>
                         <div class="form-group">
-                            <label for="formGroupExampleInput2">Unit</label>
-                            <input type="text" class="form-control" id="formGroupExampleInput2" name="UNIT" placeholder="Masukan Unit" value="{{ $pegawai->UNIT }}">
+                            <label for="formGroupExampleInput2">Golongan Darah</label>
+                            <input type="text" class="form-control" id="formGroupExampleInput2" name="GOLONGAN_DARAH" placeholder="Masukan Golongan Darah" value="{{ $datapribadi->GOLONGAN_DARAH }}">
                         </div>
                         <div class="form-group">
-                            <label for="formGroupExampleInput2">Sub Unit</label>
-                            <input type="text" class="form-control" id="formGroupExampleInput2" name="SUB UNIT" placeholder="Masukan Sub Unit" value="{{ $pegawai->SUB_UNIT }}">
+                            <label for="formGroupExampleInput2">Alamat</label>
+                            <input type="text" class="form-control" id="formGroupExampleInput2" name="ALAMAT_RUMAH" placeholder="Masukan Alamat" value="{{ $datapribadi->ALAMAT_RUMAH }}">
                         </div>
                         <div class="form-group">
-                            <label for="formGroupExampleInput2">Jabatan</label>
-                            <input type="text" class="form-control" id="formGroupExampleInput2" name="JABATAN" placeholder="Masukan Jabatan" value="{{ $pegawai->JABATAN }}">
+                            <label for="formGroupExampleInput2">Kode Pos</label>
+                            <input type="text" class="form-control" id="formGroupExampleInput2" name="KODE_POS" placeholder="Masukan Kode Pos" value="{{ $datapribadi->KODE_POS }}">
                         </div>
                         <div class="form-group">
-                            <label for="formGroupExampleInput2">Jenis Pegawai</label>
-                            <input type="text" class="form-control" id="formGroupExampleInput2" name="JENIS_PEGAWAI" placeholder="Masukan Jenis Pegawai" value="{{ $pegawai->JENIS_PEGAWAI }}">
+                            <label for="formGroupExampleInput2">Telpon Rumah</label>
+                            <input type="text" class="form-control" id="formGroupExampleInput2" name="TELPON_RUMAH" placeholder="Masukan Nomor Telpon Rumah" value="{{ $datapribadi->TELPON_RUMAH }}">
                         </div>
                         <div class="form-group">
-                            <label for="formGroupExampleInput2">Pendidikan Terakhir</label>
-                            <input type="text" class="form-control" id="formGroupExampleInput2" name="PENDIDIKAN_TERAKHIR" placeholder="Masukan Pendidikan" value="{{ $pegawai->PENDIDIKAN_TERAKHIR }}">
+                            <label for="formGroupExampleInput2">No. Hp</label>
+                            <input type="text" class="form-control" id="formGroupExampleInput2" name="NO_HP" placeholder="Masukan Nomor Handphone" value="{{ $datapribadi->NO_HP }}">
                         </div>
                         <div class="form-group">
-                            <label for="formGroupExampleInput2">Status Pegawai</label>
-                            <input type="text" class="form-control" id="formGroupExampleInput2" name="STATUS_PEGAWAI" placeholder="Masukan Status Pegawai" value="{{ $pegawai->STATUS_PEGAWAI }}">
-                        </div>
-                        <div class="form-group">
-                            <label for="formGroupExampleInput2">Kedudukan</label>
-                            <input type="text" class="form-control" id="formGroupExampleInput2" name="KEDUDUKAN" placeholder="Masukan Kedudukan" value="{{ $pegawai->KEDUDUKAN }}">
+                            <label for="formGroupExampleInput2">Email</label>
+                            <input type="email" class="form-control" id="formGroupExampleInput2" name="EMAIL" placeholder="Masukan Email" value="{{ $datapribadi->EMAIL }}">
                         </div>
                         <button type="submit" name="add" class="btn btn-primary">Submit</button>
-                        <a href="{{ url('/datapegawai') }}" class="btn btn-danger"> Kembali</a>
+                        <a href="{{ url('/datapribadi/'.$pegawai->id) }}" class="btn btn-danger"> Kembali</a>
                     </form>
                 </div>
             </div>
-            
         <script src="js/jquery.min.js"></script>
         <script src="js/popper.js"></script>
         <script src="js/bootstrap.min.js"></script>

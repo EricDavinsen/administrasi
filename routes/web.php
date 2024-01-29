@@ -1,14 +1,18 @@
 <?php
 
+use App\Models\RiwayatPendidikan;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\loginController;
+use App\Http\Controllers\DiklatController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DisposisiController;
+use App\Http\Controllers\RiwayatSkController;
 use App\Http\Controllers\SuratCutiController;
 use App\Http\Controllers\SuratMasukController;
 use App\Http\Controllers\DataPribadiController;
 use App\Http\Controllers\SuratKeluarController;
+use App\Http\Controllers\RiwayatPendidikanController;
 use App\Http\Controllers\SuratPanggilanTugasController;
 
 /*
@@ -31,6 +35,7 @@ Route::post('/login', [LoginController::class, "login"]);
 Route::post('/createaccount', [LoginController::class, "register"]);
 Route::get("/forgotpassword", [LoginController::class, "forgotpassword"]);
 Route::post("/changepassword", [LoginController::class,"changepassword"]);
+
 
 //SURAT KELUAR
 Route::get('/suratkeluar', [SuratKeluarController::class, "index"])->middleware('auth:admin');
@@ -67,10 +72,10 @@ Route::get('/tampilspt/{id}', [SuratPanggilanTugasController::class, "view"])->m
 
 // DISPOSISI
 Route::get('/disposisi', [DisposisiController::class, "index"])->middleware('auth:admin');
-Route::get("/createdisposisi", [DisposisiController::class, "indexcreate"])->middleware('auth:admin');
+Route::get("/createdisposisi/{id}", [DisposisiController::class, "indexcreate"])->middleware('auth:admin');
 Route::get('/editdisposisi/{id}', [DisposisiController::class, "edit"])->middleware('auth:admin');
 Route::delete("/deletedisposisi/{id}", [DisposisiController::class, "destroy"])->middleware('auth:admin');
-Route::post('/adddisposisi', [DisposisiController::class, "store"]);
+Route::post('/adddisposisi/{id}', [DisposisiController::class, "store"]);
 Route::put("/updatedisposisi/{id}", [DisposisiController::class, "update"])->middleware('auth:admin');
 Route::get('/tampildisposisi/{id}', [DisposisiController::class, "view"])->middleware('auth:admin');
 Route::get('/lembardisposisi/{id}', [DisposisiController::class, "create"])->middleware('auth:admin');
@@ -95,6 +100,8 @@ Route::get("/dashboardpegawai/{id}", [PegawaiController::class,"index"])->middle
 Route::delete("/deletepegawai/{id}", [PegawaiController::class, "destroy"])->middleware('auth:admin');
 Route::get('/editpegawai/{id}', [PegawaiController::class, "edit"])->middleware('auth:admin');
 Route::put("/updatepegawai/{id}", [PegawaiController::class, "update"])->middleware('auth:admin');
+Route::get('/caripegawai', [PegawaiController::class, "find"])->middleware('auth:admin');
+Route::get('/exportpegawai', [PegawaiController::class, "export_excel"])->middleware('auth:admin');
 
 
 // DATA PRIBADI
@@ -104,4 +111,32 @@ Route::get('/editdatapribadi/{id}', [DataPribadiController::class, "edit"])->mid
 Route::put("/updatedatapribadi/{id}", [DataPribadiController::class, "update"])->middleware('auth:admin');
 Route::delete("/deletedatapribadi/{id}", [DataPribadiController::class, "destroy"])->middleware('auth:admin');
 Route::post('/adddatapribadi/{id}', [DataPribadiController::class, "store"])->middleware('auth:admin');
-Route::get('/tampildatapribadi/{id}', [DataPribadiController::class, "view"])->middleware('auth:admin');
+
+
+// RIWAYAT PENDIDIKAN
+Route::get('/riwayatpendidikan/{id}', [RiwayatPendidikanController::class,"index"])->middleware('auth:admin');
+Route::get('/createriwayatpendidikan/{id}', [RiwayatPendidikanController::class,"indexcreate"])->middleware('auth:admin');
+Route::post('/addriwayatpendidikan/{id}', [RiwayatPendidikanController::class, "store"])->middleware('auth:admin');
+Route::delete("/deleteriwayatpendidikan/{id}", [RiwayatPendidikanController::class, "destroy"])->middleware('auth:admin');
+Route::get('/editriwayatpendidikan/{id}', [RiwayatPendidikanController::class, "edit"])->middleware('auth:admin');
+Route::put("/updateriwayatpendidikan/{id}", [RiwayatPendidikanController::class, "update"])->middleware('auth:admin');
+
+
+// DIKLAT
+Route::get('/diklat/{id}', [DiklatController::class,"index"])->middleware('auth:admin');
+Route::get('/creatediklat/{id}', [DiklatController::class,"indexcreate"])->middleware('auth:admin');
+Route::post('/adddiklat/{id}', [DiklatController::class, "store"])->middleware('auth:admin');
+Route::delete("/deletediklat/{id}", [DiklatController::class, "destroy"])->middleware('auth:admin');
+Route::get('/editdiklat/{id}', [DiklatController::class, "edit"])->middleware('auth:admin');
+Route::put("/updatediklat/{id}", [DiklatController::class, "update"])->middleware('auth:admin');
+Route::get('/sertifdiklat/{id}', [DiklatController::class, "view"])->middleware('auth:admin');
+Route::get('/tampilsertifikat/{id}', [DiklatController::class, "view"])->middleware('auth:admin');
+
+
+// RIWAYAT SK
+Route::get('/riwayatsk/{id}', [RiwayatSkController::class,"index"])->middleware('auth:admin');
+Route::get('/createriwayatsk/{id}', [RiwayatSkController::class,"indexcreate"])->middleware('auth:admin');
+Route::post('/addriwayatsk/{id}', [RiwayatSkController::class, "store"])->middleware('auth:admin');
+Route::delete("/deleteriwayatsk/{id}", [RiwayatSkController::class, "destroy"])->middleware('auth:admin');
+Route::get('/editriwayatsk/{id}', [RiwayatSkController::class, "edit"])->middleware('auth:admin');
+Route::put("/updateriwayatsk/{id}", [RiwayatSkController::class, "update"])->middleware('auth:admin');

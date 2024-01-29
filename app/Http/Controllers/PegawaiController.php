@@ -4,13 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Pegawai;
 use Illuminate\View\View;
+use App\Exports\ExportSurat;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Auth;
 
 class PegawaiController extends Controller
 {
     public function index($id){
         $pegawai = Pegawai::where('id', $id)->first();
+        
        return view("dashboardpegawai")->with([
          'admin' => Auth::guard('admin')->user(),
          'pegawai' => $pegawai
@@ -57,25 +60,18 @@ class PegawaiController extends Controller
             return redirect()
                 ->intended("/datapegawai")
                 ->with([
-                notify()->success('Surat Masuk Telah Ditambahkan'),
-                "success" => "Surat Masuk Telah Ditambahkan"]);
+                notify()->success('Pegawai Telah Ditambahkan'),
+                "success" => "Pegawai Telah Ditambahkan"]);
         }
         return redirect()
             ->intended("/createpegawai")
             ->with([
-                notify()->error('Gagal Menambah Surat Masuk'),
-                "error" => "Gagal Menambah Surat Masuk"]);
+                notify()->error('Gagal Menambah Pegawai'),
+                "error" => "Gagal Menambah Pegawai"]);
     }
 
     public function destroy($id)
     {
-        $deletefile = Pegawai::findorfail($id);
-        $file = public_path('document/'.$deletefile->FILE_SURAT);
-
-        if (file_exists($file)) {
-            @unlink($file);
-        }
-
         $pegawai = Pegawai::where('id', $id);
 
             if ($pegawai) {
@@ -176,7 +172,6 @@ class PegawaiController extends Controller
     public function find(Request $request)
     {
         $pegawai = Pegawai::where('NAMA_PEGAWAI', 'like', '%' . $request->search . '%')
-            ->orWhere('NIK', 'like', '%' . $request->search . '%')
             ->orWhere('TANGGAL_LAHIR', 'like', '%' . $request->search . '%')
             ->orWhere('JENIS_KELAMIN', 'like', '%' . $request->search . '%')
             ->orWhere('INSTANSI', 'like', '%' . $request->search . '%')
@@ -186,7 +181,12 @@ class PegawaiController extends Controller
         $pegawai->appends(['search' => $request->search]);
 
         return view("datapegawai")->with([
-            'datapegawai' => $pegawai
+            'pegawai' => $pegawai
         ]);
+    }
+
+    function export_excel()
+    {
+        return Excel::download(new ExportSurat, 'datapegawai.xlsx');
     }
 }

@@ -66,8 +66,7 @@
                         </ul>
                         
                             <a href="{{ url('logout') }}" class="btn-logout"> Logout </a>
-
-                        
+                    </div>
                 </nav>
 
                 <!-- Page Content  -->
@@ -83,26 +82,26 @@
                             </button>
 
                             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                            <ul class="nav navbar-nav ml-auto">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('dashboardpage') }}">Dashboard</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('datapegawai') }}">Pegawai</a>
-                                </li>
-                                <li class="nav-item active">
-                                    <a class="nav-link" href="{{ url('suratmasuk') }}">Surat Masuk</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('suratkeluar') }}">Surat Keluar</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('suratcuti') }}">Surat Cuti</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('spt') }}">SPT</a>
-                                </li>
-                            </ul>
+                                <ul class="nav navbar-nav ml-auto">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ url('dashboardpage') }}">Dashboard</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ url('datapegawai') }}">Pegawai</a>
+                                    </li>
+                                    <li class="nav-item active">
+                                        <a class="nav-link" href="{{ url('suratmasuk') }}">Surat Masuk</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ url('suratkeluar') }}">Surat Keluar</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ url('suratcuti') }}">Surat Cuti</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ url('spt') }}">SPT</a>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </nav>

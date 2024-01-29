@@ -72,8 +72,7 @@
                         </ul>
                         
                             <a href="{{ url('logout') }}" class="btn-logout"> Logout </a>
-
-                        
+                    </div>     
                 </nav>
 
                 <!-- Page Content  -->
