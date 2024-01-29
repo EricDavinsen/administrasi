@@ -45,6 +45,7 @@ class PegawaiController extends Controller
                 "AGAMA" => ["required"],
                 "INSTANSI" => ["required"],
                 "UNIT" => ["required"],
+                "SUB_UNIT" => ["required"],
                 "JABATAN" => ["required"],
                 "JENIS_PEGAWAI" => ["required"],
                 "PENDIDIKAN_TERAKHIR" => ["required"],
