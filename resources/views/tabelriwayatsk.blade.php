@@ -17,7 +17,7 @@
                             <td>{{ $no++ }}</td>
                             <td>{{ $item->JABATAN }}</td>
                             <td>{{ $item->NOMOR_SK }}</td>
-                            <td>{{ $item->TANGGAL_SK }}</td>
+                            <td>{{ \Carbon\Carbon::parse($item->TANGGAL_SK)->format('d-m-Y') }}</td>
                             <td>
                                 <div class="action-buttons d-flex w-100  justify-content-center gap-2">
                                 <a href="{{ url('/editriwayatsk/'.$item->id) }}" class="btn btn-info">Edit</a> 

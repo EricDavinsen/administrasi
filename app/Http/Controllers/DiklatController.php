@@ -167,10 +167,10 @@ class DiklatController extends Controller
         }
 
     if ($updateData) {
-        return redirect()->intended('/datapegawai')->with([ notify()->success('Diklat Telah Diupdate'),
+        return redirect()->intended("/diklat/$id")->with([ notify()->success('Diklat Telah Diupdate'),
             'success' => 'Diklat Telah Diupdate']);
     }
-    return redirect()->intended('/datapegawai')->with([ notify()->error('Batal Mengupdate Diklat'),
+    return redirect()->intended("/diklat/$id")->with([ notify()->error('Batal Mengupdate Diklat'),
         'error' => 'Batal Mengupdate Diklat']);
     }
 

@@ -93,75 +93,46 @@ class RiwayatSkController extends Controller
 
     public function edit($id)
     {
-        $diklat = RiwayatSk::where('id', $id)->first();
+        $riwayatsk = RiwayatSk::where('id', $id)->first();
         $pegawai = Pegawai::where('id', $id)->first();
 
-        return view("edit/editdiklat")->with([
-            'diklat' => $diklat,
+        return view("edit/editriwayatsk")->with([
+            'riwayatsk' => $riwayatsk,
             'pegawai' => $pegawai
         ]);
     }
 
     public function update(Request $request, $id)
     {
-        $diklat = RiwayatSk::where('id', $id)->first();
+        $riwayatsk = RiwayatSk::where('id', $id)->first();
 
-        if ($request->NAMA_DIKLAT) {
-            $diklat->NAMA_DIKLAT = $request->NAMA_DIKLAT;
+        if ($request->JABATAN) {
+            $riwayatsk->JABATAN = $request->JABATAN;
         }
 
-        if ($request->TANGGAL_MULAI) {
-            $diklat->TANGGAL_MULAI = $request->TANGGAL_MULAI;
+        if ($request->NOMOR_SK) {
+            $riwayatsk->NOMOR_SK = $request->NOMOR_SK;
         }
 
-        if ($request->TANGGAL_SELESAI) {
-            $diklat->TANGGAL_SELESAI = $request->TANGGAL_SELESAI;
-        }
-
-        if ($request->JUMLAH_JAM) {
-            $diklat->JUMLAH_JAM = $request->JUMLAH_JAM;
-        }
-
-        if ($request->PENYELENGGARA) {
-            $diklat->PENYELENGGARA = $request->PENYELENGGARA;
-        }
-
-        if ($request->SERTIFIKAT) {
-            $diklat->SERTIFIKAT = $request->SERTIFIKAT;
+        if ($request->TANGGAL_SK) {
+            $riwayatsk->TANGGAL_SK = $request->TANGGAL_SK;
         }
 
         $updateData = RiwayatSk::where('id', $id)
         ->limit(1)
         ->update(
             array(
-                'NAMA_DIKLAT' => $diklat->NAMA_DIKLAT,
-                'TANGGAL_MULAI' => $diklat->TANGGAL_MULAI,
-                'TANGGAL_SELESAI' => $diklat->TANGGAL_SELESAI,
-                'JUMLAH_JAM' => $diklat->JUMLAH_JAM,
-                'PENYELENGGARA' => $diklat->PENYELENGGARA,
-                'SERTIFIKAT' => $diklat->SERTIFIKAT
+                'JABATAN' => $riwayatsk->JABATAN,
+                'NOMOR_SK' => $riwayatsk->NOMOR_SK,
+                'TANGGAL_SK' => $riwayatsk->TANGGAL_SK,
             ),
         );
 
-        if ($request->hasFile('SERTIFIKAT')) {
-            $updatefile = RiwayatSk::find($id);
-            $document = $request->file('SERTIFIKAT');
-            $fileName = $request->file("SERTIFIKAT")->getClientOriginalName();
-            $document->move('document/', $fileName);
-            $exist_file = $updatefile['SERTIFIKAT'];
-            $update['SERTIFIKAT'] =  $fileName;
-            $updatefile->update($update);
-        }
-       
-        if (isset($exist_file) && file_exists($exist_file)) {
-            unlink($exist_file);
-        }
-
     if ($updateData) {
-        return redirect()->intended('/datapegawai')->with([ notify()->success('Riwayat SK Telah Diupdate'),
+        return redirect()->intended("/riwayatsk/$id")->with([ notify()->success('Riwayat SK Telah Diupdate'),
             'success' => 'Riwayat SK Telah Diupdate']);
     }
-    return redirect()->intended('/datapegawai')->with([ notify()->error('Batal Mengupdate Riwayat SK'),
+    return redirect()->intended("/riwayatsk/$id")->with([ notify()->error('Batal Mengupdate Riwayat SK'),
         'error' => 'Batal Mengupdate Riwayat SK']);
     }
 }

@@ -129,10 +129,10 @@ class RiwayatPendidikanController extends Controller
         );
 
     if ($updateData) {
-        return redirect()->intended('/datapegawai')->with([ notify()->success('Riwayat Pendidikan Telah Diupdate'),
+        return redirect()->intended("/riwayatpendidikan/$id")->with([ notify()->success('Riwayat Pendidikan Telah Diupdate'),
             'success' => 'Riwayat Pendidikan Telah Diupdate']);
     }
-    return redirect()->intended('/datapegawai')->with([ notify()->error('Batal Mengupdate Riwayat Pendidikan'),
+    return redirect()->intended("/riwayatpendidikan/$id")->with([ notify()->error('Batal Mengupdate Riwayat Pendidikan'),
         'error' => 'Batal Mengupdate Riwayat Pendidikan']);
     }
 }
