@@ -132,7 +132,7 @@
                             </div>
                             <div class="kategori_items">
                                 <div class="card kategori_card">
-                                    <a href="#/kategorialam" class="nav-link d-flex justify-content-center flex-column align-items-center">
+                                    <a href="{{ url('/riwayatsk/'.$pegawai->id) }}" class="nav-link d-flex justify-content-center flex-column align-items-center">
                                     <i class="kategori_icon fa-solid fa-user"></i>
                                     <h5 class="text-center">RIWAYAT SK</h5>
                                     </a> 
@@ -154,15 +154,6 @@
                                     </a> 
                                 </div>
                             </div>
-
-                            <!-- <div class="kategori_items">
-                                <div class="card kategori_card">
-                                    <a href="#/kategorialam" class="nav-link d-flex justify-content-center flex-column align-items-center">
-                                    <i class="kategori_icon fa-solid fa-hospital-user"></i>
-                                    <h5 class="text-center">DATA BPJS</h5>
-                                    </a> 
-                                </div>
-                            </div> -->
 
                             <div class="kategori_items">
                                 <div class="card kategori_card">

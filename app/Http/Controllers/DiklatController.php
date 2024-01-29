@@ -67,7 +67,7 @@ class DiklatController extends Controller
                 "success" => "Diklat Telah Ditambahkan"]);
         }
         return redirect()
-            ->intended("/createdatapribadi/$id")
+            ->intended("/creatediklat/$id")
             ->with([
                 notify()->error('Gagal Menambah Diklat'),
                 "error" => "Gagal Menambah Diklat"]);

@@ -10,11 +10,11 @@ use Illuminate\Support\Facades\Auth;
 class RiwayatSkController extends Controller
 {
     public function index($id){
-        $diklat = RiwayatSk::where('pegawai_id', $id)->latest()->get();
+        $riwayatsk = RiwayatSk::where('pegawai_id', $id)->latest()->get();
         $pegawai = Pegawai::where('id', $id)->first();
 
-        return view("diklat")->with([
-            'diklat' => $diklat,
+        return view("riwayatsk")->with([
+            'riwayatsk' => $riwayatsk,
             'pegawai' => $pegawai,
             'admin' => Auth::guard('admin')->user() 
         ]);
@@ -23,10 +23,10 @@ class RiwayatSkController extends Controller
     public function indexcreate($id)
     {
         $pegawai = Pegawai::where('id', $id)->first();
-        $diklat = RiwayatSk::all();
-        return view("tambah/tambahdiklat")->with([
+        $riwayatsk = RiwayatSk::all();
+        return view("tambah/tambahriwayatsk")->with([
             'pegawai' => $pegawai,
-            'diklat' => $diklat,
+            'riwayatsk' => $riwayatsk,
             'admin' => Auth::guard('admin')->user() 
         ]);
     }
@@ -35,39 +35,30 @@ class RiwayatSkController extends Controller
         $pegawai = Pegawai::where('id', $id)->first();
         $this->validate($request,
             [
-                "NAMA_DIKLAT" => ["required"],
-                "TANGGAL_MULAI" => ["required"],
-                "TANGGAL_SELESAI" => ["required"],
-                "JUMLAH_JAM" => ["required"],
-                "PENYELENGGARA" => ["required"],
-                "SERTIFIKAT" => ["required"],
+                "JABATAN" => ["required"],
+                "NOMOR_SK" => ["required"],
+                "TANGGAL_SK" => ["required"],
             ],
         );
 
-        $file = $request->file("SERTIFIKAT");
-        $fileName = $request->file("SERTIFIKAT")->getClientOriginalName();
-        $file->move('document/', $fileName);
 
-        $diklat = RiwayatSk::create([
+        $riwayatsk = RiwayatSk::create([
             'pegawai_id' => $pegawai->id,
-            'NAMA_DIKLAT' => $request->NAMA_DIKLAT,
-            'TANGGAL_MULAI' => $request->TANGGAL_MULAI,
-            'TANGGAL_SELESAI' => $request->TANGGAL_SELESAI,
-            'JUMLAH_JAM' => $request->JUMLAH_JAM,
-            'PENYELENGGARA' => $request->PENYELENGGARA,
-            'SERTIFIKAT' => $fileName,
+            'JABATAN' => $request->JABATAN,
+            'NOMOR_SK' => $request->NOMOR_SK,
+            'TANGGAL_SK' => $request->TANGGAL_SK,
         ]);
 
 
-        if ($diklat) {
+        if ($riwayatsk) {
             return redirect()
-                ->intended("/diklat/$id")
+                ->intended("/riwayatsk/$id")
                 ->with([
                 notify()->success('Riwayat SK Telah Ditambahkan'),
                 "success" => "Riwayat SK Telah Ditambahkan"]);
         }
         return redirect()
-            ->intended("/createdatapribadi/$id")
+            ->intended("/createriwayatsk/$id")
             ->with([
                 notify()->error('Gagal Menambah Riwayat SK'),
                 "error" => "Gagal Menambah Riwayat SK"]);
@@ -84,10 +75,10 @@ class RiwayatSkController extends Controller
             @unlink($file);
         }
       
-        $diklat = RiwayatSk::where('id', $id);
+        $riwayatsk = RiwayatSk::where('id', $id);
 
-            if ($diklat) {
-                $diklat->delete();
+            if ($riwayatsk) {
+                $riwayatsk->delete();
                 return redirect()->intended('/datapegawai')
                     ->with([ 
                         notify()->success('Riwayat SK Telah Dihapus'),

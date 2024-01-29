@@ -162,7 +162,7 @@
                             <input type="email" class="form-control" id="formGroupExampleInput2" name="EMAIL" placeholder="Masukan Email">
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
-                        <a href="{{ url('/dashboardpegawai/'.$pegawai->id)  }}" class="btn btn-danger"> Kembali</a>
+                        <a href="{{ url('/datapribadi/'.$pegawai->id)  }}" class="btn btn-danger"> Kembali</a>
                     </form>
                 </div>
             </div>

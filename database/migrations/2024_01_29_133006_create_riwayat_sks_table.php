@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('pegawai_id');
             $table->string('JABATAN');
-            $table->date('NOMOR_SK');
+            $table->string('NOMOR_SK');
             $table->date('TANGGAL_SK');
             $table->foreign('pegawai_id')->references('id')->on('pegawai')->onDelete('cascade');
             $table->timestamps();
