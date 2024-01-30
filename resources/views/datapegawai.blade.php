@@ -63,12 +63,8 @@
                             <li>
                                 <a href="{{ url('disposisi') }}">Disposisi</a>
                             </li>
-                         
-                         
                         </ul>
-                        
                             <a href="{{ url('logout') }}" class="btn-logout"> Logout </a>
-
                     </div>
                 </nav>
 
@@ -128,7 +124,30 @@
                     <div class="d-flex w-100 justify-content-end pegawai-button">
                         <a href="{{ url('/createpegawai') }}" class="btn btn-md btn-success m-3"> Tambah</a>
                         <a href="{{ url('/cetakpegawai') }}" class="btn btn-md btn-warning m-3" style="color:white"> Cetak</a>
-                        <a href="{{ url('/exportpegawai') }}" class="btn btn-md btn-info m-3" style="color:white"> Download</a>
+                        <button type="button" class="btn btn-md btn-info m-3" data-toggle="modal" data-target="#exampleModal">Export</button>
+                    </div>
+                   
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Export Data Pegawai</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <form action="{{ url('/exportpegawai') }}" method="GET" enctype="multipart/form-data">
+                                    @csrf
+                                        <div class="modal-body">
+                                            <h5>Apakah anda ingin mengexport tabel data pegawai?</h5>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-info">Export</button>
+                                        </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                    @include('tabelpegawai',$pegawai)
                     <div class="d-flex justify-content-center">

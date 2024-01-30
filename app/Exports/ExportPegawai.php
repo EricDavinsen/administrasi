@@ -6,7 +6,7 @@ use App\Models\Pegawai;
 use Maatwebsite\Excel\Concerns\FromView;
 use Illuminate\Contracts\View\View;
 
-class ExportSurat implements FromView
+class ExportPegawai implements FromView
 {
     /**
     * @return \Illuminate\Support\Collection

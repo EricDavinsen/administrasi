@@ -102,6 +102,7 @@ Route::get('/editpegawai/{id}', [PegawaiController::class, "edit"])->middleware(
 Route::put("/updatepegawai/{id}", [PegawaiController::class, "update"])->middleware('auth:admin');
 Route::get('/caripegawai', [PegawaiController::class, "find"])->middleware('auth:admin');
 Route::get('/exportpegawai', [PegawaiController::class, "export_excel"])->middleware('auth:admin');
+// Route::post('/importpegawai', [PegawaiController::class, "import_excel"])->middleware('auth:admin');
 
 
 // DATA PRIBADI

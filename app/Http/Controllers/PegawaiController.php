@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\ImportPegawai;
 use App\Models\Pegawai;
 use Illuminate\View\View;
-use App\Exports\ExportSurat;
 use Illuminate\Http\Request;
-use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ExportPegawai;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PegawaiController extends Controller
 {
@@ -188,6 +189,15 @@ class PegawaiController extends Controller
 
     function export_excel()
     {
-        return Excel::download(new ExportSurat, 'datapegawai.xlsx');
+        return Excel::download(new ExportPegawai, 'datapegawai.xlsx');
     }
+
+    // function import_excel(Request $request)
+    // {
+    //     $data = $request->file('file');
+    //     $fileName = $data->getClientOriginalName();
+    //     $data->move('document/', $fileName);
+    //     Excel::import(new ImportPegawai, public_path('/document/' . $fileName));
+    //     return redirect()->back();
+    // }
 }
