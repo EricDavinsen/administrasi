@@ -116,13 +116,13 @@
                     </nav>
                     <h1 class="h3 mb-0 text-gray-800 mb-2">Data Pribadi</h1>
                     <div class="d-flex w-100 justify-content-end pegawai-button">
-                        <a href="{{ url('/editdatapribadi/' . $datapribadi->pegawai_id) }}" class="btn btn-md btn-warning m-2" style="color:white"> Edit</a>
+                        <a href="{{ url('/editdatapribadi/' . $datapribadi->pegawai_id) }}" class="btn btn-md btn-warning m-2" style="color:white">Edit</a>
                         <form action="{{ url('/deletedatapribadi/' .$datapribadi->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger m-2">Delete</button>
                         </form>
-                        <a href="{{ url('/dashboardpegawai/' . $datapribadi->pegawai_id) }}" class="btn btn-md btn-info m-2" style="color:white"> Back</a>
+                        <a href="{{ url('/dashboardpegawai/' . $datapribadi->pegawai_id) }}" class="btn btn-md btn-info m-2" style="color:white">Back</a>
                     </div>
                     @include ('tabeldatapribadi', $datapribadi)
                 </div>

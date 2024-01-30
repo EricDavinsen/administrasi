@@ -123,7 +123,7 @@
                             </div>
                         </div>
                     </form>
-                    <a href="{{ url('/createspt') }}" class="btn btn-md btn-success m-2"> Tambah</a>
+                    <a href="{{ url('/createspt') }}" class="btn btn-md btn-success m-2">Tambah</a>
                     <table class="table table-bordered">
                         <thead class="text-center">
                             <tr>

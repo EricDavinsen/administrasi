@@ -122,8 +122,8 @@
                         </div>
                     </form>
                     <div class="d-flex w-100 justify-content-end pegawai-button">
-                        <a href="{{ url('/createpegawai') }}" class="btn btn-md btn-success m-3"> Tambah</a>
-                        <a href="{{ url('/cetakpegawai') }}" class="btn btn-md btn-warning m-3" style="color:white"> Cetak</a>
+                        <a href="{{ url('/createpegawai') }}" class="btn btn-md btn-success m-3">Tambah</a>
+                        <a href="{{ url('/cetakpegawai') }}" class="btn btn-md btn-warning m-3" style="color:white">Cetak</a>
                         <button type="button" class="btn btn-md btn-info m-3" data-toggle="modal" data-target="#exampleModal">Export</button>
                     </div>
                    
