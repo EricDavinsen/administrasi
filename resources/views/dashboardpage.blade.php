@@ -73,7 +73,7 @@
                 </nav>
 
                 <!-- Page Content  -->
-                <div id="content" class="p-4 p-md-5 bg-dark">
+                <div id="content" class="p-4 p-md-5" style="background-color: #878c94">
                     <nav class="navbar navbar-expand-lg navbar-light bg-light">
                         <div class="container-fluid">
                             <button type="button" id="sidebarCollapse" class="btn btn-primary">
