@@ -24,6 +24,7 @@
             <link href="{{ asset('css/styles.css') }}" rel="stylesheet" type="text/css" />
             <link href="{{ asset('css/sidebar.css') }}" rel="stylesheet" type="text/css" />
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+            <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     </head>
 
     <body>
@@ -114,17 +115,20 @@
                             </div>
                         </div>
                     </nav>
-                    <h1 class="h3 mb-0 text-gray-800 mb-2">Data Pribadi</h1>
-                    <div class="d-flex w-100 justify-content-end pegawai-button">
-                        <a href="{{ url('/editdatapribadi/' . $datapribadi->pegawai_id) }}" class="btn btn-md btn-warning m-2" style="color:white">Edit</a>
-                        <form action="{{ url('/deletedatapribadi/' .$datapribadi->id) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger m-2">Delete</button>
-                        </form>
-                        <a href="{{ url('/dashboardpegawai/' . $datapribadi->pegawai_id) }}" class="btn btn-md btn-info m-2" style="color:white">Back</a>
+                    <div class="surat_container"  data-aos="fade-up" data-aos-delay="50" data-aos-duration="2000">
+                        <h1 class="h3 mb-0 text-gray-800 mb-2 no-print">Data Pribadi</h1>
+                        <div class="d-flex w-100 justify-content-end pegawai-button">
+                        <button type="submit" class="btn btn-success m-2 no-print" value="print" onclick="window.print()">Print</button>
+                            <a href="{{ url('/editdatapribadi/' . $datapribadi->pegawai_id) }}" class="btn btn-md btn-warning m-2 no-print" style="color:white">Edit</a>
+                            <form action="{{ url('/deletedatapribadi/' .$datapribadi->id) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger m-2 no-print">Delete</button>
+                            </form>
+                            <a href="{{ url('/dashboardpegawai/' . $datapribadi->pegawai_id) }}" class="btn btn-md btn-info m-2 no-print" style="color:white">Back</a>
+                        </div>
+                        @include ('tabel/tabeldatapribadi', $datapribadi)
                     </div>
-                    @include ('tabeldatapribadi', $datapribadi)
                 </div>
             </div>
         
@@ -132,6 +136,11 @@
         <script src="js/popper.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/main.js"></script>
+        @include('sweetalert::alert')
         @notifyJs
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+        <script>
+            AOS.init();
+        </script>
     </body>
 </html>

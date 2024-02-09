@@ -129,6 +129,10 @@
                             <label for="formGroupExampleInput2">STTB</label>
                             <input type="text" class="form-control" id="formGroupExampleInput2" name="STTB" placeholder="Masukan STTB">
                         </div>
+                        <div class="form-group">
+                            <label for="formGroupExampleInput2">Ijazah</label>
+                            <input type="file" class="form-control" id="formGroupExampleInput2" name="IJAZAH_SEKOLAH" placeholder="Masukan Ijazah">
+                        </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
                         <a href="{{ url('/riwayatpendidikan/'.$pegawai->id)  }}" class="btn btn-danger"> Kembali</a>
                     </form>
@@ -139,6 +143,7 @@
         <script src="js/popper.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/main.js"></script>
+        @include('sweetalert::alert')
         @notifyJs
     </body>
 </html>

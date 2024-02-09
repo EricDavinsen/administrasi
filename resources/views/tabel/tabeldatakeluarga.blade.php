@@ -2,26 +2,28 @@
                         <thead class="text-center">
                             <tr>
                             <th scope="col">No</th>
-                            <th scope="col">Jabatan</th>
-                            <th scope="col">Nomor SK</th>
-                            <th scope="col">Tanggal SK</th>
+                            <th scope="col">Nama</th>
+                            <th scope="col">Tanggal Lahir</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Pekerjaan</th>
                             <th scope="col">Aksi</th>
                             </tr>
                         </thead>
-                        <tbody class="text-center">
+                        <tbody>
                             @php
                             $no=1;
                             @endphp
-                            @foreach ($riwayatsk as $item)
+                            @foreach ($datakeluarga as $item)
                             <tr>
                             <td>{{ $no++ }}</td>
-                            <td>{{ $item->JABATAN }}</td>
-                            <td>{{ $item->NOMOR_SK }}</td>
-                            <td>{{ \Carbon\Carbon::parse($item->TANGGAL_SK)->format('d-m-Y') }}</td>
+                            <td>{{ $item->NAMA_KELUARGA }}</td>
+                            <td>{{ \Carbon\Carbon::parse($item->TANGGAL_LAHIR)->format('d-m-Y') }}</td>
+                            <td>{{ $item->STATUS }}</td>
+                            <td>{{ $item->PEKERJAAN }}</td>
                             <td>
                                 <div class="action-buttons d-flex w-100  justify-content-center gap-2">
-                                <a href="{{ url('/editriwayatsk/'.$item->id) }}" class="btn btn-info">Edit</a> 
-                                    <form action="{{ url('/deleteriwayatsk/'.$item->id) }}" method="POST">
+                                <a href="{{ url('/editdatakeluarga/'.$item->id) }}" class="btn btn-info">Edit</a> 
+                                    <form action="{{ url('/deletedatakeluarga/'.$item->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger">Delete</button>

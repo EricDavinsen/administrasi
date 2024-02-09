@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ExportSpt;
 use Illuminate\View\View;
 use Nette\Utils\DateTime;
 use Illuminate\Http\Request;
 use App\Models\SuratPanggilanTugas;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SuratPanggilanTugasController extends Controller
 {
@@ -197,6 +199,11 @@ class SuratPanggilanTugasController extends Controller
     public function view($id){
         $data = SuratPanggilanTugas::find($id);
 
-        return view("tampilspt",compact("data"));
+        return view("tampil/tampilspt",compact("data"));
+    }
+
+    function export_excel()
+    {
+        return Excel::download(new ExportSpt, 'suratpanggilantugas.xlsx');
     }
 }

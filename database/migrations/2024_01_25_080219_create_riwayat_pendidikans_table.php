@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('JURUSAN');
             $table->integer('TAHUN_LULUS');
             $table->string('STTB');
+            $table->string('IJAZAH_SEKOLAH')->nullable();
             $table->foreign('pegawai_id')->references('id')->on('pegawai')->onDelete('cascade');
             $table->timestamps();
         });

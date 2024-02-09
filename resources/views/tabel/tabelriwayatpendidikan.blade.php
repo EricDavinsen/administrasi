@@ -9,7 +9,7 @@
                             <th scope="col">Aksi</th>
                             </tr>
                         </thead>
-                        <tbody class="text-center">
+                        <tbody>
                             @php
                             $no=1;
                             @endphp
@@ -28,6 +28,9 @@
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger">Delete</button>
                                     </form>
+                                @if ($item->IJAZAH_SEKOLAH != null)
+                                <a href="{{ url('/tampilijazah/'.$item->id) }}" class="btn btn-warning" style="color:white">Ijazah</a> 
+                                @endif
                                 </div>
                             </td>
                             </tr>

@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ExportRiwayatSk;
 use App\Models\Pegawai;
 use App\Models\RiwayatSk;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class RiwayatSkController extends Controller
 {
@@ -38,17 +40,32 @@ class RiwayatSkController extends Controller
                 "JABATAN" => ["required"],
                 "NOMOR_SK" => ["required"],
                 "TANGGAL_SK" => ["required"],
+                "TMT_SK" => ["required"],
             ],
         );
 
-
-        $riwayatsk = RiwayatSk::create([
-            'pegawai_id' => $pegawai->id,
-            'JABATAN' => $request->JABATAN,
-            'NOMOR_SK' => $request->NOMOR_SK,
-            'TANGGAL_SK' => $request->TANGGAL_SK,
-        ]);
-
+        if ($request->hasFile('FILE_SK')) {
+            $document = $request->file('FILE_SK');
+            $fileName = $request->file("FILE_SK")->getClientOriginalName();
+            $document->move('document/', $fileName);
+            $riwayatsk = RiwayatSk::create([
+                'pegawai_id' => $pegawai->id,
+                'JABATAN' => $request->JABATAN,
+                'NOMOR_SK' => $request->NOMOR_SK,
+                'TANGGAL_SK' => $request->TANGGAL_SK,
+                'TMT_SK' => $request->TMT_SK,
+                'FILE_SK' => $fileName,
+            ]);
+        }else{
+            $riwayatsk = RiwayatSk::create([
+                'pegawai_id' => $pegawai->id,
+                'JABATAN' => $request->JABATAN,
+                'NOMOR_SK' => $request->NOMOR_SK,
+                'TANGGAL_SK' => $request->TANGGAL_SK,
+                'TMT_SK' => $request->TMT_SK,
+                'FILE_SK' => $request->FILE_SK
+            ]);
+        }
 
         if ($riwayatsk) {
             return redirect()
@@ -68,13 +85,6 @@ class RiwayatSkController extends Controller
     public function destroy($id)
     {
 
-        $deletefile = RiwayatSk::findorfail($id);
-        $file = public_path('document/'.$deletefile->SERTIFIKAT);
-
-        if (file_exists($file)) {
-            @unlink($file);
-        }
-      
         $riwayatsk = RiwayatSk::where('id', $id);
 
             if ($riwayatsk) {
@@ -118,6 +128,14 @@ class RiwayatSkController extends Controller
             $riwayatsk->TANGGAL_SK = $request->TANGGAL_SK;
         }
 
+        if($request->TMT_SK) {
+            $riwayatsk->TMT_SK = $request->TMT_SK;
+        }
+
+        if($request->FILE_SK) {
+            $riwayatsk->FILE_SK = $request->FILE_SK;
+        }
+
         $updateData = RiwayatSk::where('id', $id)
         ->limit(1)
         ->update(
@@ -125,14 +143,43 @@ class RiwayatSkController extends Controller
                 'JABATAN' => $riwayatsk->JABATAN,
                 'NOMOR_SK' => $riwayatsk->NOMOR_SK,
                 'TANGGAL_SK' => $riwayatsk->TANGGAL_SK,
+                'TMT_SK' => $riwayatsk->TMT_SK,
+                'FILE_SK' => $riwayatsk->FILE_SK
             ),
         );
 
+        if ($request->hasFile('FILE_SK')) {
+            $updatefile = RiwayatSk::find($id);
+            $document = $request->file('FILE_SK');
+            $fileName = $request->file("FILE_SK")->getClientOriginalName();
+            $document->move('document/', $fileName);
+            $exist_file = $updatefile['FILE_SK'];
+            $update['FILE_SK'] =  $fileName;
+            $updatefile->update($update);
+        }
+       
+        if (isset($exist_file) && file_exists($exist_file)) {
+            unlink($exist_file);
+        }
+
     if ($updateData) {
-        return redirect()->intended("/riwayatsk/$id")->with([ notify()->success('Riwayat SK Telah Diupdate'),
+        return redirect()->intended("/riwayatsk/$riwayatsk->pegawai_id")->with([ notify()->success('Riwayat SK Telah Diupdate'),
             'success' => 'Riwayat SK Telah Diupdate']);
     }
-    return redirect()->intended("/riwayatsk/$id")->with([ notify()->error('Batal Mengupdate Riwayat SK'),
+    return redirect()->intended("/riwayatsk/$riwayatsk->pegawai_id")->with([ notify()->error('Batal Mengupdate Riwayat SK'),
         'error' => 'Batal Mengupdate Riwayat SK']);
     }
+
+    public function view($id){
+        $data = RiwayatSk::find($id);
+        $riwayatsk = RiwayatSk::where('id', $id)->first();
+
+        return view("tampil/tampilfilesk",compact("data","riwayatsk"));
+    }
+
+    function export_excel($id)
+    {
+        return Excel::download(new ExportRiwayatSk, 'riwayatsk.xlsx');
+    }
+
 }

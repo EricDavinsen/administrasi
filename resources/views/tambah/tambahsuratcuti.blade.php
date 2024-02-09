@@ -168,6 +168,7 @@
                     </div>
                 </div>
             </div>
+            @include('sweetalert::alert')
             @notifyJs
     </body>
 </html>

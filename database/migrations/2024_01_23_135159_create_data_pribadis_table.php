@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('ALAMAT_RUMAH');
             $table->string('KODE_POS');
             $table->string('TELPON_RUMAH');
-            $table->string('NO_HP');
+            $table->string('NO_HP')->nullable();
             $table->string('EMAIL');
             $table->timestamps();
             $table->foreign('pegawai_id')->references('id')->on('pegawai')->onDelete('cascade');

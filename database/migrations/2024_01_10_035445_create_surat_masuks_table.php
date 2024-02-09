@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('JENIS_SURAT');
             $table->string('SIFAT_SURAT');
             $table->string('ASAL_SURAT');
-            $table->string('PERIHAL_SURAT');
+            $table->string('PERIHAL_SURAT')->nullable();
             $table->string('FILE_SURAT');
             $table->timestamps();
         });

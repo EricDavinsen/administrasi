@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ExportDiklat;
 use App\Models\Diklat;
 use App\Models\Pegawai;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DiklatController extends Controller
 {
@@ -40,24 +42,33 @@ class DiklatController extends Controller
                 "TANGGAL_SELESAI" => ["required"],
                 "JUMLAH_JAM" => ["required"],
                 "PENYELENGGARA" => ["required"],
-                "SERTIFIKAT" => ["required"],
             ],
         );
 
-        $file = $request->file("SERTIFIKAT");
-        $fileName = $request->file("SERTIFIKAT")->getClientOriginalName();
-        $file->move('document/', $fileName);
-
-        $diklat = Diklat::create([
-            'pegawai_id' => $pegawai->id,
-            'NAMA_DIKLAT' => $request->NAMA_DIKLAT,
-            'TANGGAL_MULAI' => $request->TANGGAL_MULAI,
-            'TANGGAL_SELESAI' => $request->TANGGAL_SELESAI,
-            'JUMLAH_JAM' => $request->JUMLAH_JAM,
-            'PENYELENGGARA' => $request->PENYELENGGARA,
-            'SERTIFIKAT' => $fileName,
-        ]);
-
+        if ($request->hasFile('SERTIFIKAT')) {
+            $document = $request->file('SERTIFIKAT');
+            $fileName = $request->file("SERTIFIKAT")->getClientOriginalName();
+            $document->move('document/', $fileName);
+            $diklat = Diklat::create([
+                'pegawai_id' => $pegawai->id,
+                'NAMA_DIKLAT' => $request->NAMA_DIKLAT,
+                'TANGGAL_MULAI' => $request->TANGGAL_MULAI,
+                'TANGGAL_SELESAI' => $request->TANGGAL_SELESAI,
+                'JUMLAH_JAM' => $request->JUMLAH_JAM,
+                'PENYELENGGARA' => $request->PENYELENGGARA,
+                'SERTIFIKAT' => $fileName,
+            ]);
+        }else{
+            $diklat = Diklat::create([
+                'pegawai_id' => $pegawai->id,
+                'NAMA_DIKLAT' => $request->NAMA_DIKLAT,
+                'TANGGAL_MULAI' => $request->TANGGAL_MULAI,
+                'TANGGAL_SELESAI' => $request->TANGGAL_SELESAI,
+                'JUMLAH_JAM' => $request->JUMLAH_JAM,
+                'PENYELENGGARA' => $request->PENYELENGGARA,
+                'SERTIFIKAT' => $request->SERTIFIKAT,
+            ]);
+        }
 
         if ($diklat) {
             return redirect()
@@ -167,10 +178,10 @@ class DiklatController extends Controller
         }
 
     if ($updateData) {
-        return redirect()->intended("/diklat/$id")->with([ notify()->success('Diklat Telah Diupdate'),
+        return redirect()->intended("/diklat/$diklat->pegawai_id")->with([ notify()->success('Diklat Telah Diupdate'),
             'success' => 'Diklat Telah Diupdate']);
     }
-    return redirect()->intended("/diklat/$id")->with([ notify()->error('Batal Mengupdate Diklat'),
+    return redirect()->intended("/diklat/$diklat->pegawai_id")->with([ notify()->error('Batal Mengupdate Diklat'),
         'error' => 'Batal Mengupdate Diklat']);
     }
 
@@ -178,6 +189,11 @@ class DiklatController extends Controller
         $data = Diklat::find($id);
         $diklat = Diklat::where('id', $id)->first();
 
-        return view("tampilsertifikat",compact("data","diklat"));
+        return view("tampil/tampilsertifikat",compact("data","diklat"));
+    }
+
+    function export_excel($id)
+    {
+        return Excel::download(new ExportDiklat, 'diklat.xlsx');
     }
 }

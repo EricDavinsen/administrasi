@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('JABATAN');
             $table->string('NOMOR_SK');
             $table->date('TANGGAL_SK');
+            $table->date('TMT_SK');
+            $table->string('FILE_SK')->nullable();
             $table->foreign('pegawai_id')->references('id')->on('pegawai')->onDelete('cascade');
             $table->timestamps();
         });

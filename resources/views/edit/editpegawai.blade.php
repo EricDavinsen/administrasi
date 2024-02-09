@@ -124,6 +124,10 @@
                             <input type="text" class="form-control" id="formGroupExampleInput2" name="NIK" placeholder="Masukan NIK" value="{{ $pegawai->NIK }}">
                         </div>
                         <div class="form-group">
+                            <label for="formGroupExampleInput2">No Kartu Keluarga</label>
+                            <input type="text" class="form-control" id="formGroupExampleInput2" name="NO_KK" placeholder="Masukan Nomor Keluarga" value="{{ $pegawai->NO_KK }}">
+                        </div>
+                        <div class="form-group">
                             <label for="formGroupExampleInput2">Tanggal Lahir</label>
                             <input type="date" class="form-control" id="formGroupExampleInput2" name="TANGGAL_LAHIR" value="{{ $pegawai->TANGGAL_LAHIR }}">
                         </div>
@@ -171,6 +175,10 @@
                             <label for="formGroupExampleInput2">Kedudukan</label>
                             <input type="text" class="form-control" id="formGroupExampleInput2" name="KEDUDUKAN" placeholder="Masukan Kedudukan" value="{{ $pegawai->KEDUDUKAN }}">
                         </div>
+                        <div class="form-group">
+                            <label for="formGroupExampleInput2">Foto</label>
+                            <input type="file" class="form-control" id="formGroupExampleInput2" name="FOTO_PEGAWAI" placeholder="Masukan Foto" value="{{ $pegawai->FOTO_PEGAWAI }}">
+                        </div>
                         <button type="submit" name="add" class="btn btn-primary">Submit</button>
                         <a href="{{ url('/datapegawai') }}" class="btn btn-danger"> Kembali</a>
                     </form>
@@ -181,6 +189,7 @@
         <script src="js/popper.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/main.js"></script>
+        @include('sweetalert::alert')
         @notifyJs
     </body>
 </html>

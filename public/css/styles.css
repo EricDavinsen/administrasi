@@ -11382,27 +11382,27 @@ html {
     z-index: 999;
 }
 
-.homepage{
-    box-shadow:9px 12px 13px 0px rgba(0,0,0,0.75);
+.homepage {
+    box-shadow: 9px 12px 13px 0px rgba(0, 0, 0, 0.75);
 }
 
 button:active {
-  box-shadow: 0 5px #666;
-  transform: translateY(4px);
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
 }
 
 @media print {
     .no-print {
-       visibility: hidden;
+        visibility: hidden;
     }
 }
 
-.dashboard-card{
-    transition: transform .2s; 
+.dashboard-card {
+    transition: transform 0.2s;
 }
 
-.dashboard-card:hover{
-    transform: scale(1.1); 
+.dashboard-card:hover {
+    transform: scale(1.1);
 }
 
 .kategori_card {
@@ -11414,29 +11414,64 @@ button:active {
     align-items: center;
     justify-content: center;
     transition: transform 0.2s;
-  }
-  
-  .kategori_items :hover {
+}
+
+.kategori_items :hover {
     transform: scale(1.2);
     cursor: pointer;
     background-color: #6df207;
-  }
-  
-  .kategori_card a:hover,
-  .kategori_card h5:hover,
-  .kategori_card img:hover {
-    transform: scale(1);
-  }
-  
+}
 
-  .kategori_card h5 {
+.kategori_card a:hover,
+.kategori_card h5:hover,
+.kategori_card img:hover {
+    transform: scale(1);
+}
+
+.kategori_card h5 {
     color: var(--txt-third);
     margin-top: 15px;
     margin-bottom: 0;
     font-weight: 600;
     font-size: 18px;
-  }
+}
 
-  .kategori_icon{
+.kategori_icon {
     font-size: 32px;
-  }
+}
+
+.informasi-data {
+    margin-bottom: 35px;
+}
+
+.garis_title {
+    border: 2px solid black;
+    margin-bottom: 30px;
+}
+
+.foto-pegawai img {
+    min-width: 170px;
+    min-height: 250px;
+    border: 1px solid black;
+}
+
+.surat_card:hover {
+    background-color: #595757;
+    color: white;
+}
+
+
+.jumlah_item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background-color: red;
+    border-radius: 100px;
+    text-align: center;
+    width: 55px;
+    height: 55px;
+    right: -25px;
+    top:-25px;
+    position: absolute;
+}

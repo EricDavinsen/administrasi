@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ExportSuratMasuk;
 use Illuminate\View\View;
 use App\Models\SuratMasuk;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SuratMasukController extends Controller
 {
@@ -203,6 +205,11 @@ class SuratMasukController extends Controller
     public function view($id){
         $data = SuratMasuk::find($id);
 
-        return view("tampilsuratmasuk",compact("data"));
+        return view("tampil/tampilsuratmasuk",compact("data"));
+    }
+
+    function export_excel()
+    {
+        return Excel::download(new ExportSuratMasuk, 'suratmasuk.xlsx');
     }
 }

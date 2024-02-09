@@ -24,6 +24,7 @@
             <link href="{{ asset('css/styles.css') }}" rel="stylesheet" type="text/css" />
             <link href="{{ asset('css/sidebar.css') }}" rel="stylesheet" type="text/css" />
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+            <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     </head>
 
     <body>
@@ -113,57 +114,49 @@
                             </div>
                         </div>
                     </nav>
-                    <h1 class="h3 mb-0 text-gray-800 mb-2">Surat Keluar</h1>
-                    <form class="navbar-search" action="{{ url('/carisuratkeluar') }}" method="GET">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Cari Surat" aria-label="Search" name="search">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="submit">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
+
+                    <div class="surat_container"  data-aos="fade-up" data-aos-delay="50" data-aos-duration="2000">
+                        <h1 class="h3 mb-0 text-gray-800 mb-2">Surat Keluar</h1>
+                        <form class="navbar-search" action="{{ url('/carisuratkeluar') }}" method="GET">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Cari Surat" aria-label="Search" name="search">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="submit">
+                                        <i class="fas fa-search fa-sm"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="d-flex w-100 justify-content-end">
+                            <a href="{{ url('/createsuratkeluar') }}" class="btn btn-md btn-success m-3">Tambah</a>
+                            <button type="button" class="btn btn-md btn-info m-3" data-toggle="modal" data-target="#exampleModal">Export</button>
+                        </div>
+                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Export Surat Keluar</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <form action="{{ url('/exportsuratkeluar') }}" method="GET" enctype="multipart/form-data">
+                                        @csrf
+                                            <div class="modal-body">
+                                                <h5>Apakah anda ingin mengexport tabel data surat keluar?</h5>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-info">Export</button>
+                                            </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
-                    </form>
-                    <a href="{{ url('/createsuratkeluar') }}" class="btn btn-md btn-success m-2">Tambah</a>
-                    <table class="table table-bordered">
-                        <thead class="text-center">
-                            <tr>
-                            <th scope="col">Nomor Surat</th>
-                            <th scope="col">Tanggal Surat</th>
-                            <th scope="col">Jenis Surat</th>
-                            <th scope="col">Tujuan</th>
-                            <th scope="col">Sifat</th>
-                            <th scope="col">Perihal</th>
-                            <th scope="col">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-center">
-                            @foreach ($suratkeluar as $item)
-                            <tr>
-                            <td>{{ $item->NOMOR_SURAT }}</td>
-                            <td>{{ \Carbon\Carbon::parse($item->TANGGAL_SURAT)->format('d-m-Y') }}</td>
-                            <td>{{ $item->JENIS_SURAT }}</td>
-                            <td>{{ $item->TUJUAN_SURAT }}</td>
-                            <td>{{ $item->SIFAT_SURAT }}</td>
-                            <td>{{ $item->PERIHAL_SURAT }}</td>
-                            <td>
-                                <div class="action-buttons d-flex w-100  justify-content-center gap-2">
-                                <a href="{{ url('/editsuratkeluar/'.$item->id) }}" class="btn btn-info">Edit</a> 
-                                    <form action="{{ url('/deletesuratkeluar/'.$item->id) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger">Delete</button>
-                                    </form>
-                                    <a href="{{ url('/tampilsuratkeluar/'.$item->id) }}" class="btn btn-warning" style="color:white">Review</a> 
-                                </div>
-                            </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-
-                    <div class="d-flex justify-content-center">
-                        {!! $suratkeluar->links() !!}
+                        @include('tabel/tabelsuratkeluar',$suratkeluar)
+                        <div class="d-flex justify-content-center">
+                            {!! $suratkeluar->links() !!}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -172,6 +165,11 @@
         <script src="js/popper.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/main.js"></script>
+        @include('sweetalert::alert')
         @notifyJs
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+        <script>
+            AOS.init();
+        </script>
     </body>
 </html>

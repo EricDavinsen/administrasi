@@ -21,7 +21,7 @@ return new class extends Migration
             $table->date('TANGGAL_SELESAI');
             $table->string('JUMLAH_JAM');
             $table->string('PENYELENGGARA');
-            $table->string('SERTIFIKAT');
+            $table->string('SERTIFIKAT')->nullable();
             $table->foreign('pegawai_id')->references('id')->on('pegawai')->onDelete('cascade');
             $table->timestamps();
         });

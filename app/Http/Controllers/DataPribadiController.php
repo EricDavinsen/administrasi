@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ExportDataPribadi;
 use App\Models\Pegawai;
 use Illuminate\View\View;
 use App\Models\DataPribadi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DataPribadiController extends Controller
 {
@@ -194,10 +196,10 @@ class DataPribadiController extends Controller
         );
 
     if ($updateData) {
-        return redirect()->intended("/datapribadi/$id")->with([ notify()->success('Data Pribadi Telah Diupdate'),
+        return redirect()->intended("/datapribadi/$datapribadi->pegawai_id")->with([ notify()->success('Data Pribadi Telah Diupdate'),
             'success' => 'Data Pribadi Telah Diupdate']);
     }
-    return redirect()->intended("/datapribadi/$id")->with([ notify()->error('Batal Mengupdate Data Pribadi'),
+    return redirect()->intended("/datapribadi/$datapribadi->pegawai_id")->with([ notify()->error('Batal Mengupdate Data Pribadi'),
         'error' => 'Batal Mengupdate Data Pribadi']);
     }
 }

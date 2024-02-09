@@ -130,6 +130,10 @@
                             <label for="formGroupExampleInput2">STTB</label>
                             <input type="text" class="form-control" id="formGroupExampleInput2" name="STTB" placeholder="Masukan STTB" value="{{ $riwayatpendidikan->STTB }}">
                         </div>
+                        <div class="form-group">
+                            <label for="formGroupExampleInput2">IJAZAH SEKOLAH</label>
+                            <input type="file" class="form-control" id="formGroupExampleInput2" name="IJAZAH_SEKOLAH" placeholder="Masukan Ijazah" value="{{ $riwayatpendidikan->IJAZAH_SEKOLAH }}">
+                        </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
                         <a href="{{ url('/riwayatpendidikan/'.$riwayatpendidikan->pegawai_id)  }}" class="btn btn-danger"> Kembali</a>
                     </form>
@@ -140,6 +144,7 @@
         <script src="js/popper.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/main.js"></script>
+        @include('sweetalert::alert')
         @notifyJs
     </body>
 </html>

@@ -24,6 +24,7 @@
             <link href="{{ asset('css/styles.css') }}" rel="stylesheet" type="text/css" />
             <link href="{{ asset('css/sidebar.css') }}" rel="stylesheet" type="text/css" />
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+            <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     </head>
 
     <body>
@@ -113,69 +114,60 @@
                         </div>
                     </nav>
 
-                    <h1 class="h3 mb-0 text-gray-800 mb-2">Surat Cuti</h1>
-                    <form class="navbar-search" action="{{ url('/carisuratcuti') }}" method="GET">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Cari Surat" aria-label="Search" name="search">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="submit">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
+                    <div class="surat_container"  data-aos="fade-up" data-aos-delay="50" data-aos-duration="2000">
+                        <h1 class="h3 mb-0 text-gray-800 mb-2">Surat Cuti</h1>
+                        <form class="navbar-search" action="{{ url('/carisuratcuti') }}" method="GET">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Cari Surat" aria-label="Search" name="search">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="submit">
+                                        <i class="fas fa-search fa-sm"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="d-flex w-100 justify-content-end">
+                            <a href="{{ url('/createsuratcuti') }}" class="btn btn-md btn-success m-3">Tambah</a>
+                            <button type="button" class="btn btn-md btn-info m-3" data-toggle="modal" data-target="#exampleModal">Export</button>
+                        </div>
+                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Export Surat Cuti</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <form action="{{ url('/exportsuratcuti') }}" method="GET" enctype="multipart/form-data">
+                                        @csrf
+                                            <div class="modal-body">
+                                                <h5>Apakah anda ingin mengexport tabel data surat cuti?</h5>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-info">Export</button>
+                                            </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
-                    </form>
-                    <a href="{{ url('/createsuratcuti') }}" class="btn btn-md btn-success m-2">Tambah</a>
-                    <table class="table table-bordered">
-                        <thead class="text-center">
-                            <tr>
-                            <th scope="col">No Cuti</th>
-                            <th scope="col">Nama</th>
-                            <th scope="col">Jenis Cuti</th>
-                            <th scope="col">Alasan</th>
-                            <th scope="col">Tanggal Mulai</th>
-                            <th scope="col">Tanggal Selesai</th>
-                            <th scope="col">Lama Cuti</th>
-                            <th scope="col">Sisa Cuti Tahunan</th>
-                            <th scope="col">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-center">
-                            @foreach ($suratcuti as $item)
-                            <tr>
-                            <td>{{ $item->NO_CUTI }}</td>
-                            <td>{{ $item->NAMA }}</td>
-                            <td>{{ $item->JENIS_CUTI }}</td>
-                            <td>{{ $item->ALASAN_CUTI }}</td>
-                            <td>{{ \Carbon\Carbon::parse($item->TANGGAL_MULAI)->format('d-m-Y') }}</td>
-                            <td>{{ \Carbon\Carbon::parse($item->TANGGAL_SELESAI)->format('d-m-Y') }}</td>
-                            <td>{{ $item->LAMA_CUTI }} hari</td>
-                            <td>{{ $item->SISA_CUTI_TAHUNAN }}</td>
-                            <td>
-                                <div class="action-buttons d-flex w-100  justify-content-center gap-2">
-                                    <a href="{{ url('/editsuratcuti/'.$item->id) }}" class="btn btn-info">Edit</a> 
-                                    <form action="{{ url('/deletesuratcuti/'.$item->id) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger">Delete</button>
-                                    </form>
-                                    <a href="{{ url('/tampilsuratcuti/'.$item->id) }}" class="btn btn-warning" style="color:white">Review</a> 
-                                </div>
-                            </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-
-                    <div class="d-flex justify-content-center">
-                        {!! $suratcuti->links() !!}
+                        @include('tabel/tabelsuratcuti', $suratcuti)
+                        <div class="d-flex justify-content-center">
+                            {!! $suratcuti->links() !!}
+                        </div>
                     </div>
                 </div>
             </div>
-        
         <script src="js/jquery.min.js"></script>
         <script src="js/popper.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/main.js"></script>
+        @include('sweetalert::alert')
         @notifyJs
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+        <script>
+            AOS.init();
+        </script>
     </body>
 </html>

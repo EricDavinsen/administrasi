@@ -17,17 +17,19 @@ return new class extends Migration
             $table->id();
             $table->string('NAMA_PEGAWAI');
             $table->string('NIK');
+            $table->string('NO_KK')->nullable();
             $table->date('TANGGAL_LAHIR');
             $table->string('JENIS_KELAMIN');
             $table->string('AGAMA');
             $table->string('INSTANSI');
             $table->string('UNIT');
-            $table->string('SUB_UNIT');
+            $table->string('SUB_UNIT')->nullable();
             $table->string('JABATAN');
             $table->string('JENIS_PEGAWAI');
             $table->string('PENDIDIKAN_TERAKHIR');
             $table->string('STATUS_PEGAWAI');
             $table->string('KEDUDUKAN');
+            $table->string('FOTO_PEGAWAI');
             $table->timestamps();
         });
     }

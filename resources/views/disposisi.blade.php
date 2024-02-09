@@ -24,6 +24,7 @@
             <link href="{{ asset('css/styles.css') }}" rel="stylesheet" type="text/css" />
             <link href="{{ asset('css/sidebar.css') }}" rel="stylesheet" type="text/css" />
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+            <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     </head>
 
     <body>
@@ -113,47 +114,38 @@
                             </div>
                         </div>
                     </nav>
-                    <h1 class="h3 mb-0 text-gray-800 mb-2">Disposisi</h1>
-                
-                    <table class="table table-bordered">
-                        <thead class="text-center">
-                            <tr>
-                            <th scope="col">No</th>
-                            <th scope="col">Kode Surat</th>
-                            <th scope="col">Nomor Surat</th>
-                            <th scope="col">Nama</th>
-                            <th scope="col">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-center">
-                            @php
-                            $no=1;
-                            @endphp
-                            @foreach ($disposisi as $item)
-                                <tr>
-                                <td>{{ $no++ }}</td>
-                                <td>{{ $item->surat->KODE_SURAT }}</td>
-                                <td>{{ $item->surat->NOMOR_SURAT }}</td>
-                                <td>{{ $item->NAMA }}</td>
-                                <td>
-                                    <div class="action-buttons d-flex w-100  justify-content-center gap-2">
-                                    <a href="{{ url('/editdisposisi/'.$item->id) }}" class="btn btn-info">Edit</a> 
-                                    <form action="{{ url('/deletedisposisi/'.$item->id) }}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger">Delete</button>
-                                            </form>
-                                        <a href="{{ url('/tampildisposisi/'.$item->id) }}" class="btn btn-warning" style="color:white">Hasil</a> 
-                                        <a href="{{ url('/lembardisposisi/' . $item->id) }}" class="btn btn-success">Lembar Disposisi</a>
-                                    </div>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
 
-                    <div class="d-flex justify-content-center">
-                        {!! $disposisi->links() !!}
+                    <div class="surat_container"  data-aos="fade-up" data-aos-delay="50" data-aos-duration="2000">
+                        <h1 class="h3 mb-0 text-gray-800 mb-2">Disposisi</h1>
+                        <div class="d-flex w-100 justify-content-end">
+                            <button type="button" class="btn btn-md btn-info m-3" data-toggle="modal" data-target="#exampleModal">Export</button>
+                        </div>
+                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Export Disposisi</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <form action="{{ url('/exportdisposisi') }}" method="GET" enctype="multipart/form-data">
+                                        @csrf
+                                            <div class="modal-body">
+                                                <h5>Apakah anda ingin mengexport tabel data disposisi?</h5>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-info">Export</button>
+                                            </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        @include('tabel/tabeldisposisi', $disposisi)
+                        <div class="d-flex justify-content-center">
+                            {!! $disposisi->links() !!}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -162,6 +154,11 @@
         <script src="js/popper.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/main.js"></script>
+        @include('sweetalert::alert')
         @notifyJs
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+        <script>
+            AOS.init();
+        </script>
     </body>
 </html>

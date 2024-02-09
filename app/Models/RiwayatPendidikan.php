@@ -44,6 +44,7 @@ class RiwayatPendidikan extends Model
         "JURUSAN",
         "TAHUN_LULUS",
         "STTB",
+        "IJAZAH_SEKOLAH",
     ];
 
     public function getCreatedAtAttribute()

@@ -24,6 +24,7 @@
             <link href="{{ asset('css/styles.css') }}" rel="stylesheet" type="text/css" />
             <link href="{{ asset('css/sidebar.css') }}" rel="stylesheet" type="text/css" />
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+            <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     </head>
 
     <body>
@@ -111,8 +112,8 @@
                         </div>
                     </nav>
                     
-                    <div class="container-fluid category">
-                        <h2 class="d-flex w-100 justify-content-center" style="font-weight: bold">Menu Pegawai</h2>
+                    <div class="container-fluid category" data-aos="fade-right" data-aos-delay="50" data-aos-duration="2000">
+                        <h2 class="d-flex w-100 justify-content-center" style="font-weight: bold">Menu Pegawai : {{$pegawai->NAMA_PEGAWAI}}</h2>
                         <div class="d-flex justify-content-center gap-5 w-100 mt-3 flex-wrap">
                         <div class="kategori_items">
                                 <div class="card kategori_card">
@@ -157,36 +158,36 @@
 
                             <div class="kategori_items">
                                 <div class="card kategori_card">
-                                    <a href="#/kategorialam" class="nav-link d-flex justify-content-center flex-column align-items-center">
-                                    <i class="kategori_icon fa-solid fa-restroom"></i>
-                                    <h5 class="text-center">DATA ISTRI/SUAMI</h5>
+                                    <a href="{{ url('/datakeluarga/'.$pegawai->id) }}" class="nav-link d-flex justify-content-center flex-column align-items-center">
+                                    <i class="kategori_icon fa-solid fa-house-chimney-window"></i>
+                                    <h5 class="text-center">DATA KELUARGA</h5>
                                     </a> 
                                 </div>
                             </div>
 
                             <div class="kategori_items">
                                 <div class="card kategori_card">
-                                    <a href="#/kategorialam" class="nav-link d-flex justify-content-center flex-column align-items-center">
-                                    <i class="kategori_icon fa-solid fa-child"></i>
-                                    <h5 class="text-center">DATA ANAK</h5>
+                                    <a href="{{ url('/databpjs/'.$pegawai->id) }}" class="nav-link d-flex justify-content-center flex-column align-items-center">
+                                    <i class="kategori_icon fa-solid fa-user-doctor"></i>
+                                    <h5 class="text-center">DATA BPJS</h5>
                                     </a> 
                                 </div>
                             </div>
 
                             <div class="kategori_items">
                                 <div class="card kategori_card">
-                                    <a href="#/kategorialam" class="nav-link d-flex justify-content-center flex-column align-items-center">
-                                    <i class="kategori_icon fa-solid fa-user-group"></i>
-                                    <h5 class="text-center">DATA ORANG TUA</h5>
-                                    </a> 
-                                </div>
-                            </div>
-
-                            <div class="kategori_items">
-                                <div class="card kategori_card">
-                                    <a href="#/kategorialam" class="nav-link d-flex justify-content-center flex-column align-items-center">
+                                    <a href="{{ url('/penilaiantahunan/'.$pegawai->id) }}" class="nav-link d-flex justify-content-center flex-column align-items-center">
                                     <i class="kategori_icon fa-solid fa-file-lines"></i>
                                     <h5 class="text-center">PENILAIAN TAHUNAN</h5>
+                                    </a> 
+                                </div>
+                            </div>
+
+                            <div class="kategori_items">
+                                <div class="card kategori_card">
+                                    <a href="{{ url('/cetakinformasi/'.$pegawai->id) }}" class="nav-link d-flex justify-content-center flex-column align-items-center">
+                                    <i class="kategori_icon fa-solid fa-print"></i>
+                                    <h5 class="text-center">CETAK INFORMASI</h5>
                                     </a> 
                                 </div>
                             </div>
@@ -197,5 +198,9 @@
         <script src="js/popper.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/main.js"></script>
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+        <script>
+            AOS.init();
+        </script>
     </body>
 </html>

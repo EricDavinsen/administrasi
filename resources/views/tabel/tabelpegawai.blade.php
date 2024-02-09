@@ -11,7 +11,7 @@
                             <th scope="col">Aksi</th>
                             </tr>
                         </thead>
-                        <tbody class="text-center">
+                        <tbody>
                             @php
                             $no=1;
                             @endphp

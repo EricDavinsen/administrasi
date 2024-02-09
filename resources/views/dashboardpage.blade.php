@@ -24,6 +24,7 @@
             <link href="{{ asset('css/styles.css') }}" rel="stylesheet" type="text/css" />
             <link href="{{ asset('css/sidebar.css') }}" rel="stylesheet" type="text/css" />
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+            <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     </head>
 
     <body>
@@ -72,7 +73,7 @@
                 </nav>
 
                 <!-- Page Content  -->
-                <div id="content" class="p-4 p-md-5">
+                <div id="content" class="p-4 p-md-5 bg-dark">
                     <nav class="navbar navbar-expand-lg navbar-light bg-light">
                         <div class="container-fluid">
                             <button type="button" id="sidebarCollapse" class="btn btn-primary">
@@ -111,108 +112,92 @@
                         </div>
                     </nav>
 
-                    <div class="container-fluid">
-                        <!-- Page Heading -->
-                        <div class="notification">
+                    <div class="notification">
                             <x-notify::notify />
                         </div>
-                        <div class="d-sm-flex align-items-center justify-content-center mb-4">
-                            <h1 class="h3 mb-0" style="color:green">Welcome, {{ $admin->USERNAME }} !</h1>
+                    <div class="container-fluid" data-aos="fade-down" data-aos-delay="50" data-aos-duration="2000">
+                        <!-- Page Heading -->
+                        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-2 font-weight-bold" style="font-size: 35px; color:white">Dashboard</h1>
+                        <h5 class="mb-0" style="color:#2dcc14; font-weight: bold">User : {{ $admin->USERNAME }}</h5>
                         </div>
-                        <h1 class="h3 mb-0 text-gray-800 mb-2">Dashboard</h1>
-
+                       
                         <!-- Content Row -->
                         <div class="row">
-                                <div class="col-xl-3 col-md-6 mb-4">
-                                    <a href = "{{ url('suratmasuk') }}">
-                                        <div class="dashboard-card card border-left-primary shadow h-100 py-2" style="background-color: #6df207">
-                                            <div class="card-body">
-                                                <div class="row no-gutters align-items-center">
-                                                    <div class="col mr-2">
-                                                        <div class="text-xs font-weight-bold text-uppercase mb-1">
-                                                            Surat Masuk</div>
-                                                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $suratmasuk }}</div>
-                                                    </div>
-                                                    <div class="col-auto">
-                                                        <i class="fas fa-envelope fa-2x text-gray-300"></i>
-                                                    </div>
+                            <div class="col-xs-12 col-sm-6 col-md-6 p-3">
+                                <a href = "{{ url('suratmasuk') }}">
+                                    <div class="frontside">
+                                        <div class="surat_card card">
+                                                <div class="item_container">
+                                                    <div class="jumlah_item">{{ $suratmasuk }}</div>
                                                 </div>
+
+                                            <div class="card-body text-center">
+                                                <i class="fa-solid fa-envelope fa-2x text-gray-300" style="font-size: 130px"></i>
+                                                <h4 class="card-title">Surat Masuk</h4>
+                                                <p class="card-text p-3">Tekan untuk menuju ke menu surat masuk.</p>
                                             </div>
                                         </div>
-                                    </a>
-                                </div>
-                        
-                            <div class="col-xl-3 col-md-6 mb-4">
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-6 col-md-6 p-3">
                                 <a href = "{{ url('suratkeluar') }}">
-                                    <div class="dashboard-card card border-left-success shadow h-100 py-2" style="background-color: #fc0341">
-                                        <div class="card-body">
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col mr-2">
-                                                    <div class="text-xs font-weight-bold text-uppercase mb-1">
-                                                        Surat Keluar</div>
-                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $suratkeluar }}</div>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <i class="fas fa-envelope-open-text fa-2x text-gray-300"></i>
-                                                </div>
+                                    <div class="frontside">
+                                        <div class="surat_card card">
+                                            <div class="jumlah_item">{{ $suratkeluar }}</div>
+                                            <div class="card-body text-center">
+                                                <i class="fa-solid fa-envelope-open-text fa-2x text-gray-300" style="font-size: 130px"></i>
+                                                <h4 class="card-title">Surat Keluar</h4>
+                                                <p class="card-text p-3">Tekan untuk menuju ke menu surat keluar.</p>
                                             </div>
                                         </div>
                                     </div>
                                 </a>
                             </div>
 
-                            <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="col-xs-12 col-sm- col-md-4 p-3">
                                 <a href = "{{ url('suratcuti') }}">
-                                    <div class="dashboard-card card border-left-info shadow h-100 py-2" style="background-color: #5fd9d4">
-                                        <div class="card-body">
-                                            <div class="row no-gutters align-items-center">
-                                            <div class="col mr-2">
-                                                    <div class="text-xs font-weight-bold text-uppercase mb-1">
-                                                        Surat Cuti</div>
-                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $suratcuti }}</div>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <i class="fa-regular fa-envelope fa-2x text-gray-300"></i>
-                                                </div>
+                                    <div class="frontside">
+                                        <div class="surat_card card">
+                                        <div class="jumlah_item">{{ $suratcuti }}</div>
+                                            <div class="card-body text-center">
+                                                <i class="fa-regular fa-envelope fa-2x text-gray-300" style="font-size: 130px"></i>
+                                                <h4 class="card-title">Surat Cuti</h4>
+                                                <p class="card-text p-3">Tekan untuk menuju ke menu surat cuti.</p>
                                             </div>
                                         </div>
                                     </div>
                                 </a>
                             </div>
 
-                            <!-- Pending Requests Card Example -->
-                            <div class="col-xl-3 col-md-6 mb-4">
+
+                            <div class="col-xs-12 col-sm-6 col-md-4 p-3">
                                 <a href = "{{ url('spt') }}">
-                                    <div class="dashboard-card card border-left-warning shadow h-100 py-2" style="background-color: #ff5e00">
-                                        <div class="card-body">
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col mr-2">
-                                                    <div class="text-xs font-weight-bold text-uppercase mb-1">
-                                                        SPT</div>
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ $spt }}</div>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <i class="fa-solid fa-circle-exclamation fa-2x text-gray-300"></i>
-                                                </div>
+                                    <div class="frontside">
+                                        <div class="surat_card card">
+                                        <div class="jumlah_item">{{ $spt }}</div>
+                                            <div class="card-body text-center">
+                                                <i class="fa-solid fa-circle-exclamation fa-2x text-gray-300" style="font-size: 130px"></i>
+                                                <h4 class="card-title">Surat Perintah Tugas (SPT)</h4>
+                                                <p class="card-text p-3">Tekan untuk menuju ke menu surat spt.</p>
                                             </div>
                                         </div>
                                     </div>
                                 </a>
                             </div>
 
-                            <div class="col-xl-3 col-md-6 mb-4">
+
+                            <div class="col-xs-12 col-sm-6 col-md-4 p-3">
                                 <a href = "{{ url('datapegawai') }}">
-                                    <div class="dashboard-card card border-left-warning shadow h-100 py-2" style="background-color: #ffeb12">
-                                        <div class="card-body">
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col mr-2">
-                                                    <div class="text-xs font-weight-bold text-uppercase mb-1">
-                                                        Jumlah Pegawai</div>
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ $pegawai }}</div>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <i class="fa-solid fa-users fa-2x text-gray-300"></i>
-                                                </div>
+                                    <div class="frontside">
+                                        <div class="surat_card card">
+                                        <div class="jumlah_item">{{ $pegawai }}</div>
+                                            <div class="card-body text-center">
+                                                <i class="fa-solid fa-users fa-2x text-gray-300" style="font-size: 130px"></i>
+                                                <h4 class="card-title">Data Pegawai</h4>
+                                                <p class="card-text p-3">Tekan untuk menuju ke menu pegawai.</p>
                                             </div>
                                         </div>
                                     </div>
@@ -223,10 +208,15 @@
                 </div>
             </div>
         </div>
+        @include('sweetalert::alert')
         @notifyJs
         <script src="js/jquery.min.js"></script>
         <script src="js/popper.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/main.js"></script>
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+        <script>
+            AOS.init();
+        </script>
     </body>
 </html>

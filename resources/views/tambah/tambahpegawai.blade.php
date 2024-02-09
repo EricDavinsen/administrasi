@@ -123,6 +123,10 @@
                             <input type="text" class="form-control" id="formGroupExampleInput2" name="NIK" placeholder="Masukan NIK">
                         </div>
                         <div class="form-group">
+                            <label for="formGroupExampleInput2">NO KARTU KELUARGA</label>
+                            <input type="text" class="form-control" id="formGroupExampleInput2" name="NO_KK" placeholder="Masukan Nomor Kartu Keluarga">
+                        </div>
+                        <div class="form-group">
                             <label for="formGroupExampleInput2">Tanggal Lahir</label>
                             <input type="date" class="form-control" id="formGroupExampleInput2" name="TANGGAL_LAHIR">
                         </div>
@@ -170,6 +174,10 @@
                             <label for="formGroupExampleInput2">Kedudukan</label>
                             <input type="text" class="form-control" id="formGroupExampleInput2" name="KEDUDUKAN" placeholder="Masukan Kedudukan">
                         </div>
+                        <div class="form-group">
+                            <label for="formGroupExampleInput2">Foto</label>
+                            <input type="file" class="form-control" id="formGroupExampleInput2" name="FOTO_PEGAWAI" placeholder="Masukan Foto">
+                        </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
                         <a href="{{ url('/datapegawai') }}" class="btn btn-danger"> Kembali</a>
                     </form>
@@ -180,6 +188,7 @@
         <script src="js/popper.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/main.js"></script>
+        @include('sweetalert::alert')
         @notifyJs
     </body>
 </html>

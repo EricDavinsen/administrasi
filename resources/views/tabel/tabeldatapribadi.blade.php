@@ -4,17 +4,17 @@
                             <th colspan="2">DATA PRIBADI</th>
                             </tr>
                         </thead>
-                        <tbody class="text-center">
+                        <tbody>
                             <tr>
-                                <td scope="col" width="30%">KTP</th>
+                                <td scope="col" width="30%">NO KTP</th>
                                 <td>{{ $datapribadi->NO_KTP }}</td>
                             </tr>
                             <tr>
-                                <td scope="col">BPJS</th>
+                                <td scope="col">NO BPJS</th>
                                 <td>{{ $datapribadi->NO_BPJS }}</td>
                             </tr>
                             <tr>
-                                <td scope="col">NPWP</th>
+                                <td scope="col">NO NPWP</th>
                                 <td>{{ $datapribadi->NO_NPWP }}</td>
                             </tr>
                             <tr>

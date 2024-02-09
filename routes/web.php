@@ -1,6 +1,7 @@
 <?php
 
-use App\Models\RiwayatPendidikan;
+use App\Http\Controllers\DataBpjsController;
+use App\Http\Controllers\PenilaianTahunanController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\loginController;
 use App\Http\Controllers\DiklatController;
@@ -12,6 +13,7 @@ use App\Http\Controllers\SuratCutiController;
 use App\Http\Controllers\SuratMasukController;
 use App\Http\Controllers\DataPribadiController;
 use App\Http\Controllers\SuratKeluarController;
+use App\Http\Controllers\DataKeluargaController;
 use App\Http\Controllers\RiwayatPendidikanController;
 use App\Http\Controllers\SuratPanggilanTugasController;
 
@@ -46,6 +48,7 @@ Route::delete("/deletesuratkeluar/{id}", [SuratKeluarController::class, "destroy
 Route::post('/addsuratkeluar', [SuratKeluarController::class, "store"])->middleware('auth:admin');
 Route::put("/updatesuratkeluar/{id}", [SuratKeluarController::class, "update"])->middleware('auth:admin');
 Route::get('/tampilsuratkeluar/{id}', [SuratKeluarController::class, "view"])->middleware('auth:admin');
+Route::get('/exportsuratkeluar', [SuratKeluarController::class, "export_excel"])->middleware('auth:admin');
 
 
 // SURAT MASUK
@@ -57,6 +60,7 @@ Route::delete("/deletesuratmasuk/{id}", [SuratMasukController::class, "destroy"]
 Route::post('/addsuratmasuk', [SuratMasukController::class, "store"])->middleware('auth:admin');
 Route::put("/updatesuratmasuk/{id}", [SuratMasukController::class, "update"])->middleware('auth:admin');
 Route::get('/tampilsuratmasuk/{id}', [SuratMasukController::class, "view"])->middleware('auth:admin');
+Route::get('/exportsuratmasuk', [SuratMasukController::class, "export_excel"])->middleware('auth:admin');
 
 
 // SPT
@@ -68,6 +72,7 @@ Route::delete("/deletespt/{id}", [SuratPanggilanTugasController::class, "destroy
 Route::post('/addspt', [SuratPanggilanTugasController::class, "store"])->middleware('auth:admin');
 Route::put("/updatespt/{id}", [SuratPanggilanTugasController::class, "update"])->middleware('auth:admin');
 Route::get('/tampilspt/{id}', [SuratPanggilanTugasController::class, "view"])->middleware('auth:admin');
+Route::get('/exportspt', [SuratPanggilanTugasController::class, "export_excel"])->middleware('auth:admin');
 
 
 // DISPOSISI
@@ -79,6 +84,7 @@ Route::post('/adddisposisi/{id}', [DisposisiController::class, "store"]);
 Route::put("/updatedisposisi/{id}", [DisposisiController::class, "update"])->middleware('auth:admin');
 Route::get('/tampildisposisi/{id}', [DisposisiController::class, "view"])->middleware('auth:admin');
 Route::get('/lembardisposisi/{id}', [DisposisiController::class, "create"])->middleware('auth:admin');
+Route::get('/exportdisposisi', [DisposisiController::class, "export_excel"])->middleware('auth:admin');
 
 
 // SURAT CUTI
@@ -90,6 +96,7 @@ Route::delete("/deletesuratcuti/{id}", [SuratCutiController::class, "destroy"])-
 Route::post('/addsuratcuti', [SuratCutiController::class, "store"])->middleware('auth:admin');
 Route::put("/updatesuratcuti/{id}", [SuratCutiController::class, "update"])->middleware('auth:admin');
 Route::get('/tampilsuratcuti/{id}', [SuratCutiController::class, "view"])->middleware('auth:admin');
+Route::get('/exportsuratcuti', [SuratCutiController::class, "export_excel"])->middleware('auth:admin');
 
 
 // DATA PEGAWAI
@@ -102,7 +109,7 @@ Route::get('/editpegawai/{id}', [PegawaiController::class, "edit"])->middleware(
 Route::put("/updatepegawai/{id}", [PegawaiController::class, "update"])->middleware('auth:admin');
 Route::get('/caripegawai', [PegawaiController::class, "find"])->middleware('auth:admin');
 Route::get('/exportpegawai', [PegawaiController::class, "export_excel"])->middleware('auth:admin');
-// Route::post('/importpegawai', [PegawaiController::class, "import_excel"])->middleware('auth:admin');
+Route::get('/cetakinformasi/{id}', [PegawaiController::class, "create"])->middleware('auth:admin');
 
 
 // DATA PRIBADI
@@ -121,6 +128,8 @@ Route::post('/addriwayatpendidikan/{id}', [RiwayatPendidikanController::class, "
 Route::delete("/deleteriwayatpendidikan/{id}", [RiwayatPendidikanController::class, "destroy"])->middleware('auth:admin');
 Route::get('/editriwayatpendidikan/{id}', [RiwayatPendidikanController::class, "edit"])->middleware('auth:admin');
 Route::put("/updateriwayatpendidikan/{id}", [RiwayatPendidikanController::class, "update"])->middleware('auth:admin');
+Route::get('/tampilijazah/{id}', [RiwayatPendidikanController::class, "view"])->middleware('auth:admin');
+Route::get('/exportriwayatpendidikan/{id}', [RiwayatPendidikanController::class, "export_excel"])->middleware('auth:admin');
 
 
 // DIKLAT
@@ -132,6 +141,7 @@ Route::get('/editdiklat/{id}', [DiklatController::class, "edit"])->middleware('a
 Route::put("/updatediklat/{id}", [DiklatController::class, "update"])->middleware('auth:admin');
 Route::get('/sertifdiklat/{id}', [DiklatController::class, "view"])->middleware('auth:admin');
 Route::get('/tampilsertifikat/{id}', [DiklatController::class, "view"])->middleware('auth:admin');
+Route::get('/exportdiklat/{id}', [DiklatController::class, "export_excel"])->middleware('auth:admin');
 
 
 // RIWAYAT SK
@@ -141,3 +151,36 @@ Route::post('/addriwayatsk/{id}', [RiwayatSkController::class, "store"])->middle
 Route::delete("/deleteriwayatsk/{id}", [RiwayatSkController::class, "destroy"])->middleware('auth:admin');
 Route::get('/editriwayatsk/{id}', [RiwayatSkController::class, "edit"])->middleware('auth:admin');
 Route::put("/updateriwayatsk/{id}", [RiwayatSkController::class, "update"])->middleware('auth:admin');
+Route::get('/tampilfilesk/{id}', [RiwayatSkController::class, "view"])->middleware('auth:admin');
+Route::get('/exportriwayatsk/{id}', [RiwayatSkController::class, "export_excel"])->middleware('auth:admin');
+
+
+// DATA KELUARGA
+Route::get('/datakeluarga/{id}', [DataKeluargaController::class,"index"])->middleware('auth:admin');
+Route::get('/createdatakeluarga/{id}', [DataKeluargaController::class,"indexcreate"])->middleware('auth:admin');
+Route::post('/adddatakeluarga/{id}', [DataKeluargaController::class, "store"])->middleware('auth:admin');
+Route::delete("/deletedatakeluarga/{id}", [DataKeluargaController::class, "destroy"])->middleware('auth:admin');
+Route::get('/editdatakeluarga/{id}', [DataKeluargaController::class, "edit"])->middleware('auth:admin');
+Route::put("/updatedatakeluarga/{id}", [DataKeluargaController::class, "update"])->middleware('auth:admin');
+Route::get('/exportdatakeluarga/{id}', [DataKeluargaController::class, "export_excel"])->middleware('auth:admin');
+
+
+// PENILAIAN TAHUNAN
+Route::get('/penilaiantahunan/{id}', [PenilaianTahunanController::class,"index"])->middleware('auth:admin');
+Route::get('/createpenilaiantahunan/{id}', [PenilaianTahunanController::class,"indexcreate"])->middleware('auth:admin');
+Route::post('/addpenilaiantahunan/{id}', [PenilaianTahunanController::class, "store"])->middleware('auth:admin');
+Route::delete("/deletepenilaiantahunan/{id}", [PenilaianTahunanController::class, "destroy"])->middleware('auth:admin');
+Route::get('/editpenilaiantahunan/{id}', [PenilaianTahunanController::class, "edit"])->middleware('auth:admin');
+Route::put("/updatepenilaiantahunan/{id}", [PenilaianTahunanController::class, "update"])->middleware('auth:admin');
+Route::get('/tampilpenilaiantahunan/{id}', [PenilaianTahunanController::class, "view"])->middleware('auth:admin');
+
+
+// DATA BPJS
+Route::get('/databpjs/{id}', [DataBpjsController::class,"index"])->middleware('auth:admin');
+Route::get('/createdatabpjs/{id}', [DataBpjsController::class,"indexcreate"])->middleware('auth:admin');
+Route::post('/adddatabpjs/{id}', [DataBpjsController::class, "store"])->middleware('auth:admin');
+Route::delete("/deletedatabpjs/{id}", [DataBpjsController::class, "destroy"])->middleware('auth:admin');
+Route::get('/editdatabpjs/{id}', [DataBpjsController::class, "edit"])->middleware('auth:admin');
+Route::put("/updatedatabpjs/{id}", [DataBpjsController::class, "update"])->middleware('auth:admin');
+Route::get('/tampildatabpjs/{id}', [DataBpjsController::class, "view"])->middleware('auth:admin');
+Route::get('/exportbpjs/{id}', [DataBpjsController::class, "export_excel"])->middleware('auth:admin');

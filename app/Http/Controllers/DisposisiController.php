@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ExportDisposisi;
 use App\Models\Disposisi;
 use Illuminate\View\View;
 use App\Models\SuratMasuk;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DisposisiController extends Controller
 {
@@ -149,13 +151,18 @@ class DisposisiController extends Controller
     public function view($id){
         $data = Disposisi::find($id);
 
-        return view("tampildisposisi",compact("data"));
+        return view("tampil/tampildisposisi",compact("data"));
     }
 
     public function create($id){
         $disposisi = Disposisi::where('id', $id)->first();
-        return view('lembardisposisi')->with([
+        return view('tampil/lembardisposisi')->with([
             'disposisi' => $disposisi,
         ]);
+    }
+
+    function export_excel()
+    {
+        return Excel::download(new ExportDisposisi, 'disposisi.xlsx');
     }
 }

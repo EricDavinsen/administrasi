@@ -35,6 +35,7 @@ class SuratPanggilanTugas extends Model
         "NAMA",
         "TANGGAL_MULAI",
         "TANGGAL_SELESAI",
+        "LAMA_TUGAS",
         "KEPERLUAN",
         "FILE_SURAT",
     ];

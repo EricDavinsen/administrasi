@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ExportSuratCuti;
 use App\Models\SuratCuti;
 use Illuminate\View\View;
 use Nette\Utils\DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SuratCutiController extends Controller
 {
@@ -140,9 +142,6 @@ class SuratCutiController extends Controller
             $suratcuti->FILE_SURAT = $request->FILE_SURAT;
         }
 
-        
-       
-      
         $updateSurat = SuratCuti::where('id', $id)
         ->limit(1)
         ->update(
@@ -210,6 +209,11 @@ class SuratCutiController extends Controller
     public function view($id){
         $data = SuratCuti::find($id);
 
-        return view("tampilsuratcuti",compact("data"));
+        return view("tampil/tampilsuratcuti",compact("data"));
+    }
+
+    function export_excel()
+    {
+        return Excel::download(new ExportSuratCuti, 'suratcuti.xlsx');
     }
 }

@@ -41,6 +41,8 @@ class RiwayatSk extends Model
         "JABATAN",
         "NOMOR_SK",
         "TANGGAL_SK",
+        "TMT_SK",
+        "FILE_SK"
     ];
 
     public function getCreatedAtAttribute()

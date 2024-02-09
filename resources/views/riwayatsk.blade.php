@@ -24,6 +24,7 @@
             <link href="{{ asset('css/styles.css') }}" rel="stylesheet" type="text/css" />
             <link href="{{ asset('css/sidebar.css') }}" rel="stylesheet" type="text/css" />
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+            <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     </head>
 
     <body>
@@ -114,12 +115,16 @@
                             </div>
                         </div>
                     </nav>
-                    <h1 class="h3 mb-0 text-gray-800 mb-2">Riwayat SK</h1>
-                    <div class="d-flex w-100 justify-content-between pegawai-button">
-                        <a href="{{ url('/createriwayatsk/'.$pegawai->id) }}" class="btn btn-md btn-success m-3">Tambah</a>
-                        <a href="{{ url('/dashboardpegawai/'.$pegawai->id) }}" class="btn btn-md btn-info m-3">Back</a>
+
+                    <div class="surat_container"  data-aos="fade-up" data-aos-delay="50" data-aos-duration="2000">
+                        <h1 class="h3 mb-0 text-gray-800 mb-2">Riwayat SK</h1>
+                        <div class="d-flex w-100 justify-content-start pegawai-button">
+                            <a href="{{ url('/createriwayatsk/'.$pegawai->id) }}" class="btn btn-md btn-success m-3">Tambah</a>
+                            <a href="{{ url('/exportriwayatsk/'.$pegawai->id) }}" class="btn btn-md btn-warning text-white  m-3">Export</a>
+                            <a href="{{ url('/dashboardpegawai/'.$pegawai->id) }}" class="btn btn-md btn-info m-3">Back</a>
+                        </div>
+                        @include ('tabel/tabelriwayatsk', $riwayatsk)
                     </div>
-                    @include ('tabelriwayatsk', $riwayatsk)
                 </div>
             </div>
         
@@ -127,6 +132,11 @@
         <script src="js/popper.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/main.js"></script>
+        @include('sweetalert::alert')
         @notifyJs
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+        <script>
+            AOS.init();
+        </script>
     </body>
 </html>

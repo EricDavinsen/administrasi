@@ -32,6 +32,7 @@ class Pegawai extends Model
     protected $fillable = [
         "NAMA_PEGAWAI",
         "NIK",
+        "NO_KK",
         "TANGGAL_LAHIR",
         "JENIS_KELAMIN",
         "AGAMA",
@@ -43,6 +44,7 @@ class Pegawai extends Model
         "PENDIDIKAN_TERAKHIR",
         "STATUS_PEGAWAI",
         "KEDUDUKAN",
+        "FOTO_PEGAWAI",
     ];
 
 

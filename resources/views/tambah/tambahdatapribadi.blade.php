@@ -27,9 +27,6 @@
     </head>
 
     <body>
-        <div class="notification">
-            <x-notify::notify />
-        </div>
         <div class="wrapper d-flex align-items-stretch">
                 <nav id="sidebar">
                     <div class="p-4 pt-5 ">
@@ -111,6 +108,9 @@
                         </div>
                     </nav>
 
+                    <div class="notification">
+                        <x-notify::notify />
+                    </div>
                     <form action="{{ url('/adddatapribadi/'.$pegawai->id) }}"method="post" enctype="multipart/form-data">
                          @csrf
                         <div class="form-group">
@@ -124,6 +124,10 @@
                         <div class="form-group">
                             <label for="formGroupExampleInput2">NO NPWP</label>
                             <input type="text" class="form-control" id="formGroupExampleInput2" name="NO_NPWP" placeholder="Masukan Nomor NPWP">
+                        </div>
+                        <div class="form-group">
+                            <label for="formGroupExampleInput2">NO KARTU KELUARGA</label>
+                            <input type="text" class="form-control" id="formGroupExampleInput2" name="NO_KK" placeholder="Masukan Nomor Kartu Keluarga">
                         </div>
                         <div class="form-group">
                             <label for="formGroupExampleInput2">Tinggi Badan</label>
@@ -162,7 +166,7 @@
                             <input type="email" class="form-control" id="formGroupExampleInput2" name="EMAIL" placeholder="Masukan Email">
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
-                        <a href="{{ url('/datapribadi/'.$pegawai->id)  }}" class="btn btn-danger"> Kembali</a>
+                        <a href="{{ url('/dashboardpegawai/'.$pegawai->id)  }}" class="btn btn-danger"> Kembali</a>
                     </form>
                 </div>
             </div>
@@ -171,6 +175,7 @@
         <script src="js/popper.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/main.js"></script>
+        @include('sweetalert::alert')
         @notifyJs
     </body>
 </html>

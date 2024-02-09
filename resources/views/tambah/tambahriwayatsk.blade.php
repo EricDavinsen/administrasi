@@ -125,6 +125,14 @@
                             <label for="formGroupExampleInput2">Tanggal SK</label>
                             <input type="date" class="form-control" id="formGroupExampleInput2" name="TANGGAL_SK" placeholder="Masukan Tanggal SK">
                         </div>
+                        <div class="form-group">
+                            <label for="formGroupExampleInput2">TMT</label>
+                            <input type="date" class="form-control" id="formGroupExampleInput2" name="TMT_SK" placeholder="Masukan TMT SK">
+                        </div>
+                        <div class="form-group">
+                            <label for="formGroupExampleInput2">File SK</label>
+                            <input type="file" class="form-control" id="formGroupExampleInput2" name="FILE_SK" placeholder="Masukan File SK">
+                        </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
                         <a href="{{ url('/riwayatsk/'.$pegawai->id)  }}" class="btn btn-danger"> Kembali</a>
                     </form>
@@ -135,6 +143,7 @@
         <script src="js/popper.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/main.js"></script>
+        @include('sweetalert::alert')
         @notifyJs
     </body>
 </html>
