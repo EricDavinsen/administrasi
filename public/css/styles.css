@@ -11455,9 +11455,14 @@ button:active {
     border: 1px solid black;
 }
 
+.surat_card {
+    opacity: 0.8;
+}
+
 .surat_card:hover {
     background-color: #595757;
     color: white;
+    opacity: 1;
 }
 
 .jumlah_item {
@@ -11473,4 +11478,18 @@ button:active {
     right: -25px;
     top: -25px;
     position: absolute;
+}
+
+.background-dashboard {
+    background-image: url("../img/dashboard_images.png");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    object-fit: cover;
+}
+
+.background-menu {
+    background-image: url("../img/background_menu.png");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    object-fit: cover;
 }

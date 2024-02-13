@@ -27,7 +27,7 @@
             <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     </head>
 
-    <body>
+    <body class="background-dashboard">
         <div class="wrapper d-flex align-items-stretch">
                 <nav id="sidebar">
                     <div class="p-4 pt-5 ">
@@ -113,7 +113,7 @@
                     </nav>
                     
                     <div class="container-fluid category" data-aos="fade-right" data-aos-delay="50" data-aos-duration="2000">
-                        <h2 class="d-flex w-100 justify-content-center" style="font-weight: bold">Menu Pegawai : {{$pegawai->NAMA_PEGAWAI}}</h2>
+                        <h2 class="d-flex w-100 justify-content-center" style="font-weight: bold; color: white">Menu Pegawai : {{$pegawai->NAMA_PEGAWAI}}</h2>
                         <div class="d-flex justify-content-center gap-5 w-100 mt-3 flex-wrap">
                         <div class="kategori_items">
                                 <div class="card kategori_card">

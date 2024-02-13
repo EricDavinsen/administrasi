@@ -27,7 +27,7 @@
             <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     </head>
 
-    <body>
+    <body class="background-menu">
         <div class="wrapper d-flex align-items-stretch">
                 <nav id="sidebar">
                     <div class="p-4 pt-5 ">
@@ -128,29 +128,7 @@
                         </form>
                         <div class="d-flex w-100 justify-content-end">
                             <a href="{{ url('/createsuratcuti') }}" class="btn btn-md btn-success m-3">Tambah</a>
-                            <button type="button" class="btn btn-md btn-info m-3" data-toggle="modal" data-target="#exampleModal">Export</button>
-                        </div>
-                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Export Surat Cuti</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <form action="{{ url('/exportsuratcuti') }}" method="GET" enctype="multipart/form-data">
-                                        @csrf
-                                            <div class="modal-body">
-                                                <h5>Apakah anda ingin mengexport tabel data surat cuti?</h5>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn btn-info">Export</button>
-                                            </div>
-                                    </form>
-                                </div>
-                            </div>
+                            <a href="{{ url('/exportsuratcuti') }}" class="btn btn-md btn-info m-3">Export</a>
                         </div>
                         @include('tabel/tabelsuratcuti', $suratcuti)
                         <div class="d-flex justify-content-center">

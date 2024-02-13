@@ -27,7 +27,7 @@
             <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     </head>
 
-    <body>
+    <body class="background-dashboard">
         <div class="wrapper d-flex align-items-stretch">
                 <nav id="sidebar">
                     <div class="p-4 pt-5 ">
@@ -73,7 +73,7 @@
                 </nav>
 
                 <!-- Page Content  -->
-                <div id="content" class="p-4 p-md-5" style="background-color: #878c94">
+                <div id="content" class="p-4 p-md-5">
                     <nav class="navbar navbar-expand-lg navbar-light bg-light">
                         <div class="container-fluid">
                             <button type="button" id="sidebarCollapse" class="btn btn-primary">
@@ -113,8 +113,8 @@
                     </nav>
 
                     <div class="notification">
-                            <x-notify::notify />
-                        </div>
+                        <x-notify::notify />
+                    </div>
                     <div class="container-fluid" data-aos="fade-down" data-aos-delay="50" data-aos-duration="2000">
                         <!-- Page Heading -->
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
