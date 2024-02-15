@@ -11414,6 +11414,7 @@ button:active {
     align-items: center;
     justify-content: center;
     transition: transform 0.2s;
+    opacity: 0.8;
 }
 
 .kategori_items :hover {
@@ -11494,9 +11495,13 @@ button:active {
     object-fit: cover;
 }
 
-.dashboard-pic{
+.dashboard-pic {
     background-image: url("../img/dashboard_pic.png");
     background-size: 100% 100%;
     background-repeat: no-repeat;
     object-fit: cover;
+}
+
+.table {
+    opacity: 0.8;
 }
