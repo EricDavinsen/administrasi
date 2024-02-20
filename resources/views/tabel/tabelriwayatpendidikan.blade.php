@@ -1,4 +1,5 @@
-<table class="table table-bordered">
+<div style="width:100%;overflow:auto; ">
+    <table id="dtHorizontalExample" class="table table-bordered table-striped table-sm scroll" style="width:100%" cellspacing="0" width="100%">
                         <thead class="text-center">
                             <tr>
                             <th scope="col">No</th>
@@ -37,3 +38,4 @@
                             @endforeach
                         </tbody>
                     </table>
+                </div>

@@ -36,7 +36,7 @@
                                         <p>Please login to your account</p>
                                         <div class="form-outline mb-4">
                                             <label class="form-label" for="form2Example11">Email</label>
-                                            <input type="email" id="emailinput" name="EMAIL_ADMIN" class="form-control"
+                                            <input type="text" id="emailinput" name="EMAIL_ADMIN" class="form-control"
                                                 placeholder="Please enter your email address" />
                                         </div>
 
@@ -50,12 +50,6 @@
                                         <div class="text-center pt-1 mb-3 pb-1">
                                             <button class="btn-login btn btn-primary btn-block fa-lg gradient-custom-4"
                                                 name="login" type="submit">Login</button>
-                                        </div>
-
-                                        <div class="d-flex align-items-center justify-content-center pb-4">
-                                            <p class="mb-0 me-2">Don't have an account?</p>
-                                            <a href="{{ url('register') }}"
-                                                class="btn-register gradient-custom-3">Register</a>
                                         </div>
                                     </form>
                                 </div>

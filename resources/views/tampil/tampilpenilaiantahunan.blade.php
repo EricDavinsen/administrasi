@@ -118,11 +118,10 @@
                     <iframe src="/document/{{$data->FILE_PENILAIAN}}" style="width: 100%; height: 1000px;"></iframe>
                 </div>
             </div>
-        
-        <script src="js/jquery.min.js"></script>
-        <script src="js/popper.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        <script src="js/main.js"></script>
+            <script src="{{ asset('js/jquery.min.js') }}"></script>
+            <script src="{{ asset('js/popper.js') }}"></script>
+            <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+            <script src="{{ asset('js/main.js') }}"></script>
         @notifyJs
     </body>
 </html>

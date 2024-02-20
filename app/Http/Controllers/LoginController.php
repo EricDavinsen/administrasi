@@ -33,7 +33,7 @@ class LoginController extends Controller
     public function login(Request $request) : RedirectResponse
     {
         $this->validate($request, [
-            'EMAIL_ADMIN' => ['required', 'email:rfc,dns'],
+            'EMAIL_ADMIN' => ['required'],
             'password' => ['required'],
         ]);
         $credential = $request->only('EMAIL_ADMIN', 'password');

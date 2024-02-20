@@ -1,4 +1,4 @@
-<table class="table table-bordered">
+<table class="table table-bordered" style="opacity:1; font-weight:bold">
                         <thead class="text-center">
                             <tr>
                             <th colspan="2">DATA PRIBADI</th>

@@ -20,11 +20,12 @@
                 href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
                 rel="stylesheet"
             />
-            
-            <link href="{{ asset('css/styles.css') }}" rel="stylesheet" type="text/css" />
             <link href="{{ asset('css/sidebar.css') }}" rel="stylesheet" type="text/css" />
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
             <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+            <link href="{{ asset('css/styles.css') }}" rel="stylesheet" type="text/css" />
+
+
     </head>
 
     <body class="background-menu">
@@ -121,17 +122,16 @@
                         <div class="d-flex w-100 justify-content-start pegawai-button">
                             <a href="{{ url('/createdatabpjs/'.$pegawai->id) }}" class="btn btn-md btn-success m-3">Tambah</a>
                             <a href="{{ url('/exportbpjs/'.$pegawai->id) }}" class="btn btn-md btn-warning text-white  m-3">Export</a>
-                            <a href="{{ url('/dashboardpegawai/'.$pegawai->id) }}" class="btn btn-md btn-info m-3">Back</a>
+                            <a href="{{ url('/dashboardpegawai/'.$pegawai->id) }}" class="btn btn-md btn-info text-white m-3">Back</a>
                         </div>
                         @include ('tabel/tabeldatabpjs', $databpjs)
                     </div>
                 </div>
             </div>
-        
-        <script src="js/jquery.min.js"></script>
-        <script src="js/popper.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        <script src="js/main.js"></script>
+            <script src="{{ asset('js/jquery.min.js') }}"></script>
+            <script src="{{ asset('js/popper.js') }}"></script>
+            <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+            <script src="{{ asset('js/main.js') }}"></script>
         @include('sweetalert::alert')
         @notifyJs
         <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
