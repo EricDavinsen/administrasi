@@ -66,6 +66,9 @@
                                 <a href="{{ url('disposisi') }}">Disposisi</a>
                             </li>
                          
+                            <li>
+                                <a href="{{ url('daftaruser') }}">Daftar User</a>
+                            </li>
                          
                         </ul>
                         

@@ -69,15 +69,6 @@ class SuratMasukController extends Controller
     
     }
 
-    public function storedispo(Request $request)
-    {
-        $suratmasuk = SuratMasuk::all();
-        $suratmasuk->dispo()->create([
-            'NAMA' => $request->NAMA,
-            'HASIL_LAPORAN' => $request->HASIL_LAPORAN,
-        ]);
-    }
-
     public function destroy($id)
     {
         $deletefile = SuratMasuk::findorfail($id);

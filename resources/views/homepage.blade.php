@@ -44,7 +44,6 @@
                                             <label class="form-label" for="form2Example22">Password</label>
                                             <input type="password" id="passwordinput" name="password"
                                                 class="form-control" placeholder="********" />
-                                            <a class="text-muted" href="{{ url('forgotpassword') }}">Forgot password?</a>
                                         </div>
 
                                         <div class="text-center pt-1 mb-3 pb-1">

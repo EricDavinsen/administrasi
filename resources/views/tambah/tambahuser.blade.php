@@ -24,17 +24,19 @@
             <link href="{{ asset('css/styles.css') }}" rel="stylesheet" type="text/css" />
             <link href="{{ asset('css/sidebar.css') }}" rel="stylesheet" type="text/css" />
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+            <script src="js/jquery.min.js"></script>
+            <script src="js/popper.js"></script>
+            <script src="js/bootstrap.min.js"></script>
+            <script src="js/main.js"></script>
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     </head>
 
     <body>
-        <div class="notification">
-            <x-notify::notify />
-        </div>
         <div class="wrapper d-flex align-items-stretch">
                 <nav id="sidebar">
                     <div class="p-4 pt-5 ">
                         <div class="sidebar-logo">
-                            <img src="{{ ('/img/logo.png') }}" 
+                            <img src="{{ ('img/logo.png') }}" 
                                     style="width: 185px;" alt="logo">
                         </div>
                         <h2 class="sidebar-title">PUSDALOPS-PB</h2>
@@ -43,7 +45,7 @@
                                 <a href="{{ url('dashboardpage') }}">Dashboard</a>
                             </li>
 
-                            <li class="nav-item active">
+                            <li>
                                 <a href="{{ url('datapegawai') }}">Pegawai</a>
                             </li>
 
@@ -51,7 +53,7 @@
                                 <a href="{{ url('suratmasuk') }}">Surat Masuk</a>
                             </li>
 
-                            <li>
+                            <li class="nav-item active">
                                 <a href="{{ url('suratkeluar') }}">Surat Keluar</a>
                             </li>
 
@@ -62,7 +64,7 @@
                             <li>
                                 <a href="{{ url('spt') }}">SPT</a>
                             </li>
-                         
+
                             <li>
                                 <a href="{{ url('disposisi') }}">Disposisi</a>
                             </li>
@@ -70,9 +72,11 @@
                             <li>
                                 <a href="{{ url('daftaruser') }}">Daftar User</a>
                             </li>
+                         
                         </ul>
+                        
                             <a href="{{ url('logout') }}" class="btn-logout"> Logout </a>
-                    </div>
+                    </div> 
                 </nav>
 
                 <!-- Page Content  -->
@@ -92,13 +96,13 @@
                                     <li class="nav-item">
                                         <a class="nav-link" href="{{ url('dashboardpage') }}">Dashboard</a>
                                     </li>
-                                    <li class="nav-item active">
+                                    <li class="nav-item">
                                         <a class="nav-link" href="{{ url('datapegawai') }}">Pegawai</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="{{ url('suratmasuk') }}">Surat Masuk</a>
                                     </li>
-                                    <li class="nav-item">
+                                    <li class="nav-item active">
                                         <a class="nav-link" href="{{ url('suratkeluar') }}">Surat Keluar</a>
                                     </li>
                                     <li class="nav-item">
@@ -115,40 +119,35 @@
                         </div>
                     </nav>
 
-                    <form action="{{ url('/adddatakeluarga/'. $pegawai->id) }}"method="post" enctype="multipart/form-data">
+                    <div class="notification">
+                        <x-notify::notify />
+                    </div>
+
+                    <form action="{{ url('/adduser') }}"method="post" enctype="multipart/form-data">
                          @csrf
                         <div class="form-group">
-                            <label for="formGroupExampleInput">Nama Keluarga</label>
-                            <input type="text" class="form-control" id="formGroupExampleInput" name="NAMA_KELUARGA" placeholder="Masukan Nama Keluarga">
+                            <label for="formGroupExampleInput2">Username</label>
+                            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Masukan Username" name="USERNAME">
                         </div>
                         <div class="form-group">
-                            <label for="formGroupExampleInput2">Tanggal Lahir</label>
-                            <input type="date" class="form-control" id="formGroupExampleInput2" name="TANGGAL_LAHIR" placeholder="Masukan Tanggal Lahir">
+                            <label for="formGroupExampleInput2">Email</label>
+                            <input type="email" class="form-control" id="formGroupExampleInput2" placeholder="Masukan Email" name="EMAIL_ADMIN">
                         </div>
                         <div class="form-group">
-                            <label for="formGroupExampleInput2">Status</label>
-                            <select class="form-control" name="STATUS">
-                                <option value="" disabled selected hidden>Pilih Status</option>
-                                <option>Suami</option>
-                                <option>Istri</option>
-                                <option>Anak</option>
-                                <option>Orang Tua</option>
-                            </select>
+                            <label for="formGroupExampleInput2">Password</label>
+                            <input type="password" class="form-control" id="formGroupExampleInput2" placeholder="Masukan Password" name="password">
                         </div>
-                        <div class="form-group">
-                            <label for="formGroupExampleInput2">Pekerjaan</label>
-                            <input type="text" class="form-control" id="formGroupExampleInput2" name="PEKERJAAN" placeholder="Masukan Pekerjaan">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                        <a href="{{ url('/datakeluarga/'.$pegawai->id)  }}" class="btn btn-danger"> Kembali</a>
+                        <button type="submit" name="add" class="btn btn-primary">Submit</button>
+                        <a href="{{ url('/daftaruser') }}" class="btn btn-danger"> Kembali</a>
                     </form>
+                    
                 </div>
             </div>
             <script src="{{ asset('js/jquery.min.js') }}"></script>
             <script src="{{ asset('js/popper.js') }}"></script>
             <script src="{{ asset('js/bootstrap.min.js') }}"></script>
             <script src="{{ asset('js/main.js') }}"></script>
-        @include('sweetalert::alert')
-        @notifyJs
+            @include('sweetalert::alert')
+            @notifyJs
     </body>
 </html>

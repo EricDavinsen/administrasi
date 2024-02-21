@@ -39,20 +39,20 @@
                         </div>
                         <h2 class="sidebar-title">PUSDALOPS-PB</h2>
                         <ul class="list-unstyled components mb-5">
-                             <li>
+                            <li>
                                 <a href="{{ url('dashboardpage') }}">Dashboard</a>
                             </li>
 
-                            <li class="nav-item active">
+                            <li>
                                 <a href="{{ url('datapegawai') }}">Pegawai</a>
                             </li>
 
-                            <li>
+                            <li class="nav-item active">
                                 <a href="{{ url('suratmasuk') }}">Surat Masuk</a>
                             </li>
 
                             <li>
-                                <a href="{{ url('suratkeluar') }}">Surat Keluar</a>
+                                <a href="{{ url('suratmasuk') }}">Surat Keluar</a>
                             </li>
 
                             <li>
@@ -71,8 +71,9 @@
                                 <a href="{{ url('daftaruser') }}">Daftar User</a>
                             </li>
                         </ul>
+                        
                             <a href="{{ url('logout') }}" class="btn-logout"> Logout </a>
-                    </div>
+                    </div>                        
                 </nav>
 
                 <!-- Page Content  -->
@@ -92,14 +93,14 @@
                                     <li class="nav-item">
                                         <a class="nav-link" href="{{ url('dashboardpage') }}">Dashboard</a>
                                     </li>
-                                    <li class="nav-item active">
+                                    <li class="nav-item">
                                         <a class="nav-link" href="{{ url('datapegawai') }}">Pegawai</a>
                                     </li>
-                                    <li class="nav-item">
+                                    <li class="nav-item active">
                                         <a class="nav-link" href="{{ url('suratmasuk') }}">Surat Masuk</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="{{ url('suratkeluar') }}">Surat Keluar</a>
+                                        <a class="nav-link" href="{{ url('suratmasuk') }}">Surat Keluar</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="{{ url('suratcuti') }}">Surat Cuti</a>
@@ -115,32 +116,23 @@
                         </div>
                     </nav>
 
-                    <form action="{{ url('/adddatakeluarga/'. $pegawai->id) }}"method="post" enctype="multipart/form-data">
+                    <form action="{{ url('/updateuser/' . $users->id) }}"method="post" enctype="multipart/form-data">
                          @csrf
-                        <div class="form-group">
-                            <label for="formGroupExampleInput">Nama Keluarga</label>
-                            <input type="text" class="form-control" id="formGroupExampleInput" name="NAMA_KELUARGA" placeholder="Masukan Nama Keluarga">
+                         @method('put')
+                         <div class="form-group">
+                            <label for="formGroupExampleInput">Username</label>
+                            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Masukan Username" name="USERNAME" value="{{ $users->USERNAME }}">
                         </div>
                         <div class="form-group">
-                            <label for="formGroupExampleInput2">Tanggal Lahir</label>
-                            <input type="date" class="form-control" id="formGroupExampleInput2" name="TANGGAL_LAHIR" placeholder="Masukan Tanggal Lahir">
+                            <label for="formGroupExampleInput2">Email</label>
+                            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Masukan Email" name="EMAIL_ADMIN" value="{{ $users->EMAIL_ADMIN }}">
                         </div>
                         <div class="form-group">
-                            <label for="formGroupExampleInput2">Status</label>
-                            <select class="form-control" name="STATUS">
-                                <option value="" disabled selected hidden>Pilih Status</option>
-                                <option>Suami</option>
-                                <option>Istri</option>
-                                <option>Anak</option>
-                                <option>Orang Tua</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="formGroupExampleInput2">Pekerjaan</label>
-                            <input type="text" class="form-control" id="formGroupExampleInput2" name="PEKERJAAN" placeholder="Masukan Pekerjaan">
+                            <label for="formGroupExampleInput2">Password</label>
+                            <input type="password" class="form-control" id="formGroupExampleInput2" placeholder="Masukan Password" name="password" value="{{ $users->password }}">
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
-                        <a href="{{ url('/datakeluarga/'.$pegawai->id)  }}" class="btn btn-danger"> Kembali</a>
+                        <a href="{{ url('/daftaruser') }}" class="btn btn-danger"> Kembali</a>
                     </form>
                 </div>
             </div>

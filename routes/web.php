@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DataBpjsController;
 use App\Http\Controllers\PenilaianTahunanController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\loginController;
 use App\Http\Controllers\DiklatController;
@@ -184,3 +185,12 @@ Route::get('/editdatabpjs/{id}', [DataBpjsController::class, "edit"])->middlewar
 Route::put("/updatedatabpjs/{id}", [DataBpjsController::class, "update"])->middleware('auth:admin');
 Route::get('/tampildatabpjs/{id}', [DataBpjsController::class, "view"])->middleware('auth:admin');
 Route::get('/exportbpjs/{id}', [DataBpjsController::class, "export_excel"])->middleware('auth:admin');
+
+// CREATE USER
+Route::get('/daftaruser', [UserController::class,"index"])->middleware('auth:admin');
+Route::get('/createuser', [UserController::class,"indexcreate"])->middleware('auth:admin');
+Route::post('/adduser', [UserController::class, "store"])->middleware('auth:admin');
+Route::delete("/deleteuser/{id}", [UserController::class, "destroy"])->middleware('auth:admin');
+Route::get('/edituser/{id}', [UserController::class, "edit"])->middleware('auth:admin');
+Route::put("/updateuser/{id}", [UserController::class, "update"])->middleware('auth:admin');
+Route::get('/cariuser', [UserController::class, "find"])->middleware('auth:admin');

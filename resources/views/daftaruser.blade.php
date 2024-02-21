@@ -24,12 +24,10 @@
             <link href="{{ asset('css/styles.css') }}" rel="stylesheet" type="text/css" />
             <link href="{{ asset('css/sidebar.css') }}" rel="stylesheet" type="text/css" />
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+            <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     </head>
 
-    <body>
-        <div class="notification">
-            <x-notify::notify />
-        </div>
+    <body class="background-menu">
         <div class="wrapper d-flex align-items-stretch">
                 <nav id="sidebar">
                     <div class="p-4 pt-5 ">
@@ -39,11 +37,11 @@
                         </div>
                         <h2 class="sidebar-title">PUSDALOPS-PB</h2>
                         <ul class="list-unstyled components mb-5">
-                             <li>
+                            <li>
                                 <a href="{{ url('dashboardpage') }}">Dashboard</a>
                             </li>
 
-                            <li class="nav-item active">
+                            <li>
                                 <a href="{{ url('datapegawai') }}">Pegawai</a>
                             </li>
 
@@ -62,12 +60,12 @@
                             <li>
                                 <a href="{{ url('spt') }}">SPT</a>
                             </li>
-                         
+
                             <li>
                                 <a href="{{ url('disposisi') }}">Disposisi</a>
                             </li>
 
-                            <li>
+                            <li class="nav-item active">
                                 <a href="{{ url('daftaruser') }}">Daftar User</a>
                             </li>
                         </ul>
@@ -76,6 +74,9 @@
                 </nav>
 
                 <!-- Page Content  -->
+                <div class="notification">
+                    <x-notify::notify />
+                </div>
                 <div id="content" class="p-4 p-md-5">
                     <nav class="navbar navbar-expand-lg navbar-light bg-light">
                         <div class="container-fluid">
@@ -88,67 +89,64 @@
                             </button>
 
                             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                                <ul class="nav navbar-nav ml-auto">
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="{{ url('dashboardpage') }}">Dashboard</a>
-                                    </li>
-                                    <li class="nav-item active">
-                                        <a class="nav-link" href="{{ url('datapegawai') }}">Pegawai</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="{{ url('suratmasuk') }}">Surat Masuk</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="{{ url('suratkeluar') }}">Surat Keluar</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="{{ url('suratcuti') }}">Surat Cuti</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="{{ url('spt') }}">SPT</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="{{ url('disposisi') }}">Disposisi</a>
-                                    </li>
-                                </ul>
+                            <ul class="nav navbar-nav ml-auto">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url('dashboardpage') }}">Dashboard</a>
+                                </li>
+                                <li class="nav-item active">
+                                    <a class="nav-link" href="{{ url('datapegawai') }}">Pegawai</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url('suratmasuk') }}">Surat Masuk</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url('suratkeluar') }}">Surat Keluar</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url('suratcuti') }}">Surat Cuti</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url('spt') }}">SPT</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url('disposisi') }}">Disposisi</a>
+                                </li>
+                            </ul>
                             </div>
                         </div>
                     </nav>
-
-                    <form action="{{ url('/adddatakeluarga/'. $pegawai->id) }}"method="post" enctype="multipart/form-data">
-                         @csrf
-                        <div class="form-group">
-                            <label for="formGroupExampleInput">Nama Keluarga</label>
-                            <input type="text" class="form-control" id="formGroupExampleInput" name="NAMA_KELUARGA" placeholder="Masukan Nama Keluarga">
+                    <div class="surat_container"  data-aos="fade-up" data-aos-delay="50" data-aos-duration="2000">
+                        <h1 class="h3 mb-0 text-gray-800 mb-2">Daftar User</h1>
+                        <form class="navbar-search" action="{{ url('/cariuser') }}" method="GET">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Cari User" aria-label="Search" name="search">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="submit">
+                                        <i class="fas fa-search fa-sm"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="d-flex w-100 justify-content-end">
+                            <a href="{{ url('/createuser') }}" class="btn btn-md btn-success m-3">Tambah</a>
                         </div>
-                        <div class="form-group">
-                            <label for="formGroupExampleInput2">Tanggal Lahir</label>
-                            <input type="date" class="form-control" id="formGroupExampleInput2" name="TANGGAL_LAHIR" placeholder="Masukan Tanggal Lahir">
+                        @include('tabel/tabeldaftaruser',$users)
+                        <div class="d-flex justify-content-center">
+                            {!! $users->links() !!}
                         </div>
-                        <div class="form-group">
-                            <label for="formGroupExampleInput2">Status</label>
-                            <select class="form-control" name="STATUS">
-                                <option value="" disabled selected hidden>Pilih Status</option>
-                                <option>Suami</option>
-                                <option>Istri</option>
-                                <option>Anak</option>
-                                <option>Orang Tua</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="formGroupExampleInput2">Pekerjaan</label>
-                            <input type="text" class="form-control" id="formGroupExampleInput2" name="PEKERJAAN" placeholder="Masukan Pekerjaan">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                        <a href="{{ url('/datakeluarga/'.$pegawai->id)  }}" class="btn btn-danger"> Kembali</a>
-                    </form>
+                    </div>
                 </div>
             </div>
-            <script src="{{ asset('js/jquery.min.js') }}"></script>
-            <script src="{{ asset('js/popper.js') }}"></script>
-            <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-            <script src="{{ asset('js/main.js') }}"></script>
+        
+        <script src="js/jquery.min.js"></script>
+        <script src="js/popper.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/main.js"></script>
         @include('sweetalert::alert')
         @notifyJs
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+        <script>
+            AOS.init();
+        </script>
     </body>
 </html>
