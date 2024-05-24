@@ -39,11 +39,12 @@ class Pegawai extends Model
         "INSTANSI",
         "UNIT",
         "SUB_UNIT",
-        "JABATAN",
+        "JABATAN_PEGAWAI",
         "JENIS_PEGAWAI",
         "PENDIDIKAN_TERAKHIR",
         "STATUS_PEGAWAI",
         "KEDUDUKAN",
+        "SISA_CUTI_TAHUNAN",
         "FOTO_PEGAWAI",
     ];
 

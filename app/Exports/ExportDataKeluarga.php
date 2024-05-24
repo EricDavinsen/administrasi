@@ -15,7 +15,7 @@ class ExportDataKeluarga implements FromView
     */
     public function view():View
     {
-        $datakeluarga = DataKeluarga::paginate(5);
+        $datakeluarga = DataKeluarga::get();
         return view('tabel/tabeldatakeluarga', ['datakeluarga' => $datakeluarga]);
     }
 }

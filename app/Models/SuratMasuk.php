@@ -12,7 +12,7 @@ class SuratMasuk extends Model
 {
     use HasFactory, Notifiable;
 
-    protected $table = 'surat_masuks';
+    protected $table = 'surat_masuk';
 
 
     /**

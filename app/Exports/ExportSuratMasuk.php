@@ -13,7 +13,7 @@ class ExportSuratMasuk implements FromView
     */
     public function view():View
     {
-        $suratmasuk = SuratMasuk::latest()->paginate(5);
+        $suratmasuk = SuratMasuk::orderBy('TANGGAL_SURAT', 'asc')->get();
         return view('tabel/tabelsuratmasuk', ['suratmasuk' => $suratmasuk]);
     }
 }

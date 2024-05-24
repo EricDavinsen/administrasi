@@ -14,7 +14,7 @@ class ExportDiklat implements FromView
     */
     public function view():View
     {
-        $diklat = Diklat::paginate(5);
+        $diklat = Diklat::get();
         return view('tabel/tabeldiklat', ['diklat' => $diklat]);
     }
 }

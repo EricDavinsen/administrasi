@@ -13,17 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('surat_cutis', function (Blueprint $table) {
+        Schema::create('surat_cuti', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('pegawai_id');
             $table->string('NO_CUTI');
-            $table->string('NAMA');
             $table->string('JENIS_CUTI');
             $table->string('ALASAN_CUTI');
             $table->date('TANGGAL_MULAI');
             $table->date('TANGGAL_SELESAI');
             $table->integer('LAMA_CUTI');
-            $table->integer('SISA_CUTI_TAHUNAN');
             $table->string('FILE_SURAT');
+            $table->foreign('pegawai_id')->references('id')->on('pegawai')->onDelete('cascade');
             $table->timestamps();
         });
     }

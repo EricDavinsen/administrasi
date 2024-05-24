@@ -1,23 +1,23 @@
 
-<div style="width:100%; overflow:auto; ">
-    <table id="dtHorizontalExample" class="table table-bordered table-striped table-sm scroll" style="width:100%" cellspacing="0" width="100%">
+<div style="width:100%; overflow-x:auto;" data-aos="fade-up" data-aos-delay="50" data-aos-duration="2000">
+    <table id="myTable" class="table table-bordered table-striped table-sm table-light" style="width:100%" cellspacing="0">
         <thead class="text-center">
             <tr>
-            <th scope="col">No</th>
-            <th scope="col">No JKN</th>
-            <th scope="col">No Kartu Keluarga</th>
-            <th scope="col">NIK</th>
-            <th scope="col">NIP</th>
-            <th scope="col">Nama Lengkap</th>
-            <th scope="col">Jenis Kelamin</th>
-            <th scope="col">Status Kawin</th>
-            <th scope="col">Hub. Keluarga</th>
-            <th scope="col">Tanggal Lahir</th>
-            <th scope="col">TMT Pegawai</th>
-            <th scope="col">Gaji Pokok</th>
-            <th scope="col">Nama Faskes</th>
-            <th scope="col">No Telepon</th>
-            <th scope="col">Aksi</th>
+            <th scope="col" style="text-align:center">No</th>
+            <th scope="col" style="text-align:center">No JKN</th>
+            <th scope="col" style="text-align:center">No Kartu Keluarga</th>
+            <th scope="col" style="text-align:center">NIK</th>
+            <th scope="col" style="text-align:center">NIP</th>
+            <th scope="col" style="text-align:center">Nama Lengkap</th>
+            <th scope="col" style="text-align:center">Jenis Kelamin</th>
+            <th scope="col" style="text-align:center">Status Kawin</th>
+            <th scope="col" style="text-align:center">Hub. Keluarga</th>
+            <th scope="col" style="text-align:center">Tanggal Lahir</th>
+            <th scope="col" style="text-align:center">TMT Pegawai</th>
+            <th scope="col" style="text-align:center">Gaji Pokok</th>
+            <th scope="col" style="text-align:center">Nama Faskes</th>
+            <th scope="col" style="text-align:center">No Telepon</th>
+            <th scope="col" style="text-align:center">Aksi</th>
             </tr>
         </thead>
         <tbody>
@@ -48,12 +48,8 @@
             <td>{{ $item->NO_TELEPON }}</td>
             <td>
                 <div class="action-buttons d-flex w-100  justify-content-center gap-2">
-                <a href="{{ url('/editdatabpjs/'.$item->id) }}" class="btn btn-info text-white">Edit</a> 
-                    <form action="{{ url('/deletedatabpjs/'.$item->id) }}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger">Delete</button>
-                    </form>
+                    <a href="{{ url('/editdatabpjs/'.$item->id) }}" class="btn btn-info text-white">Edit</a> 
+                    <a class="btn btn-danger text-white" data-toggle="modal" data-target="#deleteModal{{$item->id}}">Delete</a>
                 </div>
             </td>
             </tr>

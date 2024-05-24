@@ -1,145 +1,98 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>PUSDALOPS-PB</title>
-        @notifyCss
-        <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-            <!-- Bootstrap icons-->
-            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-            <!-- Core theme CSS (includes Bootstrap)-->
-            <!-- Font Awesome -->
-            <link
-                href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-                rel="stylesheet"
-            />
-            <!-- Google Fonts -->
-            <link
-                href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-                rel="stylesheet"
-            />
-            
-            <link href="{{ asset('css/styles.css') }}" rel="stylesheet" type="text/css" />
-            <link href="{{ asset('css/sidebar.css') }}" rel="stylesheet" type="text/css" />
-            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-            <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    </head>
+@extends('layouts.app') 
 
-    <body class="background-menu">
-        <div class="wrapper d-flex align-items-stretch">
-                <nav id="sidebar">
-                    <div class="p-4 pt-5 ">
-                        <div class="sidebar-logo">
-                            <img src="{{ ('/img/logo.png') }}" 
-                                    style="width: 185px;" alt="logo">
-                        </div>
-                        <h2 class="sidebar-title">PUSDALOPS-PB</h2>
-                        <ul class="list-unstyled components mb-5">
-                            <li>
-                                <a href="{{ url('dashboardpage') }}">Dashboard</a>
-                            </li>
+@section('content')
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <button type="button" id="sidebarCollapse" class="btn btn-primary">
+            <i class="fa fa-bars"></i>
+            <span class="sr-only">Toggle Menu</span>
+            </button>
+            <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fa fa-bars"></i>
+            </button>
 
-                            <li class="nav-item active">
-                                <a href="{{ url('datapegawai') }}">Pegawai</a>
-                            </li>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="nav navbar-nav ml-auto">
+            <li class="nav-item">
+                    <a class="nav-link" href="{{ url('/dashboardpegawai/'.$pegawai->id) }}">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('/datapribadi/'.$pegawai->id) }}">Data Pribadi</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ url('/riwayatsk/'.$pegawai->id) }}">Riwayat SK</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('/riwayatpendidikan/'.$pegawai->id) }}">Riwayat Pendidikan</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('/diklat/'.$pegawai->id) }}">Diklat</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('/datakeluarga/'.$pegawai->id) }}">Data Keluarga</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('/databpjs/'.$pegawai->id) }}">Data BPJS</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('/penilaiantahunan/'.$pegawai->id) }}">Penilaian Tahunan</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('/cetakinformasi/'.$pegawai->id) }}">Cetak Informasi</a>
+                </li>
+            </ul>
+            </div>
+        </div>
+    </nav>
 
-                            <li>
-                                <a href="{{ url('suratmasuk') }}">Surat Masuk</a>
-                            </li>
-
-                            <li>
-                                <a href="{{ url('suratkeluar') }}">Surat Keluar</a>
-                            </li>
-
-                            <li>
-                                <a href="{{ url('suratcuti') }}">Surat Cuti</a>
-                            </li>
-
-                            <li>
-                                <a href="{{ url('spt') }}">SPT</a>
-                            </li>
-
-                            <li>
-                                <a href="{{ url('disposisi') }}">Disposisi</a>
-                            </li>
-
-                            <li>
-                                <a href="{{ url('daftaruser') }}">Daftar User</a>
-                            </li>
-                         
-                        </ul>
-                        
-                            <a href="{{ url('logout') }}" class="btn-logout"> Logout </a>
-
+    <div class="surat_container" data-aos="fade-up" data-aos-delay="50" data-aos-duration="2000">
+        <h1 class="h3 mb-0 text-gray-800 mb-2">Riwayat SK</h1>
+        <div class="d-flex w-100 justify-content-start pegawai-button gap-3 mb-3">
+            <a href="{{ url('/createriwayatsk/'.$pegawai->id) }}" class="btn btn-md btn-success">Tambah</a>
+            <a href="{{ url('/exportriwayatsk/'.$pegawai->id) }}" class="btn btn-md btn-warning text-white ">Export</a>
+            <a href="{{ url('/dashboardpegawai/'.$pegawai->id) }}" class="btn btn-md btn-info">Back</a>
+        </div>
+    </div>
+    @include ('tabel/tabelriwayatsk', $riwayatsk)
+    @foreach ($riwayatsk as $data)
+        <div class="modal fade" id="exampleModalCenters-{{$data->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content vh-100">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">File Surat</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
-                </nav>
-
-                <!-- Page Content  -->
-                <div class="notification">
-                    <x-notify::notify />
-                </div>
-                <div id="content" class="p-4 p-md-5">
-                    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                        <div class="container-fluid">
-                            <button type="button" id="sidebarCollapse" class="btn btn-primary">
-                            <i class="fa fa-bars"></i>
-                            <span class="sr-only">Toggle Menu</span>
-                            </button>
-                            <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                                <i class="fa fa-bars"></i>
-                            </button>
-
-                            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                            <ul class="nav navbar-nav ml-auto">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('dashboardpage') }}">Dashboard</a>
-                                </li>
-                                <li class="nav-item active">
-                                    <a class="nav-link" href="{{ url('datapegawai') }}">Pegawai</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('suratmasuk') }}">Surat Masuk</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('suratkeluar') }}">Surat Keluar</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('suratcuti') }}">Surat Cuti</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('spt') }}">SPT</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('disposisi') }}">Disposisi</a>
-                                </li>
-                            </ul>
-                            </div>
-                        </div>
-                    </nav>
-
-                    <div class="surat_container"  data-aos="fade-up" data-aos-delay="50" data-aos-duration="2000">
-                        <h1 class="h3 mb-0 text-gray-800 mb-2">Riwayat SK</h1>
-                        <div class="d-flex w-100 justify-content-start pegawai-button">
-                            <a href="{{ url('/createriwayatsk/'.$pegawai->id) }}" class="btn btn-md btn-success m-3">Tambah</a>
-                            <a href="{{ url('/exportriwayatsk/'.$pegawai->id) }}" class="btn btn-md btn-warning text-white  m-3">Export</a>
-                            <a href="{{ url('/dashboardpegawai/'.$pegawai->id) }}" class="btn btn-md btn-info m-3">Back</a>
-                        </div>
-                        @include ('tabel/tabelriwayatsk', $riwayatsk)
+                    <div class="modal-body">
+                        <iframe src="/document/{{$data->FILE_SK}}" class="h-100 w-100 overflow-scroll"></iframe>
                     </div>
                 </div>
             </div>
-    
-        <script src="{{ asset('js/jquery.min.js') }}"></script>
-        <script src="{{ asset('js/popper.js') }}"></script>
-        <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-        <script src="{{ asset('js/main.js') }}"></script>
-        @include('sweetalert::alert')
-        @notifyJs
-        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-        <script>
-            AOS.init();
-        </script>
-    </body>
-</html>
+        </div>
+
+        <div class="modal fade" id="deleteModal{{$data->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalCenterTitle">Hapus Data</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                    </div>
+                    <div class="modal-body">
+                        Apakah anda ingin menghapus data ini?
+                    </div>
+                    <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <form action="{{ url('/deleteriwayatsk/'.$data->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
+@endsection

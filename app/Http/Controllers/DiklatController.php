@@ -12,13 +12,13 @@ use Maatwebsite\Excel\Facades\Excel;
 class DiklatController extends Controller
 {
     public function index($id){
-        $diklat = Diklat::where('pegawai_id', $id)->latest()->get();
+        $diklat = Diklat::where('pegawai_id', $id)->get();
         $pegawai = Pegawai::where('id', $id)->first();
-
+        
         return view("diklat")->with([
             'diklat' => $diklat,
             'pegawai' => $pegawai,
-            'admin' => Auth::guard('admin')->user() 
+            'users' => Auth::guard('users')->user() 
         ]);
     }
 
@@ -29,7 +29,7 @@ class DiklatController extends Controller
         return view("tambah/tambahdiklat")->with([
             'pegawai' => $pegawai,
             'diklat' => $diklat,
-            'admin' => Auth::guard('admin')->user() 
+            'users' => Auth::guard('users')->user() 
         ]);
     }
     public function store( Request $request, $id)
@@ -118,7 +118,8 @@ class DiklatController extends Controller
 
         return view("edit/editdiklat")->with([
             'diklat' => $diklat,
-            'pegawai' => $pegawai
+            'pegawai' => $pegawai,
+            'users' => Auth::guard('users')->user()
         ]);
     }
 
@@ -184,14 +185,6 @@ class DiklatController extends Controller
     return redirect()->intended("/diklat/$diklat->pegawai_id")->with([ notify()->error('Batal Mengupdate Diklat'),
         'error' => 'Batal Mengupdate Diklat']);
     }
-
-    public function view($id){
-        $data = Diklat::find($id);
-        $diklat = Diklat::where('id', $id)->first();
-
-        return view("tampil/tampilsertifikat",compact("data","diklat"));
-    }
-
     function export_excel($id)
     {
         return Excel::download(new ExportDiklat, 'diklat.xlsx');

@@ -14,24 +14,34 @@ class DisposisiController extends Controller
 {
 
     public function index(){
-        $disposisi = Disposisi::latest()->paginate(5);
+        $disposisi = Disposisi::latest()->get();
         $suratmasuk = SuratMasuk::all();
+     
         return view('disposisi')->with([
             'disposisi' => $disposisi,
             'suratmasuk' => $suratmasuk,
-            'admin' => Auth::guard('admin')->user() 
+            'users' => Auth::guard('users')->user() 
         ]);
     }
 
-    public function indexcreate($id) : View
+    public function indexcreate($id) 
     {
         $suratmasuk = SuratMasuk::where('id',$id)->first();
         $disposisi = Disposisi::all();
+
+        $existingDisposisi = Disposisi::where('surat_masuk_id', $id)->first();
+
+    if ($existingDisposisi) {
+        return redirect()->back()->with('error', 'Sudah terdapat disposisi pada surat masuk ini.');
+    }
+
         return view("tambah/tambahdisposisi")->with([
             'suratmasuk' => $suratmasuk,
             'disposisi' => $disposisi,
-            'admin' => Auth::guard('admin')->user() 
+            'users' => Auth::guard('users')->user()
         ]);
+
+
     }
     public function store( Request $request ,$id)
     {
@@ -39,10 +49,12 @@ class DisposisiController extends Controller
         $this->validate($request,
             [
                 "NAMA" => ["required"],
-                "HASIL_LAPORAN" => ["required"],
+                "PENERUS" => ["required"],
+                "INSTRUKSI" => ["required"],
             ],
         );
 
+    if ($request->hasFile('HASIL_LAPORAN')) {
         $file = $request->file("HASIL_LAPORAN");
         $fileName = $request->file("HASIL_LAPORAN")->getClientOriginalName();
         $file->move('document/', $fileName);
@@ -50,9 +62,21 @@ class DisposisiController extends Controller
         $disposisi = Disposisi::create([
             'surat_masuk_id' => $suratmasuk->id,
             'NAMA' => $request->NAMA,
+            'PENERUS' => $request->PENERUS,
+            'INSTRUKSI' => $request->INSTRUKSI,
+            'INFORMASI_LAINNYA' => $request->INFORMASI_LAINNYA,
             'HASIL_LAPORAN' => $fileName
         ]);
-
+    } else {
+        $disposisi = Disposisi::create([
+            'surat_masuk_id' => $suratmasuk->id,
+            'NAMA' => $request->NAMA,
+            'PENERUS' => $request->PENERUS,
+            'INSTRUKSI' => $request->INSTRUKSI,
+            'INFORMASI_LAINNYA' => $request->INFORMASI_LAINNYA,
+            'HASIL_LAPORAN' => $request->HASIL_LAPORAN
+        ]);
+    }
 
         if ($disposisi) {
             return redirect()
@@ -100,6 +124,7 @@ class DisposisiController extends Controller
 
         return view("edit/editdisposisi")->with([
             'disposisi' => $disposisi,
+            'users' => Auth::guard('users')->user()
         ]);
     }
 
@@ -111,6 +136,18 @@ class DisposisiController extends Controller
             $disposisi->NAMA = $request->NAMA;
         }
 
+        if ($request->PENERUS) {
+            $disposisi->PENERUS = $request->PENERUS;
+        }
+
+        if ($request->INSTRUKSI) {
+            $disposisi->INSTRUKSI = $request->INSTRUKSI;
+        }
+
+        if ($request->INFORMASI_LAINNYA) {
+            $disposisi->INFORMASI_LAINNYA = $request->INFORMASI_LAINNYA;
+        }
+
         if ($request->HASIL_LAPORAN) {
             $disposisi->HASIL_LAPORAN = $request->HASIL_LAPORAN;
         }
@@ -119,6 +156,9 @@ class DisposisiController extends Controller
         ->update(
             array(
                 'NAMA' => $disposisi->NAMA,
+                'PENERUS' => $disposisi->PENERUS,
+                'INSTRUKSI' => $disposisi->INSTRUKSI,
+                'INFORMASI_LAINNYA' => $disposisi->INFORMASI_LAINNYA,
                 'HASIL_LAPORAN' => $disposisi->HASIL_LAPORAN,
             ),
         );
@@ -148,21 +188,28 @@ class DisposisiController extends Controller
 
     }
 
-    public function view($id){
-        $data = Disposisi::find($id);
-
-        return view("tampil/tampildisposisi",compact("data"));
-    }
-
     public function create($id){
         $disposisi = Disposisi::where('id', $id)->first();
         return view('tampil/lembardisposisi')->with([
             'disposisi' => $disposisi,
+            'users' => Auth::guard('users')->user()
         ]);
     }
 
     function export_excel()
     {
         return Excel::download(new ExportDisposisi, 'disposisi.xlsx');
+    }
+
+    public function find(Request $request)
+    {
+        $disposisi = Disposisi::where('NAMA', 'like', '%' . $request->search . '%')
+            ->get();
+        $disposisi->appends(['search' => $request->search]);
+
+        return view("disposisi")->with([
+            'disposisi' => $disposisi,
+            'users' => Auth::guard('users')->user()
+        ]);
     }
 }

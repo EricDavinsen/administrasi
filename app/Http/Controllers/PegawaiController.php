@@ -20,23 +20,26 @@ class PegawaiController extends Controller
     public function index($id){
         $pegawai = Pegawai::where('id', $id)->first();
         
-       return view("dashboardpegawai")->with([
-         'admin' => Auth::guard('admin')->user(),
+        return view("dashboardpegawai")->with([
+         'users' => Auth::guard('users')->user(),
          'pegawai' => $pegawai
        ]);
     }
 
     public function indexpegawai(){
-        $pegawai = Pegawai::paginate(5);
+        $pegawai = Pegawai::orderBy('NAMA_PEGAWAI', 'asc')->get();
 
         return view("datapegawai")->with([
+            'users' => Auth::guard('users')->user(),
             'pegawai' => $pegawai
         ]);
     }
 
     public function indexcreate() : View
     {
-        return view("tambah/tambahpegawai");
+        return view("tambah/tambahpegawai")->with([
+            'users' => Auth::guard('users')->user(),
+        ]);
     }
 
     public function store(Request $request)
@@ -51,7 +54,7 @@ class PegawaiController extends Controller
                 "AGAMA" => ["required"],
                 "INSTANSI" => ["required"],
                 "UNIT" => ["required"],
-                "JABATAN" => ["required"],
+                "JABATAN_PEGAWAI" => ["required"],
                 "JENIS_PEGAWAI" => ["required"],
                 "PENDIDIKAN_TERAKHIR" => ["required"],
                 "STATUS_PEGAWAI" => ["required"],
@@ -63,7 +66,7 @@ class PegawaiController extends Controller
         if ($request->hasFile('FOTO_PEGAWAI')) {
             $document = $request->file('FOTO_PEGAWAI');
             $fileName = $request->file("FOTO_PEGAWAI")->getClientOriginalName();
-            $document->move('document/', $fileName);
+            $document->move('images/', $fileName);
             $pegawai = Pegawai::create([
                 'NAMA_PEGAWAI' => $request->NAMA_PEGAWAI,
                 'NIK' => $request->NIK,
@@ -74,31 +77,15 @@ class PegawaiController extends Controller
                 'INSTANSI' => $request->INSTANSI,
                 'UNIT' => $request->UNIT,
                 'SUB_UNIT' => $request->SUB_UNIT,
-                'JABATAN' => $request->JABATAN,
+                'JABATAN_PEGAWAI' => $request->JABATAN_PEGAWAI,
                 'JENIS_PEGAWAI' => $request->JENIS_PEGAWAI,
                 'PENDIDIKAN_TERAKHIR' => $request->PENDIDIKAN_TERAKHIR,
                 'STATUS_PEGAWAI' => $request->STATUS_PEGAWAI,
                 'KEDUDUKAN' => $request->KEDUDUKAN,
+                'SISA_CUTI_TAHUNAN' => 6,
                 'FOTO_PEGAWAI' => $fileName,
             ]);
-        }else{
-            $pegawai = Pegawai::create([
-                'NAMA_PEGAWAI' => $request->NAMA_PEGAWAI,
-                'NIK' => $request->NIK,
-                "NO_KK" => $request->NO_KK,
-                'TANGGAL_LAHIR' => $request->TANGGAL_LAHIR,
-                'JENIS_KELAMIN' => $request->JENIS_KELAMIN,
-                'AGAMA' => $request->AGAMA,
-                'INSTANSI' => $request->INSTANSI,
-                'UNIT' => $request->UNIT,
-                'SUB_UNIT' => $request->SUB_UNIT,
-                'JABATAN' => $request->JABATAN,
-                'JENIS_PEGAWAI' => $request->JENIS_PEGAWAI,
-                'PENDIDIKAN_TERAKHIR' => $request->PENDIDIKAN_TERAKHIR,
-                'STATUS_PEGAWAI' => $request->STATUS_PEGAWAI,
-                'KEDUDUKAN' => $request->KEDUDUKAN,
-                'FOTO_PEGAWAI' => $request->FOTO_PEGAWAI,
-            ]);
+     
         }
 
         if ($pegawai) {
@@ -139,6 +126,7 @@ class PegawaiController extends Controller
 
         return view("edit/editpegawai")->with([
             'pegawai' => $pegawai,
+            'users' => Auth::guard('users')->user(),
         ]);
     }
 
@@ -173,8 +161,8 @@ class PegawaiController extends Controller
         if ($request->SUB_UNIT) {
             $pegawai->SUB_UNIT = $request->SUB_UNIT;
         }
-        if ($request->JABATAN) {
-            $pegawai->JABATAN = $request->JABATAN;
+        if ($request->JABATAN_PEGAWAI) {
+            $pegawai->JABATAN_PEGAWAI = $request->JABATAN_PEGAWAI;
         }
         if ($request->JENIS_PEGAWAI) {
             $pegawai->JENIS_PEGAWAI = $request->JENIS_PEGAWAI;
@@ -204,7 +192,7 @@ class PegawaiController extends Controller
                 'INSTANSI' => $pegawai->INSTANSI,
                 'UNIT' => $pegawai->UNIT,
                 'SUB_UNIT' => $pegawai->SUB_UNIT,
-                'JABATAN' => $pegawai->JABATAN,
+                'JABATAN_PEGAWAI' => $pegawai->JABATAN_PEGAWAI,
                 'JENIS_PEGAWAI' => $pegawai->JENIS_PEGAWAI,
                 'PENDIDIKAN_TERAKHIR' => $pegawai->PENDIDIKAN_TERAKHIR,
                 'STATUS_PEGAWAI' => $pegawai->STATUS_PEGAWAI,
@@ -217,7 +205,7 @@ class PegawaiController extends Controller
             $updatefile = Pegawai::find($id);
             $document = $request->file('FOTO_PEGAWAI');
             $fileName = $request->file("FOTO_PEGAWAI")->getClientOriginalName();
-            $document->move('document/', $fileName);
+            $document->move('images/', $fileName);
             $exist_file = $updatefile['FOTO_PEGAWAI'];
             $update['FOTO_PEGAWAI'] =  $fileName;
             $updatefile->update($update);
@@ -239,16 +227,17 @@ class PegawaiController extends Controller
     public function find(Request $request)
     {
         $pegawai = Pegawai::where('NAMA_PEGAWAI', 'like', '%' . $request->search . '%')
-            ->orWhere('TANGGAL_LAHIR', 'like', '%' . $request->search . '%')
+            ->orWhereRaw("DATE_FORMAT(TANGGAL_LAHIR, '%d-%m-%Y') LIKE ?", ["%" . $request->search . "%"])
             ->orWhere('JENIS_KELAMIN', 'like', '%' . $request->search . '%')
             ->orWhere('INSTANSI', 'like', '%' . $request->search . '%')
-            ->orWhere('JABATAN', 'like', '%' . $request->search . '%')
+            ->orWhere('JABATAN_PEGAWAI', 'like', '%' . $request->search . '%')
             ->orWhere('STATUS_PEGAWAI', 'like', '%' . $request->search . '%')
-            ->paginate(5);
+            ->get();
         $pegawai->appends(['search' => $request->search]);
 
         return view("datapegawai")->with([
-            'pegawai' => $pegawai
+            'pegawai' => $pegawai,
+            'users' => Auth::guard('users')->user()
         ]);
     }
 
@@ -256,15 +245,6 @@ class PegawaiController extends Controller
     {
         return Excel::download(new ExportPegawai, 'datapegawai.xlsx');
     }
-
-    // function import_excel(Request $request)
-    // {
-    //     $data = $request->file('file');
-    //     $fileName = $data->getClientOriginalName();
-    //     $data->move('document/', $fileName);
-    //     Excel::import(new ImportPegawai, public_path('/document/' . $fileName));
-    //     return redirect()->back();
-    // }
 
     public function create($id){
         $pegawai = Pegawai::where('id', $id)->first();
@@ -278,7 +258,7 @@ class PegawaiController extends Controller
             return view("tambah/tambahdatapribadi")->with([
                 'pegawai' => $pegawai,
                 'datapribadi' => $datapribadi,
-                'admin' => Auth::guard('admin')->user(),
+                'users' => Auth::guard('users')->user(),
                 notify()->error('Isi Data Pribadi Terlebih Dahulu'),
                 'error' => 'Isi Data Pribadi Terlebih Dahulu'
             ]);
@@ -290,7 +270,8 @@ class PegawaiController extends Controller
             'riwayatpendidikan' => $riwayatpendidikan,
             'diklat' => $diklat,
             'datakeluarga' => $datakeluarga,
-            'datapribadi' => $datapribadi
+            'datapribadi' => $datapribadi,
+            'users' => Auth::guard('users')->user(),
         ]);
     }
 }

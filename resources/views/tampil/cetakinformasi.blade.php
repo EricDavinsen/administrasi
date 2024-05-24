@@ -1,82 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>PUSDALOPS-PB</title>
-        @notifyCss
-        <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-            <!-- Bootstrap icons-->
-            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-            <!-- Core theme CSS (includes Bootstrap)-->
-            <!-- Font Awesome -->
-            <link
-                href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-                rel="stylesheet"
-            />
-            <!-- Google Fonts -->
-            <link
-                href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-                rel="stylesheet"
-            />
-            
-            <link href="{{ asset('css/styles.css') }}" rel="stylesheet" type="text/css" />
-            <link href="{{ asset('css/sidebar.css') }}" rel="stylesheet" type="text/css" />
-            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-            <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    </head>
+@extends('layouts.app')
 
-    <body>
-        <div class="wrapper d-flex align-items-stretch">
-                <nav id="sidebar">
-                    <div class="p-4 pt-5 ">
-                        <div class="sidebar-logo">
-                            <img src="{{ ('/img/logo.png') }}" 
-                                    style="width: 185px;" alt="logo">
-                        </div>
-                        <h2 class="sidebar-title">PUSDALOPS-PB</h2>
-                        <ul class="list-unstyled components mb-5">
-                            <li>
-                                <a href="{{ url('dashboardpage') }}">Dashboard</a>
-                            </li>
-
-                            <li class="nav-item active">
-                                <a href="{{ url('datapegawai') }}">Pegawai</a>
-                            </li>
-
-                            <li>
-                                <a href="{{ url('suratmasuk') }}">Surat Masuk</a>
-                            </li>
-
-                            <li>
-                                <a href="{{ url('suratkeluar') }}">Surat Keluar</a>
-                            </li>
-
-                            <li>
-                                <a href="{{ url('suratcuti') }}">Surat Cuti</a>
-                            </li>
-                            
-                            <li>
-                                <a href="{{ url('spt') }}">SPT</a>
-                            </li>
-
-                            <li>
-                                <a href="{{ url('disposisi') }}">Disposisi</a>
-                            </li>
-                            
-                        </ul>
-                        
-                            <a href="{{ url('logout') }}" class="btn-logout"> Logout </a>
-
-                    </div>   
-                </nav>
-
-                <!-- Page Content  -->
-                <div class="notification">
-                    <x-notify::notify />
-                </div>
-                <div id="content" class="p-4 p-md-5">
+@section('content')
                     <nav class="navbar navbar-expand-lg navbar-light bg-light">
                         <div class="container-fluid">
                             <button type="button" id="sidebarCollapse" class="btn btn-primary">
@@ -89,26 +13,32 @@
 
                             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="nav navbar-nav ml-auto">
+                            <li class="nav-item">
+                                    <a class="nav-link" href="{{ url('/dashboardpegawai/'.$pegawai->id) }}">Dashboard</a>
+                                </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('dashboardpage') }}">Dashboard</a>
+                                    <a class="nav-link" href="{{ url('/datapribadi/'.$pegawai->id) }}">Data Pribadi</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url('/riwayatsk/'.$pegawai->id) }}">Riwayat SK</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url('/riwayatpendidikan/'.$pegawai->id) }}">Riwayat Pendidikan</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url('/diklat/'.$pegawai->id) }}">Diklat</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url('/datakeluarga/'.$pegawai->id) }}">Data Keluarga</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url('/databpjs/'.$pegawai->id) }}">Data BPJS</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url('/penilaiantahunan/'.$pegawai->id) }}">Penilaian Tahunan</a>
                                 </li>
                                 <li class="nav-item active">
-                                    <a class="nav-link" href="{{ url('datapegawai') }}">Pegawai</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('suratmasuk') }}">Surat Masuk</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('suratkeluar') }}">Surat Keluar</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('suratcuti') }}">Surat Cuti</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('spt') }}">SPT</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('disposisi') }}">Disposisi</a>
+                                    <a class="nav-link" href="{{ url('/cetakinformasi/'.$pegawai->id) }}">Cetak Informasi</a>
                                 </li>
                             </ul>
                             </div>
@@ -148,200 +78,198 @@
                             <h5>: {{ $pegawai->INSTANSI }}</h5>
                             <h5>: {{ $pegawai->UNIT }}</h5>
                             <h5>: {{ $pegawai->SUB_UNIT }}</h5>
-                            <h5>: {{ $pegawai->JABATAN }}</h5>
+                            <h5>: {{ $pegawai->JABATAN_PEGAWAI }}</h5>
                             <h5>: {{ $pegawai->JENIS_PEGAWAI }}</h5>
                             <h5>: {{ $pegawai->PENDIDIKAN_TERAKHIR }}</h5>
                             <h5>: {{ $pegawai->STATUS_PEGAWAI }}</h5>
                             <h5>: {{ $pegawai->KEDUDUKAN }}</h5>
                         </div>
                         <div class ="foto-pegawai" style="position:absolute; right:0; top:0;">
-                            <img src="/document/{{$pegawai->FOTO_PEGAWAI}}" alt="fotopengawai" style="width: 200px; height: 200px;">
+                            <img src="/images/{{$pegawai->FOTO_PEGAWAI}}" alt="fotopengawai" style="width: 200px; height: 200px;">
                         </div>
                         
                     </div>
 
-                    <h5 style="font-weight:bold">Riwayat SK</h5>
-                    <table class="table table-bordered" style="margin-bottom:35px;">
-                        <thead class="text-center">
-                            <tr>
-                            <th scope="col">No</th>
-                            <th scope="col">Jabatan</th>
-                            <th scope="col">Nomor SK</th>
-                            <th scope="col">Tanggal SK</th>
-                            <th scope="col">TMT</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @php
-                            $no=1;
-                            @endphp
-                            @foreach ($riwayatsk as $item)
-                            <tr>
-                            <td>{{ $no++ }}</td>
-                            <td>{{ $item->JABATAN }}</td>
-                            <td>{{ $item->NOMOR_SK }}</td>
-                            <td>{{ \Carbon\Carbon::parse($item->TANGGAL_SK)->format('d-m-Y') }}</td>
-                            <td>{{ \Carbon\Carbon::parse($item->TMT_SK)->format('d-m-Y') }}</td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                    @if($riwayatsk != null && count($riwayatsk) > 0)
+                        <h5 style="font-weight:bold">Riwayat SK</h5>
+                        <table class="table table-bordered" style="margin-bottom:35px;">
+                            <thead class="text-center">
+                                <tr>
+                                <th scope="col">No</th>
+                                <th scope="col">Jabatan</th>
+                                <th scope="col">Nomor SK</th>
+                                <th scope="col">Tanggal SK</th>
+                                <th scope="col">TMT</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php
+                                $no=1;
+                                @endphp
+                                @foreach ($riwayatsk as $item)
+                                <tr>
+                                <td>{{ $no++ }}</td>
+                                <td>{{ $item->JABATAN }}</td>
+                                <td>{{ $item->NOMOR_SK }}</td>
+                                <td>{{ \Carbon\Carbon::parse($item->TANGGAL_SK)->format('d-m-Y') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($item->TMT_SK)->format('d-m-Y') }}</td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    @endif
 
-                    <h5 style="font-weight:bold">Riwayat Pendidikan Umum</h5>
-                    <table class="table table-bordered" style="margin-bottom:35px;">
-                        <thead class="text-center">
-                            <tr>
-                            <th scope="col">No</th>
-                            <th scope="col">Nama Sekolah</th>
-                            <th scope="col">Jurusan</th>
-                            <th scope="col">Tahun Lulus</th>
-                            <th scope="col">STTB</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @php
-                            $no=1;
-                            @endphp
-                            @foreach ($riwayatpendidikan as $item)
-                            <tr>
-                            <td>{{ $no++ }}</td>
-                            <td>{{ $item->NAMA_SEKOLAH }}</td>
-                            <td>{{ $item->JURUSAN }}</td>
-                            <td>{{ $item->TAHUN_LULUS }}</td>
-                            <td>{{ $item->STTB }}</td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                    @if($riwayatpendidikan != null && count($riwayatpendidikan) > 0)
+                        <h5 style="font-weight:bold">Riwayat Pendidikan Umum</h5>
+                        <table class="table table-bordered" style="margin-bottom:35px;">
+                            <thead class="text-center">
+                                <tr>
+                                <th scope="col">No</th>
+                                <th scope="col">Nama Sekolah</th>
+                                <th scope="col">Jurusan</th>
+                                <th scope="col">Tahun Lulus</th>
+                                <th scope="col">STTB</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php
+                                $no=1;
+                                @endphp
+                                @foreach ($riwayatpendidikan as $item)
+                                <tr>
+                                <td>{{ $no++ }}</td>
+                                <td>{{ $item->NAMA_SEKOLAH }}</td>
+                                <td>{{ $item->JURUSAN }}</td>
+                                <td>{{ $item->TAHUN_LULUS }}</td>
+                                <td>{{ $item->STTB }}</td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    @endif
 
-                    <h5 style="font-weight:bold">Diklat/Pelatihan</h5>
-                    <table class="table table-bordered" style="margin-bottom:35px;">
-                        <thead class="text-center">
-                            <tr>
-                            <th scope="col">No</th>
-                            <th scope="col">Nama Diklat</th>
-                            <th scope="col">Tanggal Mulai</th>
-                            <th scope="col">Tanggal Selesai</th>
-                            <th scope="col">Jumlah Jam</th>
-                            <th scope="col">Penyelenggara</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @php
-                            $no=1;
-                            @endphp
-                            @foreach ($diklat as $item)
-                            <tr>
-                            <td>{{ $no++ }}</td>
-                            <td>{{ $item->NAMA_DIKLAT }}</td>
-                            <td>{{ \Carbon\Carbon::parse($item->TANGGAL_MULAI)->format('d-m-Y') }}</td>
-                            <td>{{ \Carbon\Carbon::parse($item->TANGGAL_SELESAI)->format('d-m-Y') }}</td>
-                            <td>{{ $item->JUMLAH_JAM }}</td>
-                            <td>{{ $item->PENYELENGGARA }}</td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                    @if($diklat != null && count($diklat) > 0)
+                        <h5 style="font-weight:bold">Diklat/Pelatihan</h5>
+                        <table class="table table-bordered" style="margin-bottom:35px;">
+                            <thead class="text-center">
+                                <tr>
+                                <th scope="col">No</th>
+                                <th scope="col">Nama Diklat</th>
+                                <th scope="col">Tanggal Mulai</th>
+                                <th scope="col">Tanggal Selesai</th>
+                                <th scope="col">Jumlah Jam</th>
+                                <th scope="col">Penyelenggara</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php
+                                $no=1;
+                                @endphp
+                                @foreach ($diklat as $item)
+                                <tr>
+                                <td>{{ $no++ }}</td>
+                                <td>{{ $item->NAMA_DIKLAT }}</td>
+                                <td>{{ \Carbon\Carbon::parse($item->TANGGAL_MULAI)->format('d-m-Y') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($item->TANGGAL_SELESAI)->format('d-m-Y') }}</td>
+                                <td>{{ $item->JUMLAH_JAM }}</td>
+                                <td>{{ $item->PENYELENGGARA }}</td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    @endif
 
-                    <h5 style="font-weight:bold">Riwayat Keluarga</h5>
-                    <table class="table table-bordered" style="margin-bottom:35px;">
-                        <thead class="text-center">
-                            <tr>
-                            <th scope="col">No</th>
-                            <th scope="col">Nama</th>
-                            <th scope="col">Tanggal Lahir</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Pekerjaan</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @php
-                            $no=1;
-                            @endphp
-                            @foreach ($datakeluarga as $item)
-                            <tr>
-                            <td>{{ $no++ }}</td>
-                            <td>{{ $item->NAMA_KELUARGA }}</td>
-                            <td>{{ \Carbon\Carbon::parse($item->TANGGAL_LAHIR)->format('d-m-Y') }}</td>
-                            <td>{{ $item->STATUS }}</td>
-                            <td>{{ $item->PEKERJAAN }}</td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                    @if($datakeluarga != null && count($datakeluarga) > 0)
+                        <h5 style="font-weight:bold">Riwayat Keluarga</h5>
+                        <table class="table table-bordered" style="margin-bottom:35px;">
+                            <thead class="text-center">
+                                <tr>
+                                <th scope="col">No</th>
+                                <th scope="col">Nama</th>
+                                <th scope="col">Tanggal Lahir</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Pekerjaan</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php
+                                $no=1;
+                                @endphp
+                                @foreach ($datakeluarga as $item)
+                                <tr>
+                                <td>{{ $no++ }}</td>
+                                <td>{{ $item->NAMA_KELUARGA }}</td>
+                                <td>{{ \Carbon\Carbon::parse($item->TANGGAL_LAHIR)->format('d-m-Y') }}</td>
+                                <td>{{ $item->STATUS }}</td>
+                                <td>{{ $item->PEKERJAAN }}</td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    @endif
 
-                    <table class="table table-bordered">
-                        <thead class="text-center">
-                            <tr>
-                            <th colspan="2">DATA PRIBADI</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td scope="col" width="30%">KTP</th>
-                                <td>{{ $datapribadi->NO_KTP }}</td>
-                            </tr>
-                            <tr>
-                                <td scope="col">BPJS</th>
-                                <td>{{ $datapribadi->NO_BPJS }}</td>
-                            </tr>
-                            <tr>
-                                <td scope="col">NPWP</th>
-                                <td>{{ $datapribadi->NO_NPWP }}</td>
-                            </tr>
-                            <tr>
-                                <td scope="col">TINGGI BADAN</th>
-                                <td>{{ $datapribadi->TINGGI_BADAN }}</td>
-                            </tr>
-                            <tr>
-                                <td scope="col">BERAT BADAN</th>
-                                <td>{{ $datapribadi->BERAT_BADAN }}</td>
-                            </tr>
-                            <tr>
-                                <td scope="col">WARNA KULIT</th>
-                                <td>{{ $datapribadi->WARNA_KULIT }}</td>
-                            </tr>
-                            <tr>
-                                <td scope="col">GOLONGAN DARAH</th>
-                                <td>{{ $datapribadi->GOLONGAN_DARAH }}</td>
-                            </tr>
-                            <tr>
-                                <td scope="col">ALAMAT RUMAH</th>
-                                <td>{{ $datapribadi->ALAMAT_RUMAH }}</td>
-                            </tr>
-                            <tr>
-                                <td scope="col">KODE POS</th>
-                                <td>{{ $datapribadi->KODE_POS }}</td>
-                            </tr>
-                            <tr>
-                                <td scope="col">TELPON RUMAH</th>
-                                <td>{{ $datapribadi->TELPON_RUMAH }}</td>
-                            </tr>
-                            <tr>
-                                <td scope="col">NO HP</th>
-                                <td>{{ $datapribadi->NO_HP }}</td>
-                            </tr>
-                            <tr>
-                                <td scope="col">EMAIL</th>
-                                <td>{{ $datapribadi->EMAIL }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    @if($datapribadi != null)
+                        <table class="table table-bordered">
+                            <thead class="text-center">
+                                <tr>
+                                <th colspan="2">DATA PRIBADI</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td scope="col" width="30%">KTP</th>
+                                    <td>{{ $datapribadi->NO_KTP }}</td>
+                                </tr>
+                                <tr>
+                                    <td scope="col">BPJS</th>
+                                    <td>{{ $datapribadi->NO_BPJS }}</td>
+                                </tr>
+                                <tr>
+                                    <td scope="col">NPWP</th>
+                                    <td>{{ $datapribadi->NO_NPWP }}</td>
+                                </tr>
+                                <tr>
+                                    <td scope="col">TINGGI BADAN</th>
+                                    <td>{{ $datapribadi->TINGGI_BADAN }}</td>
+                                </tr>
+                                <tr>
+                                    <td scope="col">BERAT BADAN</th>
+                                    <td>{{ $datapribadi->BERAT_BADAN }}</td>
+                                </tr>
+                                <tr>
+                                    <td scope="col">WARNA KULIT</th>
+                                    <td>{{ $datapribadi->WARNA_KULIT }}</td>
+                                </tr>
+                                <tr>
+                                    <td scope="col">GOLONGAN DARAH</th>
+                                    <td>{{ $datapribadi->GOLONGAN_DARAH }}</td>
+                                </tr>
+                                <tr>
+                                    <td scope="col">ALAMAT RUMAH</th>
+                                    <td>{{ $datapribadi->ALAMAT_RUMAH }}</td>
+                                </tr>
+                                <tr>
+                                    <td scope="col">KODE POS</th>
+                                    <td>{{ $datapribadi->KODE_POS }}</td>
+                                </tr>
+                                <tr>
+                                    <td scope="col">TELPON RUMAH</th>
+                                    <td>{{ $datapribadi->TELPON_RUMAH }}</td>
+                                </tr>
+                                <tr>
+                                    <td scope="col">NO HP</th>
+                                    <td>{{ $datapribadi->NO_HP }}</td>
+                                </tr>
+                                <tr>
+                                    <td scope="col">EMAIL</th>
+                                    <td>{{ $datapribadi->EMAIL }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    @endif
 
-                    <button type="submit" class="btn btn-info no-print" value="print" onclick="window.print()">Print</button>
-                    <a href="{{ url('/dashboardpegawai/'.$pegawai->id) }}" class="btn btn-danger no-print"> Kembali</a>
+                    <div class="d-flex gap-3">
+                        <button type="submit" class="btn btn-info no-print" value="print" onclick="window.print()">Print</button>
+                        <a href="{{ url('/dashboardpegawai/'.$pegawai->id) }}" class="btn btn-danger no-print"> Kembali</a>
                     </div>
-                </div>
-            </div>
-        
-        <script src="{{ asset('js/jquery.min.js') }}"></script>
-        <script src="{{ asset('js/popper.js') }}"></script>
-        <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-        <script src="{{ asset('js/main.js') }}"></script>
-        @notifyJs
-        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-        <script>
-            AOS.init();
-        </script>
-    </body>
-</html>
+@endsection

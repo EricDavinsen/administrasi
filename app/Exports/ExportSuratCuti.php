@@ -13,7 +13,7 @@ class ExportSuratCuti implements FromView
     */
     public function view():View
     {
-        $suratcuti = SuratCuti::latest()->paginate(5);
+        $suratcuti = SuratCuti::orderBy('NO_CUTI', 'asc')->get();
         return view('tabel/tabelsuratcuti', ['suratcuti' => $suratcuti]);
     }
 }

@@ -11,8 +11,8 @@ class SuratKeluar extends Model
 {
     use HasFactory, Notifiable;
 
-    protected $table = 'surat_keluars';
-    protected $guard = 'surat_keluars';
+    protected $table = 'surat_keluar';
+    protected $guard = 'surat_keluar';
 
     /**
      * The attributes that should be hidden for serialization.

@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\Absen;
 use App\Models\Pegawai;
+use App\Models\Disposisi;
 use App\Models\SuratCuti;
 use App\Models\SuratMasuk;
 use App\Models\SuratKeluar;
@@ -20,9 +23,11 @@ class DashboardController extends Controller
         $suratcuti = SuratCuti::count();
         $spt = SuratPanggilanTugas::count();
         $pegawai = Pegawai::count();
+        $disposisi = Disposisi::count();
+        $user = User::count();
     
-        return view('dashboardpage', compact('suratmasuk','suratkeluar','suratcuti','spt','pegawai'))->with([
-            'admin' => Auth::guard('admin')->user(),
+        return view('dashboardpage', compact('suratmasuk','suratkeluar','suratcuti','spt','pegawai','disposisi','user'))->with([
+            'users' => Auth::guard('users')->user(),
             
         ]);
      

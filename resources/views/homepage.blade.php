@@ -35,8 +35,8 @@
                                         @csrf
                                         <p>Please login to your account</p>
                                         <div class="form-outline mb-4">
-                                            <label class="form-label" for="form2Example11">Email</label>
-                                            <input type="text" id="emailinput" name="EMAIL_ADMIN" class="form-control"
+                                            <label class="form-label" for="form2Example11">Email or Username</label>
+                                            <input type="text" id="emailinput" name="email" class="form-control"
                                                 placeholder="Please enter your email address" />
                                         </div>
 
@@ -53,9 +53,9 @@
                                     </form>
                                 </div>
                             </div>
-                            <div class="col-lg-6 col-sm-6 d-flex align-items-center gradient-custom-2">
+                            <div class="sidecard-login col-lg-6 col-sm-6 d-flex align-items-center gradient-custom-2">
                                 <div class="w-100">    
-                                    <h5 class="bpbd-title mb-1">ADMINISTRATOR WEBSITE</h5>
+                                    <h5 class="bpbd-title mb-1">SIDAPUS</h5>
                                     <h1 class="bpbd-subtitle">PUSDALOPS-PB</h1>
                                 </div>
                             </div>

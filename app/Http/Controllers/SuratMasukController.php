@@ -13,16 +13,19 @@ class SuratMasukController extends Controller
 {
     public function index() : View
     {
-        $suratmasuk = SuratMasuk::latest()->paginate(5);
+        $suratmasuk = SuratMasuk::latest()->get();
+        
         return view("suratmasuk")->with([
             'suratmasuk' => $suratmasuk,
-            'admin' => Auth::guard('admin')->user()
+            'users' => Auth::guard('users')->user()
         ]);
     }
 
     public function indexcreate() : View
     {
-        return view("tambah/tambahsuratmasuk");
+        return view("tambah/tambahsuratmasuk")->with([
+            'users' => Auth::guard('users')->user()
+        ]);
     }
 
     public function store(Request $request)
@@ -100,6 +103,7 @@ class SuratMasukController extends Controller
 
         return view("edit/editsuratmasuk")->with([
             'suratmasuk' => $suratmasuk,
+            'users' => Auth::guard('users')->user()
         ]);
     }
 
@@ -175,32 +179,43 @@ class SuratMasukController extends Controller
 
     }
 
-    public function find(Request $request)
-    {
-        $suratmasuk = SuratMasuk::where('KODE_SURAT', 'like', '%' . $request->search . '%')
-            ->orWhere('NOMOR_SURAT', 'like', '%' . $request->search . '%')
-            ->orWhere('TANGGAL_SURAT', 'like', '%' . $request->search . '%')
-            ->orWhere('TANGGAL_MASUK', 'like', '%' . $request->search . '%')
-            ->orWhere('JENIS_SURAT', 'like', '%' . $request->search . '%')
-            ->orWhere('ASAL_SURAT', 'like', '%' . $request->search . '%')
-            ->orWhere('SIFAT_SURAT', 'like', '%' . $request->search . '%')
-            ->orWhere('PERIHAL_SURAT', 'like', '%' . $request->search . '%')
-            ->paginate(5);
-        $suratmasuk->appends(['search' => $request->search]);
+    // public function find(Request $request)
+    // {
+    //     $suratmasuk = SuratMasuk::where('KODE_SURAT', 'like', '%' . $request->search . '%')
+    //         ->orWhere('NOMOR_SURAT', 'like', '%' . $request->search . '%')
+    //         ->orWhereRaw("DATE_FORMAT(TANGGAL_SURAT, '%d-%m-%Y') LIKE ?", ["%" . $request->search . "%"])
+    //         ->orWhereRaw("DATE_FORMAT(TANGGAL_MASUK, '%d-%m-%Y') LIKE ?", ["%" . $request->search . "%"])
+    //         ->orWhere('JENIS_SURAT', 'like', '%' . $request->search . '%')
+    //         ->orWhere('ASAL_SURAT', 'like', '%' . $request->search . '%')
+    //         ->orWhere('SIFAT_SURAT', 'like', '%' . $request->search . '%')
+    //         ->orWhere('PERIHAL_SURAT', 'like', '%' . $request->search . '%')
+    //         ->get();
+    //     $suratmasuk->appends(['search' => $request->search]);
 
-        return view("suratmasuk")->with([
-            'suratmasuk' => $suratmasuk
-        ]);
-    }
-
-    public function view($id){
-        $data = SuratMasuk::find($id);
-
-        return view("tampil/tampilsuratmasuk",compact("data"));
-    }
+    //     return view("suratmasuk")->with([
+    //         'suratmasuk' => $suratmasuk,
+    //         'users' => Auth::guard('users')->user()
+    //     ]);
+    // }
 
     function export_excel()
     {
         return Excel::download(new ExportSuratMasuk, 'suratmasuk.xlsx');
+    }
+
+    public function filter(Request $request){
+        $start_date = $request->start_date;
+        $end_date = $request->end_date;
+        if ($start_date && $end_date) { 
+            $suratmasuk = SuratMasuk::whereBetween('TANGGAL_SURAT', [$start_date, $end_date])
+                ->get();
+        } else {
+            $suratmasuk = SuratMasuk::latest()->get();
+        }
+
+        return view("suratmasuk")->with([
+            'suratmasuk' => $suratmasuk,
+            'users' => Auth::guard('users')->user()
+        ]);
     }
 }

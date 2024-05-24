@@ -12,13 +12,13 @@ use Maatwebsite\Excel\Facades\Excel;
 class RiwayatSkController extends Controller
 {
     public function index($id){
-        $riwayatsk = RiwayatSk::where('pegawai_id', $id)->latest()->get();
+        $riwayatsk = RiwayatSk::where('pegawai_id', $id)->get();
         $pegawai = Pegawai::where('id', $id)->first();
-
+        
         return view("riwayatsk")->with([
             'riwayatsk' => $riwayatsk,
             'pegawai' => $pegawai,
-            'admin' => Auth::guard('admin')->user() 
+            'users' => Auth::guard('users')->user() 
         ]);
     }
 
@@ -29,7 +29,7 @@ class RiwayatSkController extends Controller
         return view("tambah/tambahriwayatsk")->with([
             'pegawai' => $pegawai,
             'riwayatsk' => $riwayatsk,
-            'admin' => Auth::guard('admin')->user() 
+            'users' => Auth::guard('users')->user() 
         ]);
     }
     public function store( Request $request, $id)
@@ -108,7 +108,8 @@ class RiwayatSkController extends Controller
 
         return view("edit/editriwayatsk")->with([
             'riwayatsk' => $riwayatsk,
-            'pegawai' => $pegawai
+            'pegawai' => $pegawai,
+            'users' => Auth::guard('users')->user()
         ]);
     }
 
@@ -168,13 +169,6 @@ class RiwayatSkController extends Controller
     }
     return redirect()->intended("/riwayatsk/$riwayatsk->pegawai_id")->with([ notify()->error('Batal Mengupdate Riwayat SK'),
         'error' => 'Batal Mengupdate Riwayat SK']);
-    }
-
-    public function view($id){
-        $data = RiwayatSk::find($id);
-        $riwayatsk = RiwayatSk::where('id', $id)->first();
-
-        return view("tampil/tampilfilesk",compact("data","riwayatsk"));
     }
 
     function export_excel($id)

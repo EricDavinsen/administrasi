@@ -14,11 +14,11 @@ class RiwayatPendidikanController extends Controller
     public function index($id){
         $riwayatpendidikan = RiwayatPendidikan::where('pegawai_id', $id)->get();
         $pegawai = Pegawai::where('id', $id)->first();
-
+        
         return view("riwayatpendidikan")->with([
             'riwayatpendidikan' => $riwayatpendidikan,
             'pegawai' => $pegawai,
-            'admin' => Auth::guard('admin')->user() 
+            'users' => Auth::guard('users')->user() 
         ]);
     }
 
@@ -29,7 +29,7 @@ class RiwayatPendidikanController extends Controller
         return view("tambah/tambahriwayatpendidikan")->with([
             'pegawai' => $pegawai,
             'riwayatpendidikan' => $riwayatpendidikan,
-            'admin' => Auth::guard('admin')->user() 
+            'users' => Auth::guard('users')->user() 
         ]);
     }
     public function store( Request $request, $id)
@@ -117,6 +117,7 @@ class RiwayatPendidikanController extends Controller
         return view("edit/editriwayatpendidikan")->with([
             'riwayatpendidikan' => $riwayatpendidikan,
             'pegawai' => $pegawai,
+            'users' => Auth::guard('users')->user()
         ]);
     }
 
@@ -176,13 +177,6 @@ class RiwayatPendidikanController extends Controller
     }
     return redirect()->intended("/riwayatpendidikan/$riwayatpendidikan->pegawai_id")->with([ notify()->error('Batal Mengupdate Riwayat Pendidikan'),
         'error' => 'Batal Mengupdate Riwayat Pendidikan']);
-    }
-
-    public function view($id){
-        $data = RiwayatPendidikan::find($id);
-        $riwayatpendidikan = RiwayatPendidikan::where('id', $id)->first();
-
-        return view("tampil/tampilijazah",compact("data","riwayatpendidikan"));
     }
 
     function export_excel($id)

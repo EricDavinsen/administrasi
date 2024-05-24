@@ -15,7 +15,7 @@ class ExportDataBpjs implements FromView
     */
     public function view():View
     {
-        $databpjs = DataBpjs::paginate(5);
+        $databpjs = DataBpjs::get();
         return view('tabel/tabeldatabpjs', ['databpjs' => $databpjs]);
     }
 }

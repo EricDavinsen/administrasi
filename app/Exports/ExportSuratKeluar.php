@@ -13,7 +13,7 @@ class ExportSuratKeluar implements FromView
     */
     public function view():View
     {
-        $suratkeluar = SuratKeluar::latest()->paginate(5);
+        $suratkeluar = SuratKeluar::orderBy('TANGGAL_SURAT', 'asc')->get();
         return view('tabel/tabelsuratkeluar', ['suratkeluar' => $suratkeluar]);
     }
 }

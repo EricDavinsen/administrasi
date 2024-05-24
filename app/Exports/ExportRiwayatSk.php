@@ -14,7 +14,7 @@ class ExportRiwayatSk implements FromView
     */
     public function view():View
     {
-        $riwayatsk = RiwayatSk::paginate(5);
+        $riwayatsk = RiwayatSk::get();
         return view('tabel/tabelriwayatsk', ['riwayatsk' => $riwayatsk]);
     }
 }

@@ -14,16 +14,19 @@ class SuratPanggilanTugasController extends Controller
 {
     public function index() : View
     {
-        $spt = SuratPanggilanTugas::latest()->paginate(5);
+        $spt = SuratPanggilanTugas::latest()->get();
+  
         return view("spt")->with([
             'spt' => $spt,
-            'admin' => Auth::guard('admin')->user()
+            'users' => Auth::guard('users')->user()
         ]);
     }
 
     public function indexcreate() : View
     {
-        return view("tambah/tambahspt");
+        return view("tambah/tambahspt")->with([
+            'users' => Auth::guard('users')->user()
+        ]);
     }
 
     public function store(Request $request)
@@ -107,6 +110,7 @@ class SuratPanggilanTugasController extends Controller
 
         return view("edit/editspt")->with([
             'spt' => $spt,
+            'users' => Auth::guard('users')->user()
         ]);
     }
 
@@ -182,28 +186,38 @@ class SuratPanggilanTugasController extends Controller
     public function find(Request $request)
     {
         $spt = SuratPanggilanTugas::where('NO_SPT', 'like', '%' . $request->search . '%')
-            ->orWhere('TANGGAL_SPT', 'like', '%' . $request->search . '%')
+            ->orWhereRaw("DATE_FORMAT(TANGGAL_SPT, '%d-%m-%Y') LIKE ?", ["%" . $request->search . "%"])
             ->orWhere('NAMA', 'like', '%' . $request->search . '%')
-            ->orWhere('TANGGAL_MULAI', 'like', '%' . $request->search . '%')
-            ->orWhere('TANGGAL_SELESAI', 'like', '%' . $request->search . '%')
+            ->orWhereRaw("DATE_FORMAT(TANGGAL_MULAI, '%d-%m-%Y') LIKE ?", ["%" . $request->search . "%"])
+            ->orWhereRaw("DATE_FORMAT(TANGGAL_SELESAI, '%d-%m-%Y') LIKE ?", ["%" . $request->search . "%"])
             ->orWhere('LAMA_TUGAS', 'like', '%' . $request->search . '%')
             ->orWhere('KEPERLUAN', 'like', '%' . $request->search . '%')
-            ->paginate(5);
+            ->get();
         $spt->appends(['search' => $request->search]);
 
         return view("spt")->with([
-            'spt' => $spt
+            'spt' => $spt,
+            'users' => Auth::guard('users')->user()
         ]);
     }
-
-    public function view($id){
-        $data = SuratPanggilanTugas::find($id);
-
-        return view("tampil/tampilspt",compact("data"));
-    }
-
     function export_excel()
     {
         return Excel::download(new ExportSpt, 'suratpanggilantugas.xlsx');
+    }
+
+    public function filter(Request $request){
+        $start_date = $request->start_date;
+        $end_date = $request->end_date;
+        if ($start_date && $end_date) { 
+            $spt = SuratPanggilanTugas::whereBetween('TANGGAL_SPT', [$start_date, $end_date])
+                ->get();
+        } else {
+            $spt = SuratPanggilanTugas::latest()->get();
+        }
+
+        return view("spt")->with([
+            'spt' => $spt,
+            'users' => Auth::guard('users')->user()
+        ]);
     }
 }

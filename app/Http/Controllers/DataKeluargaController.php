@@ -12,13 +12,13 @@ use Maatwebsite\Excel\Facades\Excel;
 class DataKeluargaController extends Controller
 {
     public function index($id){
-        $datakeluarga = DataKeluarga::where('pegawai_id', $id)->get();
+        $datakeluarga = DataKeluarga::where('pegawai_id', $id)->orderBy('TANGGAL_LAHIR', 'asc')->get();
         $pegawai = Pegawai::where('id', $id)->first();
-
+        
         return view("datakeluarga")->with([
             'datakeluarga' => $datakeluarga,
             'pegawai' => $pegawai,
-            'admin' => Auth::guard('admin')->user() 
+            'users' => Auth::guard('users')->user() 
         ]);
     }
 
@@ -29,7 +29,7 @@ class DataKeluargaController extends Controller
         return view("tambah/tambahdatakeluarga")->with([
             'pegawai' => $pegawai,
             'datakeluarga' => $datakeluarga,
-            'admin' => Auth::guard('admin')->user() 
+            'users' => Auth::guard('users')->user() 
         ]);
     }
 
@@ -94,7 +94,8 @@ class DataKeluargaController extends Controller
 
         return view("edit/editdatakeluarga")->with([
             'datakeluarga' => $datakeluarga,
-            'pegawai' => $pegawai
+            'pegawai' => $pegawai,
+            'users' => Auth::guard('users')->user()
         ]);
     }
 

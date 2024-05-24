@@ -24,11 +24,12 @@ return new class extends Migration
             $table->string('INSTANSI');
             $table->string('UNIT');
             $table->string('SUB_UNIT')->nullable();
-            $table->string('JABATAN');
+            $table->string('JABATAN_PEGAWAI');
             $table->string('JENIS_PEGAWAI');
             $table->string('PENDIDIKAN_TERAKHIR');
             $table->string('STATUS_PEGAWAI');
             $table->string('KEDUDUKAN');
+            $table->string('SISA_CUTI_TAHUNAN');
             $table->string('FOTO_PEGAWAI');
             $table->timestamps();
         });

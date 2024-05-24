@@ -14,7 +14,7 @@ class ExportRiwayatPendidikan implements FromView
     */
     public function view():View
     {
-        $riwayatpendidikan = RiwayatPendidikan::paginate(5);
+        $riwayatpendidikan = RiwayatPendidikan::get();
         return view('tabel/tabelriwayatpendidikan', ['riwayatpendidikan' => $riwayatpendidikan]);
     }
 }

@@ -14,7 +14,7 @@ class ExportSpt implements FromView
     */
     public function view():View
     {
-        $spt = SuratPanggilanTugas::latest()->paginate(5);
+        $spt = SuratPanggilanTugas::orderBy('TANGGAL_SPT', 'asc')->get();
         return view('tabel/tabelspt', ['spt' => $spt]);
     }
 }

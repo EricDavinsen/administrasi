@@ -13,17 +13,20 @@ class SuratKeluarController extends Controller
 {
     public function index() : View
     {
-        $suratkeluar = SuratKeluar::latest()->paginate(5);
+        $suratkeluar = SuratKeluar::latest()->get();
+        
         return view("suratkeluar")->with([
             'suratkeluar' => $suratkeluar,
-            'admin' => Auth::guard('admin')->user()
+            'users' => Auth::guard('users')->user()
         ]);
         
     }
 
     public function indexcreate() : View
     {
-        return view("tambah/tambahsuratkeluar");
+        return view("tambah/tambahsuratkeluar")->with([
+            'users' => Auth::guard('users')->user()
+        ]);
     }
 
     public function store(Request $request)
@@ -99,6 +102,7 @@ class SuratKeluarController extends Controller
 
         return view("edit/editsuratkeluar")->with([
             'suratkeluar' => $suratkeluar,
+            'users' => Auth::guard('users')->user()
         ]);
     }
 
@@ -169,27 +173,38 @@ class SuratKeluarController extends Controller
     public function find(Request $request)
     {
         $suratkeluar = SuratKeluar::where('NOMOR_SURAT', 'like', '%' . $request->search . '%')
-            ->orWhere('TANGGAL_SURAT', 'like', '%' . $request->search . '%')
+            ->orWhereRaw("DATE_FORMAT(TANGGAL_SURAT, '%d-%m-%Y') LIKE ?", ["%" . $request->search . "%"])
             ->orWhere('JENIS_SURAT', 'like', '%' . $request->search . '%')
             ->orWhere('TUJUAN_SURAT', 'like', '%' . $request->search . '%')
             ->orWhere('SIFAT_SURAT', 'like', '%' . $request->search . '%')
             ->orWhere('PERIHAL_SURAT', 'like', '%' . $request->search . '%')
-            ->paginate(5);
+            ->get();
         $suratkeluar->appends(['search' => $request->search]);
 
         return view("suratkeluar")->with([
-            'suratkeluar' => $suratkeluar
+            'suratkeluar' => $suratkeluar,
+            'users' => Auth::guard('users')->user()
         ]);
-    }
-
-    public function view($id){
-        $data = SuratKeluar::find($id);
-
-        return view("tampil/tampilsuratkeluar",compact("data"));
     }
 
     function export_excel()
     {
         return Excel::download(new ExportSuratKeluar, 'suratkeluar.xlsx');
+    }
+
+    public function filter(Request $request){
+        $start_date = $request->start_date;
+        $end_date = $request->end_date;
+        if ($start_date && $end_date) { 
+            $suratkeluar = SuratKeluar::whereBetween('TANGGAL_SURAT', [$start_date, $end_date])
+                ->get();
+        } else {
+            $suratkeluar = SuratKeluar::latest()->get();
+        }
+
+        return view("suratkeluar")->with([
+            'suratkeluar' => $suratkeluar,
+            'users' => Auth::guard('users')->user()
+        ]);
     }
 }

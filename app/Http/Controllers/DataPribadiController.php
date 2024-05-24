@@ -15,11 +15,11 @@ class DataPribadiController extends Controller
     public function index($id){
         $datapribadi = DataPribadi::where('pegawai_id', $id)->first();
         $pegawai = Pegawai::where('id', $id)->first();
-
+        
         return view("datapribadi")->with([
             'datapribadi' => $datapribadi,
             'pegawai' => $pegawai,
-            'admin' => Auth::guard('admin')->user() 
+            'users' => Auth::guard('users')->user() 
         ]);
     }
 
@@ -32,13 +32,13 @@ class DataPribadiController extends Controller
             return view("tambah/tambahdatapribadi")->with([
                 'pegawai' => $pegawai,
                 'datapribadi' => $datapribadi,
-                'admin' => Auth::guard('admin')->user() 
+                'users' => Auth::guard('users')->user() 
             ]);
         }
         return view("datapribadi")->with([
             'pegawai' => $pegawai,
             'datapribadi' => $datapribadi,
-            'admin' => Auth::guard('admin')->user() 
+            'users' => Auth::guard('users')->user() 
         ]);
     }
     public function store( Request $request, $id)
@@ -120,7 +120,8 @@ class DataPribadiController extends Controller
 
         return view("edit/editdatapribadi")->with([
             'datapribadi' => $datapribadi,
-            'pegawai' => $pegawai
+            'pegawai' => $pegawai,
+            'users' => Auth::guard('users')->user()
         ]);
     }
 

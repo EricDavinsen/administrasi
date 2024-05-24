@@ -13,7 +13,7 @@ class ExportPegawai implements FromView
     */
     public function view():View
     {
-        $pegawai = Pegawai::orderBy('NAMA_PEGAWAI', 'desc')->get();
+        $pegawai = Pegawai::orderBy('NAMA_PEGAWAI', 'asc')->get();
         return view('tabel/tabelpegawai', ['pegawai' => $pegawai]);
     }
 }

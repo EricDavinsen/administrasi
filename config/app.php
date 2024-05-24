@@ -184,6 +184,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Mckenziearts\Notify\LaravelNotifyServiceProvider::class,
         RealRashid\SweetAlert\SweetAlertServiceProvider::class,
+        Yajra\DataTables\DataTablesServiceProvider::class,
         /*
          * Package Service Providers...
          */

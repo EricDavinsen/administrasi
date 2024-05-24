@@ -12,11 +12,11 @@ class PenilaianTahunanController extends Controller
     public function index($id){
         $penilaiantahunan = PenilaianTahunan::where('pegawai_id', $id)->get();
         $pegawai = Pegawai::where('id', $id)->first();
-
+        
         return view("penilaiantahunan")->with([
             'penilaiantahunan' => $penilaiantahunan,
             'pegawai' => $pegawai,
-            'admin' => Auth::guard('admin')->user() 
+            'users' => Auth::guard('users')->user() 
         ]);
     }
 
@@ -27,7 +27,7 @@ class PenilaianTahunanController extends Controller
         return view("tambah/tambahpenilaiantahunan")->with([
             'pegawai' => $pegawai,
             'penilaiantahunan' => $penilaiantahunan,
-            'admin' => Auth::guard('admin')->user() 
+            'users' => Auth::guard('users')->user() 
         ]);
     }
     public function store( Request $request, $id)
@@ -92,7 +92,8 @@ class PenilaianTahunanController extends Controller
 
         return view("edit/editpenilaiantahunan")->with([
             'penilaiantahunan' => $penilaiantahunan,
-            'pegawai' => $pegawai
+            'pegawai' => $pegawai,
+            'users' => Auth::guard('users')->user()
         ]);
     }
 
@@ -139,10 +140,4 @@ class PenilaianTahunanController extends Controller
         'error' => 'Batal Mengupdate Penilaian Tahunan']);
     }
 
-    public function view($id){
-        $data = PenilaianTahunan::find($id);
-        $penilaiantahunan = PenilaianTahunan::where('id', $id)->first();
-
-        return view("tampil/tampilpenilaiantahunan",compact("data","penilaiantahunan"));
-    }
 }

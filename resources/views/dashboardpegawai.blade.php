@@ -37,38 +37,68 @@
                         </div>
                         <h2 class="sidebar-title">PUSDALOPS-PB</h2>
                         <ul class="list-unstyled components mb-5">
-                            <li>
-                                <a href="{{ url('dashboardpage') }}">Dashboard</a>
-                            </li>
-
-                            <li class="nav-item active">
-                                <a href="{{ url('datapegawai') }}">Pegawai</a>
-                            </li>
-
-                            <li>
-                                <a href="{{ url('suratmasuk') }}">Surat Masuk</a>
+                        <li class="nav-item active">
+                                <div class="sidebar-items d-flex align-items-center gap-3 w-100">
+                                    <i class="fa-solid fa-xl fa-home"></i>
+                                    <a href="{{ url('dashboardpage') }}">Dashboard</a>
+                                </div>
                             </li>
 
                             <li>
-                                <a href="{{ url('suratkeluar') }}">Surat Keluar</a>
+                                <div class="sidebar-items d-flex align-items-center gap-3 w-100">
+                                    <i class="fa-solid fa-xl fa-envelope"></i>
+                                    <a href="{{ url('suratmasuk') }}">Surat Masuk</a>
+                                </div>
                             </li>
 
                             <li>
-                                <a href="{{ url('suratcuti') }}">Surat Cuti</a>
+                                <div class="sidebar-items d-flex align-items-center gap-3 w-100">
+                                    <i class="fa-solid fa-xl fa-envelope-open-text"></i>
+                                    <a href="{{ url('suratkeluar') }}">Surat Keluar</a>
+                                </div>
                             </li>
 
                             <li>
-                                <a href="{{ url('spt') }}">SPT</a>
+                                <div class="sidebar-items d-flex align-items-center gap-3 w-100">
+                                    <i class="fa-solid fa-xl fa-envelope-open"></i>
+                                    <a href="{{ url('suratcuti') }}">Surat Cuti</a>
+                                </div>
                             </li>
 
                             <li>
-                                <a href="{{ url('disposisi') }}">Disposisi</a>
+                                <div class="sidebar-items d-flex align-items-center gap-3 w-100">
+                                    <i class="fa-solid fa-xl fa-circle-exclamation"></i>
+                                    <a href="{{ url('spt') }}">SPT</a>
+                                </div>
                             </li>
 
                             <li>
-                                <a href="{{ url('daftaruser') }}">Daftar User</a>
+                                <div class="sidebar-items d-flex align-items-center gap-3 w-100">
+                                    <i class="fa-solid fa-xl fa-envelopes-bulk"></i>
+                                    <a href="{{ url('disposisi') }}">Disposisi</a>
+                                </div>
+                            </li>
+
+                            <li class="mt-5">
+                                <div class="sidebar-items d-flex align-items-center gap-3 w-100">
+                                    <i class="fa-solid fa-xl fa-users"></i>
+                                    <a href="{{ url('datapegawai') }}">Daftar Pegawai</a>
                             </li>
                          
+                            <li>
+                                <div class="sidebar-items d-flex align-items-center gap-3 w-100">
+                                    <i class="fa-solid fa-xl fa-user"></i>
+                                    <a href="{{ url('daftaruser') }}">Daftar User</a>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="sidebar-items d-flex align-items-center gap-3 w-100">
+                                    <i class="fa-solid fa-xl fa-calendar"></i>
+                                    <a href="{{ url('events') }}">Agenda</a>
+                                </div>
+                            </li>
+
                         </ul>
                         
                             <a href="{{ url('logout') }}" class="btn-logout"> Logout </a>
@@ -90,26 +120,32 @@
 
                             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="nav navbar-nav ml-auto">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('dashboardpage') }}">Dashboard</a>
-                                </li>
-                                <li class="nav-item active">
-                                    <a class="nav-link" href="{{ url('datapegawai') }}">Pegawai</a>
+                            <li class="nav-item active">
+                                    <a class="nav-link" href="{{ url('/dashboardpegawai/'.$pegawai->id) }}">Dashboard</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('suratmasuk') }}">Surat Masuk</a>
+                                    <a class="nav-link" href="{{ url('/datapribadi/'.$pegawai->id) }}">Data Pribadi</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('suratkeluar') }}">Surat Keluar</a>
+                                    <a class="nav-link" href="{{ url('/riwayatsk/'.$pegawai->id) }}">Riwayat SK</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('suratcuti') }}">Surat Cuti</a>
+                                    <a class="nav-link" href="{{ url('/riwayatpendidikan/'.$pegawai->id) }}">Riwayat Pendidikan</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('spt') }}">SPT</a>
+                                    <a class="nav-link" href="{{ url('/diklat/'.$pegawai->id) }}">Diklat</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('disposisi') }}">Disposisi</a>
+                                    <a class="nav-link" href="{{ url('/datakeluarga/'.$pegawai->id) }}">Data Keluarga</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url('/databpjs/'.$pegawai->id) }}">Data BPJS</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url('/penilaiantahunan/'.$pegawai->id) }}">Penilaian Tahunan</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url('/cetakinformasi/'.$pegawai->id) }}">Cetak Informasi</a>
                                 </li>
                             </ul>
                             </div>
@@ -117,13 +153,13 @@
                     </nav>
                     
                     <div class="container-fluid category" data-aos="fade-right" data-aos-delay="50" data-aos-duration="2000">
-                        <h2 class="d-flex w-100 justify-content-center" style="font-weight: bold; color: white">Menu Pegawai : {{$pegawai->NAMA_PEGAWAI}}</h2>
+                        <h2 class="d-flex w-100 justify-content-center" style="font-weight: bold; color: white">Detail Pegawai : {{$pegawai->NAMA_PEGAWAI}}</h2>
                         <div class="d-flex justify-content-center gap-5 w-100 mt-3 flex-wrap">
                         <div class="kategori_items">
                                 <div class="card kategori_card">
                                     <a href="{{ url('/datapegawai')  }}" class="nav-link d-flex justify-content-center flex-column align-items-center">
                                     <i class="kategori_icon fa-solid fa-users"></i>
-                                    <h5 class="text-center">DATA PEGAWAI</h5>
+                                    <h5 class="text-center">DAFTAR PEGAWAI</h5>
                                     </a> 
                                 </div>
                             </div>
@@ -198,10 +234,10 @@
                         </div>
                     <div>
         @notifyJs
-        <script src="js/jquery.min.js"></script>
-        <script src="js/popper.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        <script src="js/main.js"></script>
+        <script src="{{ asset('js/jquery.min.js') }}"></script>
+        <script src="{{ asset('js/popper.js') }}"></script>
+        <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('js/main.js') }}"></script>
         <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
         <script>
             AOS.init();

@@ -16,9 +16,12 @@ return new class extends Migration
         Schema::create('disposisi', function (Blueprint $table) {
             $table->id('id');
             $table->unsignedBigInteger('surat_masuk_id');
-            $table->foreign('surat_masuk_id')->references('id')->on('surat_masuks')->onDelete('cascade');
             $table->string('NAMA');
-            $table->string('HASIL_LAPORAN');
+            $table->string('PENERUS');
+            $table->string('INSTRUKSI');
+            $table->string('INFORMASI_LAINNYA');
+            $table->string('HASIL_LAPORAN')->nullable();
+            $table->foreign('surat_masuk_id')->references('id')->on('surat_masuk')->onDelete('cascade');
             $table->timestamps();
         });
     }

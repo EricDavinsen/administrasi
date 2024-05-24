@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Admin;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
@@ -11,28 +11,41 @@ class UserController extends Controller
 {
     public function index() : View
     {
-        $users = Admin::paginate(5);
+        $user = User::get();
+    
         return view("daftaruser")->with([
-            'users' => $users,
-            'admin' => Auth::guard('admin')->user()
+            'user' => $user,
+            'users' => Auth::guard('users')->user(),
         ]);
     }
 
     public function indexcreate() : View
     {
-        return view("tambah/tambahuser");
+        return view("tambah/tambahuser")->with([
+            'users' => Auth::guard('users')->user(),
+        ]);
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'USERNAME' => 'required',
-            'EMAIL_ADMIN' => 'required',
+            'username' => 'required|unique:users,username',
+            'email' => 'required|unique:users,email',
             'password' => 'required',
+        ],[
+            'username.required' => 'Username Tidak Boleh Kosong',
+            'username.unique' => 'Username Tidak Boleh Sama',   
+            'email.required' => 'Email Tidak Boleh Kosong',
+            'email.unique' => 'Email Tidak Boleh Sama',
+            'password.required' => 'Password Tidak Boleh Kosong',
         ]);
 
-        $userData = $request->all();
-        $users = Admin::create($userData);
+        $users = User::create([
+            'username' => $request->username,
+            'email' => $request->email,
+            'password' => $request->password,
+            'role' => "pegawai",
+        ]);
 
         if ($users) {
             return redirect()
@@ -50,7 +63,7 @@ class UserController extends Controller
 
     public function destroy($id)
     {
-        $users = Admin::where('id', $id);
+        $users = User::where('id', $id);
 
             if ($users) {
                 $users->delete();
@@ -68,7 +81,7 @@ class UserController extends Controller
 
     public function edit($id)
     {
-        $users = Admin::where('id', $id)->first();
+        $users = User::where('id', $id)->first();
 
         return view("edit/edituser")->with([
             'users' => $users,
@@ -77,24 +90,24 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {
-        $users = Admin::where('id', $id)->first();
+        $users = User::where('id', $id)->first();
 
-        if ($request->USERNAME) {
-            $users->USERNAME = $request->USERNAME;
+        if ($request->username) {
+            $users->username = $request->username;
         }
-        if ($request->EMAIL_ADMIN) {
-            $users->EMAIL_ADMIN = $request->EMAIL_ADMIN;
+        if ($request->email) {
+            $users->email = $request->email;
         }
         if ($request->password) {
             $users->password = $request->password;
         }
       
-        $updateUser = Admin::where('id', $id)
+        $updateUser = User::where('id', $id)
         ->limit(1)
         ->update(
             array(
-                'USERNAME' => $users->USERNAME,
-                'EMAIL_ADMIN' => $users->EMAIL_ADMIN,
+                'username' => $users->username,
+                'email' => $users->email,
                 'password' => $users->password,
             ),
         );
@@ -110,13 +123,14 @@ class UserController extends Controller
 
     public function find(Request $request)
     {
-        $users = Admin::where('USERNAME', 'like', '%' . $request->search . '%')
-            ->orWhere('EMAIL_ADMIN', 'like', '%' . $request->search . '%')
-            ->paginate(5);
-        $users->appends(['search' => $request->search]);
+        $user = User::where('username', 'like', '%' . $request->search . '%')
+            ->orWhere('email', 'like', '%' . $request->search . '%')
+            ->get();
+        $user->appends(['search' => $request->search]);
 
         return view("daftaruser")->with([
-            'users' => $users
+            'user' => $user,
+            'users' => Auth::guard('users')->user()
         ]);
     }
 

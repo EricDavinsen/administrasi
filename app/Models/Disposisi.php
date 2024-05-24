@@ -41,6 +41,9 @@ class Disposisi extends Model
     protected $fillable = [
         "surat_masuk_id",
         "NAMA",
+        "PENERUS",
+        "INSTRUKSI",
+        "INFORMASI_LAINNYA",
         "HASIL_LAPORAN",
     ];
     

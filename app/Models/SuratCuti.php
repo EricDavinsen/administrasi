@@ -5,13 +5,14 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class SuratCuti extends Model
 {
     use HasFactory, Notifiable;
 
-    protected $table = 'surat_cutis';
+    protected $table = 'surat_cuti';
 
     /**
      * The attributes that should be hidden for serialization.
@@ -29,6 +30,7 @@ class SuratCuti extends Model
         "email_verified_at" => "datetime",
     ];
     protected $fillable = [
+        'pegawai_id',
         "NO_CUTI",
         "NAMA",
         "JENIS_CUTI",
@@ -36,7 +38,6 @@ class SuratCuti extends Model
         "TANGGAL_MULAI",
         "TANGGAL_SELESAI",
         "LAMA_CUTI",
-        "SISA_CUTI_TAHUNAN",
         "FILE_SURAT"
     ];
 
@@ -57,4 +58,10 @@ class SuratCuti extends Model
             );
         }
     }
+
+    public function pegawai():BelongsTo
+    {
+        return $this->belongsTo(Pegawai::class, 'pegawai_id', 'id');
+    }
+
 }

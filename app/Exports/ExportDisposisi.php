@@ -13,7 +13,7 @@ class ExportDisposisi implements FromView
     */
     public function view():View
     {
-        $disposisi = Disposisi::latest()->paginate(5);
+        $disposisi = Disposisi::get();
         return view('tabel/tabeldisposisi', ['disposisi' => $disposisi]);
     }
 }

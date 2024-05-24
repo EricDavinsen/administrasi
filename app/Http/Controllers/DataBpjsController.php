@@ -15,10 +15,11 @@ class DataBpjsController extends Controller
     public function index($id){
         $databpjs = DataBpjs::where('pegawai_id', $id)->get();
         $pegawai = Pegawai::where('id', $id)->first();
+        
         return view("databpjs")->with([
             'databpjs' => $databpjs,
             'pegawai' => $pegawai,
-            'admin' => Auth::guard('admin')->user() 
+            'users' => Auth::guard('users')->user() 
         ]);
     }
 
@@ -29,7 +30,7 @@ class DataBpjsController extends Controller
         return view("tambah/tambahdatabpjs")->with([
             'pegawai' => $pegawai,
             'databpjs' => $databpjs,
-            'admin' => Auth::guard('admin')->user() 
+            'users' => Auth::guard('users')->user() 
         ]);
     }
 
@@ -107,7 +108,8 @@ class DataBpjsController extends Controller
 
         return view("edit/editdatabpjs")->with([
             'databpjs' => $databpjs,
-            'pegawai' => $pegawai
+            'pegawai' => $pegawai,
+            'users' => Auth::guard('users')->user()
         ]);
     }
 
