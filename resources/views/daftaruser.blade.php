@@ -47,6 +47,7 @@
                             </button>
                     </div>
                     <div class="modal-body">
+                        
                         Apakah anda ingin menghapus data ini?
                     </div>
                     <div class="modal-footer">
