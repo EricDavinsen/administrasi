@@ -20,7 +20,7 @@
                     <td>{{ $no++ }}</td>
                     <td>{{ $item->surat->KODE_SURAT }}</td>
                     <td>{{ $item->PENERUS }}</td>
-                    <td>{{ $item->NAMA }}</td>
+                    <td>{{ $item->pegawai->NAMA_PEGAWAI }}</td>
                     <td>{{ $item->INSTRUKSI }}</td>
                     <td>{{ $item->INFORMASI_LAINNYA}}</td>
                     <td>

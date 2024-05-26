@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class SuratPanggilanTugas extends Model
@@ -30,9 +31,9 @@ class SuratPanggilanTugas extends Model
         "email_verified_at" => "datetime",
     ];
     protected $fillable = [
+        "pegawai_id",
         "NO_SPT",
         "TANGGAL_SPT",
-        "NAMA",
         "TANGGAL_MULAI",
         "TANGGAL_SELESAI",
         "LAMA_TUGAS",
@@ -56,6 +57,11 @@ class SuratPanggilanTugas extends Model
                 "Y-m-d H:i:s"
             );
         }
+    }
+
+    public function pegawai():BelongsTo
+    {
+        return $this->belongsTo(Pegawai::class, 'pegawai_id', 'id');
     }
     
 }

@@ -13,8 +13,18 @@
                             <input type="date" class="form-control" id="TANGGAL_SURAT" name="TANGGAL_SPT" value="{{ $spt->TANGGAL_SPT }}">
                         </div>
                         <div class="form-group">
-                            <label for="formGroupExampleInput2">Nama</label>
-                            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Masukan Nama" name="NAMA" value="{{ $spt->NAMA }}">
+                            <label>Nama</label>
+                            <select class="form-control mb-2" aria-label="Select Pegawai" name="pegawai_id" value="{{ $spt->pegawai_id }}">
+                                <option value="" hidden>Pilih Pegawai</option>
+                                @if ($pegawai->first() != null)
+                                    @foreach ($pegawai as $item)
+                                        <option value="{{ $item->id }}">
+                                            {{ $item->NAMA_PEGAWAI }}</option>
+                                    @endforeach
+                                @else
+                                    <option value=""disabled>Tidak ada pegawai</option>
+                                @endif
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="formGroupExampleInput2">Tanggal Mulai</label>

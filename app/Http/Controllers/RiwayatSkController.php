@@ -84,7 +84,6 @@ class RiwayatSkController extends Controller
 
     public function destroy($id)
     {
-
         $riwayatsk = RiwayatSk::where('id', $id);
 
             if ($riwayatsk) {

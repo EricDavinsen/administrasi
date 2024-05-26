@@ -11,6 +11,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DisposisiController;
 use App\Http\Controllers\RiwayatSkController;
 use App\Http\Controllers\SuratCutiController;
+use App\Http\Controllers\JenisSuratController;
 use App\Http\Controllers\SuratMasukController;
 use App\Http\Controllers\DataPribadiController;
 use App\Http\Controllers\SuratKeluarController;
@@ -43,7 +44,6 @@ Route::middleware(['auth:users', 'role'])->group(function () {
    //SURAT KELUAR
     Route::get('/suratkeluar', [SuratKeluarController::class, "index"]);
     Route::get('/createsuratkeluar',[SuratKeluarController::class, "indexcreate"]);
-    Route::get("/carisuratkeluar", [SuratKeluarController::class, "find"]);
     Route::get('/editsuratkeluar/{id}', [SuratKeluarController::class, "edit"]);
     Route::delete("/deletesuratkeluar/{id}", [SuratKeluarController::class, "destroy"]);
     Route::post('/addsuratkeluar', [SuratKeluarController::class, "store"]);
@@ -55,7 +55,6 @@ Route::middleware(['auth:users', 'role'])->group(function () {
     // SURAT MASUK
     Route::get('/suratmasuk', [SuratMasukController::class, "index"]);
     Route::get('/createsuratmasuk',[SuratMasukController::class, "indexcreate"]);
-    Route::get("/carisuratmasuk", [SuratMasukController::class, "find"]);
     Route::get('/editsuratmasuk/{id}', [SuratMasukController::class, "edit"]);
     Route::delete("/deletesuratmasuk/{id}", [SuratMasukController::class, "destroy"]);
     Route::post('/addsuratmasuk', [SuratMasukController::class, "store"]);
@@ -67,7 +66,6 @@ Route::middleware(['auth:users', 'role'])->group(function () {
     // SPT
     Route::get('/spt', [SuratPanggilanTugasController::class, "index"]);
     Route::get('/createspt',[SuratPanggilanTugasController::class, "indexcreate"]);
-    Route::get("/carispt", [SuratPanggilanTugasController::class, "find"]);
     Route::get('/editspt/{id}', [SuratPanggilanTugasController::class, "edit"]);
     Route::delete("/deletespt/{id}", [SuratPanggilanTugasController::class, "destroy"]);
     Route::post('/addspt', [SuratPanggilanTugasController::class, "store"]);
@@ -79,7 +77,6 @@ Route::middleware(['auth:users', 'role'])->group(function () {
     // DISPOSISI
     Route::get('/disposisi', [DisposisiController::class, "index"]);
     Route::get("/createdisposisi/{id}", [DisposisiController::class, "indexcreate"]);
-    Route::get("/caridisposisi", [DisposisiController::class, "find"]);
     Route::get('/editdisposisi/{id}', [DisposisiController::class, "edit"]);
     Route::delete("/deletedisposisi/{id}", [DisposisiController::class, "destroy"]);
     Route::post('/adddisposisi/{id}', [DisposisiController::class, "store"]);
@@ -91,7 +88,6 @@ Route::middleware(['auth:users', 'role'])->group(function () {
     // SURAT CUTI
     Route::get('/suratcuti', [SuratCutiController::class, "index"]);
     Route::get("/createsuratcuti", [SuratCutiController::class, "indexcreate"]);
-    Route::get("/carisuratcuti", [SuratCutiController::class, "find"]);
     Route::get('/editsuratcuti/{id}', [SuratCutiController::class, "edit"]);
     Route::delete("/deletesuratcuti/{id}", [SuratCutiController::class, "destroy"]);
     Route::post('/addsuratcuti', [SuratCutiController::class, "store"]);
@@ -108,7 +104,6 @@ Route::middleware(['auth:users', 'role'])->group(function () {
     Route::delete("/deletepegawai/{id}", [PegawaiController::class, "destroy"]);
     Route::get('/editpegawai/{id}', [PegawaiController::class, "edit"]);
     Route::put("/updatepegawai/{id}", [PegawaiController::class, "update"]);
-    Route::get('/caripegawai', [PegawaiController::class, "find"]);
     Route::get('/exportpegawai', [PegawaiController::class, "export_excel"]);
     Route::get('/cetakinformasi/{id}', [PegawaiController::class, "create"]);
 
@@ -188,6 +183,12 @@ Route::middleware(['auth:users', 'role'])->group(function () {
     Route::delete("/deleteuser/{id}", [UserController::class, "destroy"]);
     Route::get('/edituser/{id}', [UserController::class, "edit"]);
     Route::put("/updateuser/{id}", [UserController::class, "update"]);
-    Route::get('/cariuser', [UserController::class, "find"]);
 
+    //JENIS SURAT
+    Route::get('/jenissurat', [JenisSuratController::class, "index"]);
+    Route::get('/createjenissurat', [JenisSuratController::class, "indexcreate"]);
+    Route::post('/addjenissurat', [JenisSuratController::class, "store"]);
+    Route::get('/editjenissurat/{id}', [JenisSuratController::class, "edit"]);
+    Route::put("/updatejenissurat/{id}", [JenisSuratController::class, "update"]);
+    Route::delete("/deletejenissurat/{id}", [JenisSuratController::class, "destroy"]);
 });

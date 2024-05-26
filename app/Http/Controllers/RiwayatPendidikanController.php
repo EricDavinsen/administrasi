@@ -34,7 +34,6 @@ class RiwayatPendidikanController extends Controller
     }
     public function store( Request $request, $id)
     {
-
         $pegawai = Pegawai::where('id', $id)->first();
         $this->validate($request,
             [

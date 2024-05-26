@@ -16,7 +16,7 @@
             <tr>
             <td>{{ $item->NOMOR_SURAT }}</td>
             <td>{{ \Carbon\Carbon::parse($item->TANGGAL_SURAT)->format('d-m-Y') }}</td>
-            <td>{{ $item->JENIS_SURAT }}</td>
+            <td>{{ $item->jenis->JENIS_SURAT }}</td>
             <td>{{ $item->TUJUAN_SURAT }}</td>
             <td>{{ $item->SIFAT_SURAT }}</td>
             <td>{{ $item->PERIHAL_SURAT }}</td>

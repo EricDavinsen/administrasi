@@ -4,15 +4,14 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class SuratMasuk extends Model
+class JenisSurat extends Model
 {
     use HasFactory, Notifiable;
 
-    protected $table = 'surat_masuk';
+    protected $table = 'jenis_surat';
 
 
     /**
@@ -31,15 +30,7 @@ class SuratMasuk extends Model
         "email_verified_at" => "datetime",
     ];
     protected $fillable = [
-        "jenis_id",
-        "KODE_SURAT",
-        "NOMOR_SURAT",
-        "TANGGAL_SURAT",
-        "TANGGAL_MASUK",
-        "ASAL_SURAT",
-        "SIFAT_SURAT",
-        "PERIHAL_SURAT",
-        "FILE_SURAT"
+        "JENIS_SURAT",
     ];
 
     public function getCreatedAtAttribute()
@@ -59,15 +50,4 @@ class SuratMasuk extends Model
             );
         }
     }
-
-    public function dispo()
-    {
-        return $this->hasOne(Disposisi::class, 'id' , 'surat_masuk_id');
-    }
-
-    public function jenis():BelongsTo
-    {
-        return $this->belongsTo(JenisSurat::class, 'jenis_id', 'id');
-    }
-    
 }

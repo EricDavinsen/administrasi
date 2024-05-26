@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\ExportSpt;
+use App\Models\Pegawai;
 use Illuminate\View\View;
 use Nette\Utils\DateTime;
+use App\Exports\ExportSpt;
 use Illuminate\Http\Request;
 use App\Models\SuratPanggilanTugas;
 use Illuminate\Support\Facades\Auth;
@@ -15,9 +16,11 @@ class SuratPanggilanTugasController extends Controller
     public function index() : View
     {
         $spt = SuratPanggilanTugas::latest()->get();
-  
+        $pegawai = Pegawai::all();
+
         return view("spt")->with([
             'spt' => $spt,
+            'pegawai' => $pegawai,
             'users' => Auth::guard('users')->user()
         ]);
     }
@@ -25,19 +28,20 @@ class SuratPanggilanTugasController extends Controller
     public function indexcreate() : View
     {
         return view("tambah/tambahspt")->with([
+            'pegawai' => Pegawai::orderBy('NAMA_PEGAWAI', 'asc')->get(),
             'users' => Auth::guard('users')->user()
         ]);
     }
 
     public function store(Request $request)
     {
-
+        $pegawai = Pegawai::where('id', $request->pegawai_id)->first();
         $this->validate(
             $request,
             [
+                "pegawai_id" => ["required"],
                 "NO_SPT" => ["required"],
                 "TANGGAL_SPT" => ["required"],
-                "NAMA" => ["required"],
                 "TANGGAL_MULAI" => ["required"],
                 "TANGGAL_SELESAI" => ["required"],
                 "KEPERLUAN" => ["required"],
@@ -54,9 +58,9 @@ class SuratPanggilanTugasController extends Controller
         $jarak = $tanggalselesai->diff($tanggalmulai);
 
         $spt = SuratPanggilanTugas::create([
+            'pegawai_id' => $pegawai->id,
             'NO_SPT' => $request->NO_SPT,
             'TANGGAL_SPT' => $request->TANGGAL_SPT,
-            'NAMA' => $request->NAMA,
             'TANGGAL_MULAI' => $request->TANGGAL_MULAI,
             'TANGGAL_SELESAI' => $request->TANGGAL_SELESAI,
             'LAMA_TUGAS' => $jarak->days,
@@ -110,6 +114,7 @@ class SuratPanggilanTugasController extends Controller
 
         return view("edit/editspt")->with([
             'spt' => $spt,
+            'pegawai' => Pegawai::all(),
             'users' => Auth::guard('users')->user()
         ]);
     }
@@ -117,15 +122,13 @@ class SuratPanggilanTugasController extends Controller
     public function update(Request $request, $id)
     {
         $spt = SuratPanggilanTugas::where('id', $id)->first();
+        $pegawai = Pegawai::where('id', $request->pegawai_id)->first();
 
         if ($request->NO_SPT) {
             $spt->NO_SPT = $request->NO_SPT;
         }
         if ($request->TANGGAL_SPT) {
             $spt->TANGGAL_SPT = $request->TANGGAL_SPT;
-        }
-        if ($request->NAMA) {
-            $spt->NAMA = $request->NAMA;
         }
         if ($request->TANGGAL_MULAI) {
             $spt->TANGGAL_MULAI = $request->TANGGAL_MULAI;
@@ -143,9 +146,9 @@ class SuratPanggilanTugasController extends Controller
         ->limit(1)
         ->update(
             array(
+                'pegawai_id' => $pegawai->id,
                 'NO_SPT' => $spt->NO_SPT,
                 'TANGGAL_SPT' => $spt->TANGGAL_SPT,
-                'NAMA' => $spt->NAMA,
                 'TANGGAL_MULAI' => $spt->TANGGAL_MULAI,
                 'TANGGAL_SELESAI' => $spt->TANGGAL_SELESAI,
                 'KEPERLUAN' => $spt->KEPERLUAN,
@@ -181,24 +184,6 @@ class SuratPanggilanTugasController extends Controller
     return redirect()->intended('/editspt')->with([ notify()->error('Batal Mengupdate SPT'),
         'error' => 'Batal Mengupdate SPT']);
 
-    }
-
-    public function find(Request $request)
-    {
-        $spt = SuratPanggilanTugas::where('NO_SPT', 'like', '%' . $request->search . '%')
-            ->orWhereRaw("DATE_FORMAT(TANGGAL_SPT, '%d-%m-%Y') LIKE ?", ["%" . $request->search . "%"])
-            ->orWhere('NAMA', 'like', '%' . $request->search . '%')
-            ->orWhereRaw("DATE_FORMAT(TANGGAL_MULAI, '%d-%m-%Y') LIKE ?", ["%" . $request->search . "%"])
-            ->orWhereRaw("DATE_FORMAT(TANGGAL_SELESAI, '%d-%m-%Y') LIKE ?", ["%" . $request->search . "%"])
-            ->orWhere('LAMA_TUGAS', 'like', '%' . $request->search . '%')
-            ->orWhere('KEPERLUAN', 'like', '%' . $request->search . '%')
-            ->get();
-        $spt->appends(['search' => $request->search]);
-
-        return view("spt")->with([
-            'spt' => $spt,
-            'users' => Auth::guard('users')->user()
-        ]);
     }
     function export_excel()
     {

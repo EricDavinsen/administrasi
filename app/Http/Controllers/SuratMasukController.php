@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exports\ExportSuratMasuk;
+use App\Models\JenisSurat;
 use Illuminate\View\View;
 use App\Models\SuratMasuk;
 use Illuminate\Http\Request;
@@ -14,31 +15,34 @@ class SuratMasukController extends Controller
     public function index() : View
     {
         $suratmasuk = SuratMasuk::latest()->get();
+        $jenissurat = JenisSurat::all();
         
         return view("suratmasuk")->with([
             'suratmasuk' => $suratmasuk,
-            'users' => Auth::guard('users')->user()
+            'jenissurat' => $jenissurat,
+            'users' => Auth::guard('users')->user(),
         ]);
     }
 
     public function indexcreate() : View
     {
         return view("tambah/tambahsuratmasuk")->with([
+            'jenissurat' => JenisSurat::orderBy('JENIS_SURAT', 'asc')->get(),
             'users' => Auth::guard('users')->user()
         ]);
     }
 
     public function store(Request $request)
     {
-
+        $jenissurat = JenisSurat::where('id', $request->jenis_id)->first();
         $this->validate(
             $request,
             [
+                "jenis_id" => ["required"],
                 "KODE_SURAT" => ["required"],
                 "NOMOR_SURAT" => ["required"],
                 "TANGGAL_SURAT" => ["required"],
                 "TANGGAL_MASUK" => ["required"],
-                "JENIS_SURAT" => ["required"],
                 "ASAL_SURAT" => ["required"],
                 "SIFAT_SURAT" => ["required"],
                 "PERIHAL_SURAT" => ["required"],
@@ -50,12 +54,17 @@ class SuratMasukController extends Controller
         $fileName = $request->file("FILE_SURAT")->getClientOriginalName();
         $file->move('document/', $fileName);
         
-        $suratMasukData = $request->all();
-        if($request->has('FILE_SURAT')){
-            $suratMasukData['FILE_SURAT'] = $fileName;
-        }
-
-        $suratMasuk = SuratMasuk::create($suratMasukData);
+        $suratMasuk = SuratMasuk::create([
+                "jenis_id" => $jenissurat->id,
+                "KODE_SURAT" => $request->KODE_SURAT,
+                "NOMOR_SURAT" => $request->NOMOR_SURAT,
+                "TANGGAL_SURAT" => $request->TANGGAL_SURAT,
+                "TANGGAL_MASUK" => $request->TANGGAL_MASUK,
+                "ASAL_SURAT" => $request->ASAL_SURAT,
+                "SIFAT_SURAT" => $request->SIFAT_SURAT,
+                "PERIHAL_SURAT" => $request->PERIHAL_SURAT,
+                "FILE_SURAT" => $fileName,
+        ]);
 
         if ($suratMasuk) {
             return redirect()
@@ -103,6 +112,7 @@ class SuratMasukController extends Controller
 
         return view("edit/editsuratmasuk")->with([
             'suratmasuk' => $suratmasuk,
+            'jenissurat' => JenisSurat::orderBy('JENIS_SURAT', 'asc')->get(),
             'users' => Auth::guard('users')->user()
         ]);
     }
@@ -110,6 +120,7 @@ class SuratMasukController extends Controller
     public function update(Request $request, $id)
     {
         $suratmasuk = SuratMasuk::where('id', $id)->first();
+        $jenissurat = JenisSurat::where('id', $request->jenis_id)->first();
 
         if ($request->KODE_SURAT) {
             $suratmasuk->KODE_SURAT = $request->KODE_SURAT;
@@ -122,9 +133,6 @@ class SuratMasukController extends Controller
         }
         if ($request->TANGGAL_MASUK) {
             $suratmasuk->TANGGAL_MASUK = $request->TANGGAL_MASUK;
-        }
-        if ($request->JENIS_SURAT) {
-            $suratmasuk->JENIS_SURAT = $request->JENIS_SURAT;
         }
         if ($request->ASAL_SURAT) {
             $suratmasuk->ASAL_SURAT = $request->ASAL_SURAT;
@@ -142,11 +150,11 @@ class SuratMasukController extends Controller
         ->limit(1)
         ->update(
             array(
+                'jenis_id' => $jenissurat->id,
                 'KODE_SURAT' => $suratmasuk->KODE_SURAT,
                 'NOMOR_SURAT' => $suratmasuk->NOMOR_SURAT,
                 'TANGGAL_SURAT' => $suratmasuk->TANGGAL_SURAT,
                 'TANGGAL_MASUK' => $suratmasuk->TANGGAL_MASUK,
-                'JENIS_SURAT' => $suratmasuk->JENIS_SURAT,
                 'ASAL_SURAT' => $suratmasuk->ASAL_SURAT,
                 'SIFAT_SURAT' => $suratmasuk->SIFAT_SURAT,
                 'PERIHAL_SURAT' => $suratmasuk->PERIHAL_SURAT,
@@ -178,25 +186,6 @@ class SuratMasukController extends Controller
         'error' => 'Batal Mengupdate Surat Masuk']);
 
     }
-
-    // public function find(Request $request)
-    // {
-    //     $suratmasuk = SuratMasuk::where('KODE_SURAT', 'like', '%' . $request->search . '%')
-    //         ->orWhere('NOMOR_SURAT', 'like', '%' . $request->search . '%')
-    //         ->orWhereRaw("DATE_FORMAT(TANGGAL_SURAT, '%d-%m-%Y') LIKE ?", ["%" . $request->search . "%"])
-    //         ->orWhereRaw("DATE_FORMAT(TANGGAL_MASUK, '%d-%m-%Y') LIKE ?", ["%" . $request->search . "%"])
-    //         ->orWhere('JENIS_SURAT', 'like', '%' . $request->search . '%')
-    //         ->orWhere('ASAL_SURAT', 'like', '%' . $request->search . '%')
-    //         ->orWhere('SIFAT_SURAT', 'like', '%' . $request->search . '%')
-    //         ->orWhere('PERIHAL_SURAT', 'like', '%' . $request->search . '%')
-    //         ->get();
-    //     $suratmasuk->appends(['search' => $request->search]);
-
-    //     return view("suratmasuk")->with([
-    //         'suratmasuk' => $suratmasuk,
-    //         'users' => Auth::guard('users')->user()
-    //     ]);
-    // }
 
     function export_excel()
     {

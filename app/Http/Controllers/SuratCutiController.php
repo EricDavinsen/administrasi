@@ -59,8 +59,6 @@ class SuratCutiController extends Controller
         $tanggalselesai->modify("+1 day");
         $jarak = $tanggalselesai->diff($tanggalmulai);
         
-        $pegawai = Pegawai::where('id', $request->pegawai_id)->first();
-
         if($pegawai->SISA_CUTI_TAHUNAN == 0){
             return redirect()
             ->intended("/createsuratcuti")
@@ -217,24 +215,6 @@ class SuratCutiController extends Controller
         'error' => 'Batal Mengupdate Surat Cuti']);
 
     }
-
-    public function find(Request $request)
-    {
-        $suratcuti = SuratCuti::where('NO_CUTI', 'like', '%' . $request->search . '%')
-            ->orWhere('JENIS_CUTI', 'like', '%' . $request->search . '%')
-            ->orWhere('ALASAN_CUTI', 'like', '%' . $request->search . '%')
-            ->orWhereRaw("DATE_FORMAT(TANGGAL_MULAI, '%d-%m-%Y') LIKE ?", ["%" . $request->search . "%"])
-            ->orWhereRaw("DATE_FORMAT(TANGGAL_SELESAI, '%d-%m-%Y') LIKE ?", ["%" . $request->search . "%"])
-            ->orWhere('LAMA_CUTI', 'like', '%' . $request->search . '%')
-            ->get();
-        $suratcuti->appends(['search' => $request->search]);
-
-        return view("suratcuti")->with([
-            'suratcuti' => $suratcuti,
-            'users' => Auth::guard('users')->user()
-        ]);
-    }
-
     function export_excel()
     {
         return Excel::download(new ExportSuratCuti, 'suratcuti.xlsx');

@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('surat_panggilan_tugas', function (Blueprint $table) {
-            $table->unsignedBigInteger('pegawai_id')->after('id')->nullable();
-            $table->foreign('pegawai_id')->references('id')->on('pegawai')->onDelete('cascade');
-            $table->dropColumn('NAMA');
+        Schema::table('surat_keluar', function (Blueprint $table) {
+            $table->unsignedBigInteger('jenis_id')->after('id')->nullable();
+            $table->foreign('jenis_id')->references('id')->on('jenis_surat')->onDelete('cascade');
+            $table->dropColumn('JENIS_SURAT');
         });
     }
 
@@ -27,7 +27,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('surat_panggilan_tugas', function (Blueprint $table) {
+        Schema::table('surat_keluar', function (Blueprint $table) {
             $table->dropForeign(['pegawai_id']);
 
             $table->dropColumn('pegawai_id');

@@ -21,14 +21,17 @@
                             <input type="date" class="form-control" id="formGroupExampleInput2" name="TANGGAL_MASUK">
                         </div>
                         <div class="form-group">
-                            <label for="formGroupExampleInput2">Jenis Surat</label>
-                            <select class="form-control" name="JENIS_SURAT">
-                                <option value="" disabled selected hidden>Pilih Jenis Surat</option>
-                                <option>Undangan</option>
-                                <option>Permohonan</option>
-                                <option>Pemberitahuan</option>
-                                <option>Laporan Kejadian</option>
-                                <option>Surat Edaran</option>
+                            <label>Jenis Surat</label>
+                            <select class="form-control mb-2" aria-label="Select Jenis Surat" name="jenis_id">
+                                <option value="" hidden>Pilih Jenis Surat</option>
+                                @if ($jenissurat->first() != null)
+                                    @foreach ($jenissurat as $item)
+                                        <option value="{{ $item->id }}">
+                                            {{ $item->JENIS_SURAT }}</option>
+                                    @endforeach
+                                @else
+                                    <option value=""disabled>Tidak ada jenis surat</option>
+                                @endif
                             </select>
                         </div>
                         <div class="form-group">

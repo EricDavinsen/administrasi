@@ -5,8 +5,18 @@
                          @csrf
                          @method('put')
                          <div class="form-group">
-                            <label for="formGroupExampleInput">Nama</label>
-                            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Masukan Nama" name="NAMA" value="{{ $disposisi->NAMA }}">
+                            <label>Nama</label>
+                            <select class="form-control mb-2" aria-label="Select Pegawai" name="pegawai_id" value="{{ $disposisi->pegawai_id }}">
+                                <option value="" hidden>Pilih Pegawai</option>
+                                @if ($pegawai->first() != null)
+                                    @foreach ($pegawai as $item)
+                                        <option value="{{ $item->id }}">
+                                            {{ $item->NAMA_PEGAWAI }}</option>
+                                    @endforeach
+                                @else
+                                    <option value=""disabled>Tidak ada pegawai</option>
+                                @endif
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="formGroupExampleInput2">Diteruskan</label>

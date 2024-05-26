@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\ExportDisposisi;
+use App\Models\Pegawai;
 use App\Models\Disposisi;
 use Illuminate\View\View;
 use App\Models\SuratMasuk;
 use Illuminate\Http\Request;
+use App\Exports\ExportDisposisi;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -16,10 +17,12 @@ class DisposisiController extends Controller
     public function index(){
         $disposisi = Disposisi::latest()->get();
         $suratmasuk = SuratMasuk::all();
+        $pegawai = Pegawai::all();
      
         return view('disposisi')->with([
             'disposisi' => $disposisi,
             'suratmasuk' => $suratmasuk,
+            'pegawai' => $pegawai,
             'users' => Auth::guard('users')->user() 
         ]);
     }
@@ -28,16 +31,17 @@ class DisposisiController extends Controller
     {
         $suratmasuk = SuratMasuk::where('id',$id)->first();
         $disposisi = Disposisi::all();
+        $pegawai = Pegawai::all();
 
         $existingDisposisi = Disposisi::where('surat_masuk_id', $id)->first();
-
-    if ($existingDisposisi) {
-        return redirect()->back()->with('error', 'Sudah terdapat disposisi pada surat masuk ini.');
-    }
+        if ($existingDisposisi) {
+            return redirect()->back()->with('error', 'Sudah terdapat disposisi pada surat masuk ini.');
+        }
 
         return view("tambah/tambahdisposisi")->with([
             'suratmasuk' => $suratmasuk,
             'disposisi' => $disposisi,
+            'pegawai' => Pegawai::orderBy('NAMA_PEGAWAI', 'asc')->get(),
             'users' => Auth::guard('users')->user()
         ]);
 
@@ -46,9 +50,10 @@ class DisposisiController extends Controller
     public function store( Request $request ,$id)
     {
         $suratmasuk = SuratMasuk::where('id', $id)->first();
+        $pegawai = Pegawai::where('id', $request->pegawai_id)->first();
         $this->validate($request,
             [
-                "NAMA" => ["required"],
+                "pegawai_id" => ["required"],
                 "PENERUS" => ["required"],
                 "INSTRUKSI" => ["required"],
             ],
@@ -61,7 +66,7 @@ class DisposisiController extends Controller
 
         $disposisi = Disposisi::create([
             'surat_masuk_id' => $suratmasuk->id,
-            'NAMA' => $request->NAMA,
+            'pegawai_id' => $pegawai->id,
             'PENERUS' => $request->PENERUS,
             'INSTRUKSI' => $request->INSTRUKSI,
             'INFORMASI_LAINNYA' => $request->INFORMASI_LAINNYA,
@@ -70,7 +75,7 @@ class DisposisiController extends Controller
     } else {
         $disposisi = Disposisi::create([
             'surat_masuk_id' => $suratmasuk->id,
-            'NAMA' => $request->NAMA,
+            'pegawai_id' => $pegawai->id,
             'PENERUS' => $request->PENERUS,
             'INSTRUKSI' => $request->INSTRUKSI,
             'INFORMASI_LAINNYA' => $request->INFORMASI_LAINNYA,
@@ -124,6 +129,7 @@ class DisposisiController extends Controller
 
         return view("edit/editdisposisi")->with([
             'disposisi' => $disposisi,
+            'pegawai' => Pegawai::all(),
             'users' => Auth::guard('users')->user()
         ]);
     }
@@ -131,10 +137,7 @@ class DisposisiController extends Controller
     public function update(Request $request, $id)
     {
         $disposisi = Disposisi::where('id', $id)->first();
-
-        if ($request->NAMA) {
-            $disposisi->NAMA = $request->NAMA;
-        }
+        $pegawai = Pegawai::where('id', $request->pegawai_id)->first();
 
         if ($request->PENERUS) {
             $disposisi->PENERUS = $request->PENERUS;
@@ -155,7 +158,7 @@ class DisposisiController extends Controller
         ->limit(1)
         ->update(
             array(
-                'NAMA' => $disposisi->NAMA,
+                'pegawai_id' => $pegawai->id,
                 'PENERUS' => $disposisi->PENERUS,
                 'INSTRUKSI' => $disposisi->INSTRUKSI,
                 'INFORMASI_LAINNYA' => $disposisi->INFORMASI_LAINNYA,
@@ -201,15 +204,4 @@ class DisposisiController extends Controller
         return Excel::download(new ExportDisposisi, 'disposisi.xlsx');
     }
 
-    public function find(Request $request)
-    {
-        $disposisi = Disposisi::where('NAMA', 'like', '%' . $request->search . '%')
-            ->get();
-        $disposisi->appends(['search' => $request->search]);
-
-        return view("disposisi")->with([
-            'disposisi' => $disposisi,
-            'users' => Auth::guard('users')->user()
-        ]);
-    }
 }

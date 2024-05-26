@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class SuratKeluar extends Model
@@ -30,9 +31,9 @@ class SuratKeluar extends Model
         "email_verified_at" => "datetime",
     ];
     protected $fillable = [
+        "jenis_id",
         "NOMOR_SURAT",
         "TANGGAL_SURAT",
-        "JENIS_SURAT",
         "TUJUAN_SURAT",
         "SIFAT_SURAT",
         "PERIHAL_SURAT",
@@ -55,6 +56,11 @@ class SuratKeluar extends Model
                 "Y-m-d H:i:s"
             );
         }
+    }
+
+    public function jenis():BelongsTo
+    {
+        return $this->belongsTo(JenisSurat::class, 'jenis_id', 'id');
     }
     
 }

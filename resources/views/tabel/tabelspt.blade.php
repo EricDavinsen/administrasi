@@ -17,7 +17,7 @@
             <tr>
             <td>{{ $item->NO_SPT }}</td>
             <td>{{ \Carbon\Carbon::parse($item->TANGGAL_SPT)->format('d-m-Y') }}</td>
-            <td>{{ $item->NAMA }}</td>
+            <td>{{ $item->pegawai->NAMA_PEGAWAI }}</td>
             <td>{{ \Carbon\Carbon::parse($item->TANGGAL_MULAI)->format('d-m-Y') }}</td>
             <td>{{ \Carbon\Carbon::parse($item->TANGGAL_SELESAI)->format('d-m-Y') }}</td>
             @if($item->LAMA_TUGAS == 0)

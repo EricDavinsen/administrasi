@@ -16,6 +16,11 @@ class Disposisi extends Model
         return $this->belongsTo(SuratMasuk::class, 'surat_masuk_id' , 'id');
     }
 
+    public function pegawai():BelongsTo
+    {
+        return $this->belongsTo(Pegawai::class, 'pegawai_id', 'id');
+    }
+
     use HasFactory, Notifiable;
 
     protected $table = 'disposisi';
@@ -40,6 +45,7 @@ class Disposisi extends Model
 
     protected $fillable = [
         "surat_masuk_id",
+        "pegawai_id",
         "NAMA",
         "PENERUS",
         "INSTRUKSI",

@@ -49,6 +49,13 @@
                 </div>
             </li>
 
+            <li class="{{ request()->is('disposisi','caridisposisi') ? 'nav-item active' : '' }}">
+                <div class="sidebar-items d-flex align-items-center gap-3 w-100">
+                    <i class="fa-solid fa-xl fa-list-check"></i>
+                    <a href="{{ url('jenissurat') }}">Jenis Surat</a>
+                </div>
+            </li>
+
             <li class="mt-5 {{ request()->is('datapegawai','caripegawai','createpegawai') ? 'nav-item active' : '' }}">
                 <div class="sidebar-items d-flex align-items-center gap-3 w-100">
                     <i class="fa-solid fa-xl fa-users"></i>

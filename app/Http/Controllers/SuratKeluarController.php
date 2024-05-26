@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\ExportSuratKeluar;
 use Illuminate\View\View;
+use App\Models\JenisSurat;
 use App\Models\SuratKeluar;
 use Illuminate\Http\Request;
+use App\Exports\ExportSuratKeluar;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -14,9 +15,11 @@ class SuratKeluarController extends Controller
     public function index() : View
     {
         $suratkeluar = SuratKeluar::latest()->get();
+        $jenissurat = JenisSurat::all();
         
         return view("suratkeluar")->with([
             'suratkeluar' => $suratkeluar,
+            'jenissurat' => $jenissurat,
             'users' => Auth::guard('users')->user()
         ]);
         
@@ -25,19 +28,20 @@ class SuratKeluarController extends Controller
     public function indexcreate() : View
     {
         return view("tambah/tambahsuratkeluar")->with([
+            'jenissurat' => JenisSurat::orderBy('JENIS_SURAT', 'asc')->get(),
             'users' => Auth::guard('users')->user()
         ]);
     }
 
     public function store(Request $request)
     {
-
+        $jenissurat = JenisSurat::where('id', $request->jenis_id)->first();
         $this->validate(
             $request,
             [
+                "jenis_id" => ["required"],
                 "NOMOR_SURAT" => ["required"],
                 "TANGGAL_SURAT" => ["required"],
-                "JENIS_SURAT" => ["required"],
                 "TUJUAN_SURAT" => ["required"],
                 "SIFAT_SURAT" => ["required"],
                 "PERIHAL_SURAT" => ["required"],
@@ -49,12 +53,16 @@ class SuratKeluarController extends Controller
         $fileName = $request->file("FILE_SURAT")->getClientOriginalName();
         $file->move('document/', $fileName);
         
-        $suratKeluarData = $request->all();
-        if($request->has('FILE_SURAT')){
-            $suratKeluarData['FILE_SURAT'] = $fileName;
-        }
-
-        $suratKeluar = SuratKeluar::create($suratKeluarData);
+      
+        $suratKeluar = SuratKeluar::create([
+            "jenis_id" => $jenissurat->id,
+            "NOMOR_SURAT" => $request->NOMOR_SURAT,
+            "TANGGAL_SURAT" => $request->TANGGAL_SURAT,
+            "TUJUAN_SURAT" => $request->TUJUAN_SURAT,
+            "SIFAT_SURAT" => $request->SIFAT_SURAT,
+            "PERIHAL_SURAT" => $request->PERIHAL_SURAT,
+            "FILE_SURAT" => $fileName,
+    ]);
 
         if ($suratKeluar) {
             return redirect()
@@ -102,6 +110,7 @@ class SuratKeluarController extends Controller
 
         return view("edit/editsuratkeluar")->with([
             'suratkeluar' => $suratkeluar,
+            'jenissurat' => JenisSurat::orderBy('JENIS_SURAT', 'asc')->get(),
             'users' => Auth::guard('users')->user()
         ]);
     }
@@ -109,15 +118,13 @@ class SuratKeluarController extends Controller
     public function update(Request $request, $id)
     {
         $suratkeluar = SuratKeluar::where('id', $id)->first();
+        $jenissurat = JenisSurat::where('id', $request->jenis_id)->first();
 
         if ($request->NOMOR_SURAT) {
             $suratkeluar->NOMOR_SURAT = $request->NOMOR_SURAT;
         }
         if ($request->TANGGAL_SURAT) {
             $suratkeluar->TANGGAL_SURAT = $request->TANGGAL_SURAT;
-        }
-        if ($request->JENIS_SURAT) {
-            $suratkeluar->JENIS_SURAT = $request->JENIS_SURAT;
         }
         if ($request->TUJUAN_SURAT) {
             $suratkeluar->TUJUAN_SURAT = $request->TUJUAN_SURAT;
@@ -135,9 +142,9 @@ class SuratKeluarController extends Controller
         ->limit(1)
         ->update(
             array(
+                'jenis_id' => $jenissurat->id,
                 'NOMOR_SURAT' => $suratkeluar->NOMOR_SURAT,
                 'TANGGAL_SURAT' => $suratkeluar->TANGGAL_SURAT,
-                'JENIS_SURAT' => $suratkeluar->JENIS_SURAT,
                 'TUJUAN_SURAT' => $suratkeluar->TUJUAN_SURAT,
                 'SIFAT_SURAT' => $suratkeluar->SIFAT_SURAT,
                 'PERIHAL_SURAT' => $suratkeluar->PERIHAL_SURAT,
@@ -168,23 +175,6 @@ class SuratKeluarController extends Controller
     return redirect()->intended('/editsuratkeluar')->with([ notify()->error('Batal Mengupdate Surat Keluar'),
         'error' => 'Batal Mengupdate Surat Keluar']);
 
-    }
-
-    public function find(Request $request)
-    {
-        $suratkeluar = SuratKeluar::where('NOMOR_SURAT', 'like', '%' . $request->search . '%')
-            ->orWhereRaw("DATE_FORMAT(TANGGAL_SURAT, '%d-%m-%Y') LIKE ?", ["%" . $request->search . "%"])
-            ->orWhere('JENIS_SURAT', 'like', '%' . $request->search . '%')
-            ->orWhere('TUJUAN_SURAT', 'like', '%' . $request->search . '%')
-            ->orWhere('SIFAT_SURAT', 'like', '%' . $request->search . '%')
-            ->orWhere('PERIHAL_SURAT', 'like', '%' . $request->search . '%')
-            ->get();
-        $suratkeluar->appends(['search' => $request->search]);
-
-        return view("suratkeluar")->with([
-            'suratkeluar' => $suratkeluar,
-            'users' => Auth::guard('users')->user()
-        ]);
     }
 
     function export_excel()
