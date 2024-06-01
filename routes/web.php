@@ -12,6 +12,7 @@ use App\Http\Controllers\DisposisiController;
 use App\Http\Controllers\RiwayatSkController;
 use App\Http\Controllers\SuratCutiController;
 use App\Http\Controllers\JenisSuratController;
+use App\Http\Controllers\SifatSuratController;
 use App\Http\Controllers\SuratMasukController;
 use App\Http\Controllers\DataPribadiController;
 use App\Http\Controllers\SuratKeluarController;
@@ -191,4 +192,12 @@ Route::middleware(['auth:users', 'role'])->group(function () {
     Route::get('/editjenissurat/{id}', [JenisSuratController::class, "edit"]);
     Route::put("/updatejenissurat/{id}", [JenisSuratController::class, "update"]);
     Route::delete("/deletejenissurat/{id}", [JenisSuratController::class, "destroy"]);
+
+    //SIFAT SURAT
+    Route::get('/sifatsurat', [SifatSuratController::class, "index"]);
+    Route::get('/createsifatsurat', [SifatSuratController::class, "indexcreate"]);
+    Route::post('/addsifatsurat', [SifatSuratController::class, "store"]);
+    Route::delete("/deletesifatsurat/{id}", [SifatSuratController::class, "destroy"]);
+    Route::get('/editsifatsurat/{id}', [SifatSuratController::class, "edit"]);
+    Route::put("/updatesifatsurat/{id}", [SifatSuratController::class, "update"]);
 });

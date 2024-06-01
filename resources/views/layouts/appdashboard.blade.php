@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>PUSDALOPS-PB</title>
         @notifyCss
+        <link rel="shortcut icon" type="image/x-icon" href="{{ asset("img/logo.png")}}" />
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
             <!-- Bootstrap icons-->

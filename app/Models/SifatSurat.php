@@ -5,15 +5,14 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class SuratKeluar extends Model
+class SifatSurat extends Model
 {
     use HasFactory, Notifiable;
 
-    protected $table = 'surat_keluar';
-    protected $guard = 'surat_keluar';
+    protected $table = 'sifat_surat';
+
 
     /**
      * The attributes that should be hidden for serialization.
@@ -31,13 +30,7 @@ class SuratKeluar extends Model
         "email_verified_at" => "datetime",
     ];
     protected $fillable = [
-        "sifat_id",
-        "jenis_id",
-        "NOMOR_SURAT",
-        "TANGGAL_SURAT",
-        "TUJUAN_SURAT",
-        "PERIHAL_SURAT",
-        "FILE_SURAT",
+        "SIFAT_SURAT",
     ];
 
     public function getCreatedAtAttribute()
@@ -56,15 +49,5 @@ class SuratKeluar extends Model
                 "Y-m-d H:i:s"
             );
         }
-    }
-
-    public function jenis():BelongsTo
-    {
-        return $this->belongsTo(JenisSurat::class, 'jenis_id', 'id');
-    }
-    
-    public function sifat():BelongsTo
-    {
-        return $this->belongsTo(SifatSurat::class, 'sifat_id', 'id');
     }
 }

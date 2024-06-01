@@ -60,6 +60,20 @@ class DataPribadiController extends Controller
                 "NO_HP" => ["required"],
                 "EMAIL" => ["required"],
             ],
+            [
+                "NO_KTP.required" => "Nomor KTP Harus Diisi",
+                "NO_BPJS.required" => "Nomor BPJS Harus Diisi",
+                "NO_NPWP.required" => "Nomor NPWP Harus Diisi",
+                "TINGGI_BADAN.required" => "Tinggi Badan Harus Diisi",
+                "BERAT_BADAN.required" => "Berat Badan Harus Diisi",
+                "WARNA_KULIT.required" => "Warna Kulit Harus Diisi",
+                "GOLONGAN_DARAH.required" => "Golongan Darah Harus Diisi",
+                "ALAMAT_RUMAH.required" => "Alamat Harus Diisi",
+                "KODE_POS.required" => "Kode Pos Harus Diisi",
+                "TELPON_RUMAH.required" => "Telp Harus Diisi",
+                "NO_HP.required" => "No Hp Harus Diisi",
+                "EMAIL.required" => "Email Harus Diisi",
+            ]
         );
 
         $datapribadi = DataPribadi::create([
@@ -129,54 +143,36 @@ class DataPribadiController extends Controller
     {
         $datapribadi = DataPribadi::where('id', $id)->first();
 
-        if ($request->NO_KTP) {
-            $datapribadi->NO_KTP = $request->NO_KTP;
-        }
-
-        if ($request->NO_BPJS) {
-            $datapribadi->NO_BPJS = $request->NO_BPJS;
-        }
-
-        if ($request->NO_NPWP) {
-            $datapribadi->NO_NPWP = $request->NO_NPWP;
-        }
-
-        if ($request->TINGGI_BADAN) {
-            $datapribadi->TINGGI_BADAN = $request->TINGGI_BADAN;
-        }
-
-        if ($request->BERAT_BADAN) {
-            $datapribadi->BERAT_BADAN = $request->BERAT_BADAN;
-        }
-
-        if ($request->WARNA_KULIT) {
-            $datapribadi->WARNA_KULIT = $request->WARNA_KULIT;
-        }
-
-        if ($request->GOLONGAN_DARAH) {
-            $datapribadi->GOLONGAN_DARAH = $request->GOLONGAN_DARAH;
-        }
-
-        if ($request->ALAMAT_RUMAH) {
-            $datapribadi->ALAMAT_RUMAH = $request->ALAMAT_RUMAH;
-        }
-
-        if ($request->KODE_POS) {
-            $datapribadi->KODE_POS = $request->KODE_POS;
-        }
-
-        if ($request->TELPON_RUMAH) {
-            $datapribadi->TELPON_RUMAH = $request->TELPON_RUMAH;
-        }
-
-        if ($request->NO_HP) {
-            $datapribadi->NO_HP = $request->NO_HP;
-        }
-
-        if ($request->EMAIL) {
-            $datapribadi->EMAIL = $request->EMAIL;
-        }
-
+        $this->validate($request,
+            [
+                "NO_KTP" => ["required"],
+                "NO_BPJS" => ["required"],
+                "NO_NPWP" => ["required"],
+                "TINGGI_BADAN" => ["required"],
+                "BERAT_BADAN" => ["required"],
+                "WARNA_KULIT" => ["required"],
+                "GOLONGAN_DARAH" => ["required"],
+                "ALAMAT_RUMAH" => ["required"],
+                "KODE_POS" => ["required"],
+                "TELPON_RUMAH" => ["required"],
+                "NO_HP" => ["required"],
+                "EMAIL" => ["required"],
+            ],
+            [
+                "NO_KTP.required" => "Nomor KTP Harus Diisi",
+                "NO_BPJS.required" => "Nomor BPJS Harus Diisi",
+                "NO_NPWP.required" => "Nomor NPWP Harus Diisi",
+                "TINGGI_BADAN.required" => "Tinggi Badan Harus Diisi",
+                "BERAT_BADAN.required" => "Berat Badan Harus Diisi",
+                "WARNA_KULIT.required" => "Warna Kulit Harus Diisi",
+                "GOLONGAN_DARAH.required" => "Golongan Darah Harus Diisi",
+                "ALAMAT_RUMAH.required" => "Alamat Harus Diisi",
+                "KODE_POS.required" => "Kode Pos Harus Diisi",
+                "TELPON_RUMAH.required" => "Telp Harus Diisi",
+                "NO_HP.required" => "No Hp Harus Diisi",
+                "EMAIL.required" => "Email Harus Diisi",
+            ]
+        );
         $updateData = DataPribadi::where('id', $id)
         ->limit(1)
         ->update(

@@ -43,6 +43,13 @@ class DiklatController extends Controller
                 "JUMLAH_JAM" => ["required"],
                 "PENYELENGGARA" => ["required"],
             ],
+            [
+                "NAMA_DIKLAT.required" => "Nama Diklat Harus Diisi",
+                "TANGGAL_MULAI.required" => "Tanggal Mulai Harus Diisi",
+                "TANGGAL_SELESAI.required" => "Tanggal Selesai Harus Diisi",
+                "JUMLAH_JAM.required" => "Jumlah Jam Harus Diisi",
+                "PENYELENGGARA.required" => "Penyelenggara Harus Diisi",
+            ]
         );
 
         if ($request->hasFile('SERTIFIKAT')) {
@@ -127,29 +134,22 @@ class DiklatController extends Controller
     {
         $diklat = Diklat::where('id', $id)->first();
 
-        if ($request->NAMA_DIKLAT) {
-            $diklat->NAMA_DIKLAT = $request->NAMA_DIKLAT;
-        }
-
-        if ($request->TANGGAL_MULAI) {
-            $diklat->TANGGAL_MULAI = $request->TANGGAL_MULAI;
-        }
-
-        if ($request->TANGGAL_SELESAI) {
-            $diklat->TANGGAL_SELESAI = $request->TANGGAL_SELESAI;
-        }
-
-        if ($request->JUMLAH_JAM) {
-            $diklat->JUMLAH_JAM = $request->JUMLAH_JAM;
-        }
-
-        if ($request->PENYELENGGARA) {
-            $diklat->PENYELENGGARA = $request->PENYELENGGARA;
-        }
-
-        if ($request->SERTIFIKAT) {
-            $diklat->SERTIFIKAT = $request->SERTIFIKAT;
-        }
+        $this->validate($request,
+        [
+            "NAMA_DIKLAT" => ["required"],
+            "TANGGAL_MULAI" => ["required"],
+            "TANGGAL_SELESAI" => ["required"],
+            "JUMLAH_JAM" => ["required"],
+            "PENYELENGGARA" => ["required"],
+        ],
+        [
+            "NAMA_DIKLAT.required" => "Nama Diklat Harus Diisi",
+            "TANGGAL_MULAI.required" => "Tanggal Mulai Harus Diisi",
+            "TANGGAL_SELESAI.required" => "Tanggal Selesai Harus Diisi",
+            "JUMLAH_JAM.required" => "Jumlah Jam Harus Diisi",
+            "PENYELENGGARA.required" => "Penyelenggara Harus Diisi",
+        ]
+    );
 
         $updateData = Diklat::where('id', $id)
         ->limit(1)

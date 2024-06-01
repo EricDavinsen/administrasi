@@ -42,6 +42,12 @@ class RiwayatPendidikanController extends Controller
                 "TAHUN_LULUS" => ["required"],
                 "STTB" => ["required"],
             ],
+            [
+                "NAMA_SEKOLAH.required" => "Nama Sekolah Harus Diisi",
+                "JURUSAN.required" => "Jurusan Harus Diisi",
+                "TAHUN_LULUS.required" => "Tangal Lulus Harus Diisi",
+                "STTB.required" => "STTB Harus Diisi",
+            ]
         );
 
         if ($request->hasFile('IJAZAH_SEKOLAH')) {
@@ -124,25 +130,20 @@ class RiwayatPendidikanController extends Controller
     {
         $riwayatpendidikan = RiwayatPendidikan::where('id', $id)->first();
 
-        if ($request->NAMA_SEKOLAH) {
-            $riwayatpendidikan->NAMA_SEKOLAH = $request->NAMA_SEKOLAH;
-        }
-
-        if ($request->JURUSAN) {
-            $riwayatpendidikan->JURUSAN = $request->JURUSAN;
-        }
-
-        if ($request->TAHUN_LULUS) {
-            $riwayatpendidikan->TAHUN_LULUS = $request->TAHUN_LULUS;
-        }
-
-        if ($request->STTB) {
-            $riwayatpendidikan->STTB = $request->STTB;
-        }
-
-        if ($request->IJAZAH_SEKOLAH) {
-            $riwayatpendidikan->IJAZAH_SEKOLAH = $request->IJAZAH_SEKOLAH;
-        }
+        $this->validate($request,
+        [
+            "NAMA_SEKOLAH" => ["required"],
+            "JURUSAN" => ["required"],
+            "TAHUN_LULUS" => ["required"],
+            "STTB" => ["required"],
+        ],
+        [
+            "NAMA_SEKOLAH.required" => "Nama Sekolah Harus Diisi",
+            "JURUSAN.required" => "Jurusan Harus Diisi",
+            "TAHUN_LULUS.required" => "Tangal Lulus Harus Diisi",
+            "STTB.required" => "STTB Harus Diisi",
+        ]
+    );
 
         $updateData = RiwayatPendidikan::where('id', $id)
         ->limit(1)

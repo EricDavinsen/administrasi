@@ -23,7 +23,12 @@ class LoginController extends Controller
         $this->validate($request, [
             'email' => ['required'],
             'password' => ['required'],
-        ]);
+        ],
+        [
+            'email.required' => 'Email/Username Harus Diisi',
+            'password.required' => 'Password Harus Diisi',
+        ]
+    );
         $loginField = filter_var($request->input('email'), FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
 
         $credential = [

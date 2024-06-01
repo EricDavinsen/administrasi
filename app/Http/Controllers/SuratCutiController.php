@@ -48,6 +48,14 @@ class SuratCutiController extends Controller
                 "TANGGAL_SELESAI" => ["required"],
                 "FILE_SURAT" => ["required"],
             ],
+            [
+                "pegawai_id.required" => "Nama Harus Diisi",
+                "NO_CUTI.required" => "Nomor Cuti Harus Diisi",
+                "JENIS_CUTI.required" => "Jenis Cuti Harus Diisi",
+                "ALASAN_CUTI.required" => "Alasan Cuti Harus Diisi",
+                "TANGGAL_MULAI.required" => "Tangal Mulai Harus Diisi",
+                "TANGGAL_SELESAI.required" => "Tangal Selesai Harus Diisi",
+                "FILE_SURAT.required" => "File Surat Harus Diisi",]
         );
 
         $file = $request->file("FILE_SURAT");
@@ -139,24 +147,24 @@ class SuratCutiController extends Controller
         $suratcuti = SuratCuti::where('id', $id)->first();
         $pegawai = Pegawai::where('id', $request->pegawai_id)->first();
 
-        if ($request->NO_CUTI) {
-            $suratcuti->NO_CUTI = $request->NO_CUTI;
-        }
-        if ($request->JENIS_CUTI) {
-            $suratcuti->JENIS_CUTI = $request->JENIS_CUTI;
-        }
-        if ($request->ALASAN_CUTI) {
-            $suratcuti->ALASAN_CUTI = $request->ALASAN_CUTI;
-        }
-        if ($request->TANGGAL_MULAI) {
-            $suratcuti->TANGGAL_MULAI = $request->TANGGAL_MULAI;
-        }
-        if ($request->TANGGAL_SELESAI) {
-            $suratcuti->TANGGAL_SELESAI = $request->TANGGAL_SELESAI;
-        }
-        if ($request->FILE_SURAT) {
-            $suratcuti->FILE_SURAT = $request->FILE_SURAT;
-        }
+        $this->validate(
+            $request,
+            [
+                "pegawai_id" => ["required"],
+                "NO_CUTI" => ["required"],
+                "JENIS_CUTI" => ["required"],
+                "ALASAN_CUTI" => ["required"],
+                "TANGGAL_MULAI" => ["required"],
+                "TANGGAL_SELESAI" => ["required"],
+            ],
+            [
+                "pegawai_id.required" => "Nama Harus Diisi",
+                "NO_CUTI.required" => "Nomor Cuti Harus Diisi",
+                "JENIS_CUTI.required" => "Jenis Cuti Harus Diisi",
+                "ALASAN_CUTI.required" => "Alasan Cuti Harus Diisi",
+                "TANGGAL_MULAI.required" => "Tangal Mulai Harus Diisi",
+                "TANGGAL_SELESAI.required" => "Tangal Selesai Harus Diisi",]
+        );
 
         if($request->JENIS_CUTI == "Cuti Tahunan" && $pegawai->SISA_CUTI_TAHUNAN != 0 && $request->old_jenis_cuti != "Cuti Tahunan"){
             $pegawai->SISA_CUTI_TAHUNAN -= 1;
@@ -175,11 +183,11 @@ class SuratCutiController extends Controller
         ->update(
             array(
                 'pegawai_id' => $pegawai->id,
-                'NO_CUTI' => $suratcuti->NO_CUTI,
-                'JENIS_CUTI' => $suratcuti->JENIS_CUTI,
-                'ALASAN_CUTI' => $suratcuti->ALASAN_CUTI,
-                'TANGGAL_MULAI' => $suratcuti->TANGGAL_MULAI,
-                'TANGGAL_SELESAI' => $suratcuti->TANGGAL_SELESAI,
+                'NO_CUTI' => $request->NO_CUTI,
+                'JENIS_CUTI' => $request->JENIS_CUTI,
+                'ALASAN_CUTI' => $request->ALASAN_CUTI,
+                'TANGGAL_MULAI' => $request->TANGGAL_MULAI,
+                'TANGGAL_SELESAI' => $request->TANGGAL_SELESAI,
                 'FILE_SURAT' => $suratcuti->FILE_SURAT,
             ),
         );

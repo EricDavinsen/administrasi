@@ -43,6 +43,11 @@ class DataKeluargaController extends Controller
                 "TANGGAL_LAHIR" => ["required"],
                 "STATUS" => ["required"],
             ],
+            [
+                "NAMA_KELUARGA.required" => "Nama Harus Diisi",
+                "TANGGAL_LAHIR.required" => "Tangal Lahir Harus Diisi",
+                "STATUS.required" => "Status Harus Diisi",
+            ]
         );
 
             $datakeluarga = DataKeluarga::create([
@@ -103,21 +108,18 @@ class DataKeluargaController extends Controller
     {
         $datakeluarga = DataKeluarga::where('id', $id)->first();
 
-        if ($request->NAMA_KELUARGA) {
-            $datakeluarga->NAMA_KELUARGA = $request->NAMA_KELUARGA;
-        }
-
-        if ($request->TANGGAL_LAHIR) {
-            $datakeluarga->TANGGAL_LAHIR = $request->TANGGAL_LAHIR;
-        }
-
-        if ($request->STATUS) {
-            $datakeluarga->STATUS = $request->STATUS;
-        }
-
-        if ($request->PEKERJAAN) {
-            $datakeluarga->PEKERJAAN = $request->PEKERJAAN;
-        }
+        $this->validate($request,
+            [
+                "NAMA_KELUARGA" => ["required"],
+                "TANGGAL_LAHIR" => ["required"],
+                "STATUS" => ["required"],
+            ],
+            [
+                "NAMA_KELUARGA.required" => "Nama Harus Diisi",
+                "TANGGAL_LAHIR.required" => "Tangal Lahir Harus Diisi",
+                "STATUS.required" => "Status Harus Diisi",
+            ]
+        );
 
         $updateData = DataKeluarga::where('id', $id)
         ->limit(1)
@@ -125,7 +127,7 @@ class DataKeluargaController extends Controller
             array(
                 'NAMA_KELUARGA' => $datakeluarga->NAMA_KELUARGA,
                 'TANGGAL_LAHIR' => $datakeluarga->TANGGAL_LAHIR,
-                'STATUS' => $datakeluarga->STATUS,
+                'STATUS' => $request->STATUS,
                 'PEKERJAAN' => $datakeluarga->PEKERJAAN,
             ),
         );

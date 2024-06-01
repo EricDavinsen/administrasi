@@ -61,6 +61,21 @@ class PegawaiController extends Controller
                 "KEDUDUKAN" => ["required"],
                 "FOTO_PEGAWAI" => ["required"],
             ],
+            [
+                "NAMA_PEGAWAI.required" => "Nama Harus Diisi",
+                "NIK.required" => "NIK Harus Diisi",
+                "TANGGAL_LAHIR.required" => "Tangal Lahir Harus Diisi",
+                "JENIS_KELAMIN.required" => "Jenis Kelamin Harus Diisi",
+                "AGAMA.required" => "Agama Harus Diisi",
+                "INSTANSI.required" => "Instansi Harus Diisi",
+                "UNIT.required" => "Unit Harus Diisi",
+                "JABATAN_PEGAWAI.required" => "Jabatan Harus Diisi",
+                "JENIS_PEGAWAI.required" => "Jenis Harus Diisi",
+                "PENDIDIKAN_TERAKHIR.required" => "Pendidikan Harus Diisi",
+                "STATUS_PEGAWAI.required" => "Status Harus Diisi",
+                "KEDUDUKAN.required" => "Kedudukan Harus Diisi",
+                "FOTO_PEGAWAI.required" => "Foto Harus Diisi",
+            ]
         );
 
         if ($request->hasFile('FOTO_PEGAWAI')) {
@@ -134,69 +149,56 @@ class PegawaiController extends Controller
     {
         $pegawai = Pegawai::where('id', $id)->first();
 
-        if ($request->NAMA_PEGAWAI) {
-            $pegawai->NAMA_PEGAWAI = $request->NAMA_PEGAWAI;
-        }
-        if ($request->NIK) {
-            $pegawai->NIK = $request->NIK;
-        }
-        if ($request->NO_KK) {
-            $pegawai->NO_KK = $request->NO_KK;
-        }
-        if ($request->TANGGAL_LAHIR) {
-            $pegawai->TANGGAL_LAHIR = $request->TANGGAL_LAHIR;
-        }
-        if ($request->JENIS_KELAMIN) {
-            $pegawai->JENIS_KELAMIN = $request->JENIS_KELAMIN;
-        }
-        if ($request->AGAMA) {
-            $pegawai->AGAMA = $request->AGAMA;
-        }
-        if ($request->INSTANSI) {
-            $pegawai->INSTANSI = $request->INSTANSI;
-        }
-        if ($request->UNIT) {
-            $pegawai->UNIT = $request->UNIT;
-        }
-        if ($request->SUB_UNIT) {
-            $pegawai->SUB_UNIT = $request->SUB_UNIT;
-        }
-        if ($request->JABATAN_PEGAWAI) {
-            $pegawai->JABATAN_PEGAWAI = $request->JABATAN_PEGAWAI;
-        }
-        if ($request->JENIS_PEGAWAI) {
-            $pegawai->JENIS_PEGAWAI = $request->JENIS_PEGAWAI;
-        }
-        if ($request->PENDIDIKAN_TERAKHIR) {
-            $pegawai->PENDIDIKAN_TERAKHIR = $request->PENDIDIKAN_TERAKHIR;
-        }
-        if ($request->STATUS_PEGAWAI) {
-            $pegawai->STATUS_PEGAWAI = $request->STATUS_PEGAWAI;
-        }
-        if ($request->KEDUDUKAN) {
-            $pegawai->KEDUDUKAN = $request->KEDUDUKAN;
-        }
-        if ($request->FOTO_PEGAWAI) {
-            $pegawai->FOTO_PEGAWAI = $request->FOTO_PEGAWAI;
-        }
+        $this->validate(
+            $request,
+            [
+                "NAMA_PEGAWAI" => ["required"],
+                "NIK" => ["required"],
+                "TANGGAL_LAHIR" => ["required"],
+                "JENIS_KELAMIN" => ["required"],
+                "AGAMA" => ["required"],
+                "INSTANSI" => ["required"],
+                "UNIT" => ["required"],
+                "JABATAN_PEGAWAI" => ["required"],
+                "JENIS_PEGAWAI" => ["required"],
+                "PENDIDIKAN_TERAKHIR" => ["required"],
+                "STATUS_PEGAWAI" => ["required"],
+                "KEDUDUKAN" => ["required"],
+            ],
+            [
+                "NAMA_PEGAWAI.required" => "Nama Harus Diisi",
+                "NIK.required" => "NIK Harus Diisi",
+                "TANGGAL_LAHIR.required" => "Tangal Lahir Harus Diisi",
+                "JENIS_KELAMIN.required" => "Jenis Kelamin Harus Diisi",
+                "AGAMA.required" => "Agama Harus Diisi",
+                "INSTANSI.required" => "Instansi Harus Diisi",
+                "UNIT.required" => "Unit Harus Diisi",
+                "JABATAN_PEGAWAI.required" => "Jabatan Harus Diisi",
+                "JENIS_PEGAWAI.required" => "Jenis Harus Diisi",
+                "PENDIDIKAN_TERAKHIR.required" => "Pendidikan Harus Diisi",
+                "STATUS_PEGAWAI.required" => "Status Harus Diisi",
+                "KEDUDUKAN.required" => "Kedudukan Harus Diisi",
+            ]
+        );
+
         $updateSurat = Pegawai::where('id', $id)
         ->limit(1)
         ->update(
             array(
-                'NAMA_PEGAWAI' => $pegawai->NAMA_PEGAWAI,
-                'NIK' => $pegawai->NIK,
-                'NO_KK' => $pegawai->NO_KK,
-                'TANGGAL_LAHIR' => $pegawai->TANGGAL_LAHIR,
-                'JENIS_KELAMIN' => $pegawai->JENIS_KELAMIN,
-                'AGAMA' => $pegawai->AGAMA,
-                'INSTANSI' => $pegawai->INSTANSI,
-                'UNIT' => $pegawai->UNIT,
-                'SUB_UNIT' => $pegawai->SUB_UNIT,
-                'JABATAN_PEGAWAI' => $pegawai->JABATAN_PEGAWAI,
-                'JENIS_PEGAWAI' => $pegawai->JENIS_PEGAWAI,
-                'PENDIDIKAN_TERAKHIR' => $pegawai->PENDIDIKAN_TERAKHIR,
-                'STATUS_PEGAWAI' => $pegawai->STATUS_PEGAWAI,
-                'KEDUDUKAN' => $pegawai->KEDUDUKAN,
+                'NAMA_PEGAWAI' => $request->NAMA_PEGAWAI,
+                'NIK' => $request->NIK,
+                'NO_KK' => $request->NO_KK,
+                'TANGGAL_LAHIR' => $request->TANGGAL_LAHIR,
+                'JENIS_KELAMIN' => $request->JENIS_KELAMIN,
+                'AGAMA' => $request->AGAMA,
+                'INSTANSI' => $request->INSTANSI,
+                'UNIT' => $request->UNIT,
+                'SUB_UNIT' => $request->SUB_UNIT,
+                'JABATAN_PEGAWAI' => $request->JABATAN_PEGAWAI,
+                'JENIS_PEGAWAI' => $request->JENIS_PEGAWAI,
+                'PENDIDIKAN_TERAKHIR' => $request->PENDIDIKAN_TERAKHIR,
+                'STATUS_PEGAWAI' => $request->STATUS_PEGAWAI,
+                'KEDUDUKAN' => $request->KEDUDUKAN,
                 'FOTO_PEGAWAI' => $pegawai->FOTO_PEGAWAI,
             ),
         );

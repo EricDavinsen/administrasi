@@ -29,11 +29,11 @@
             @endif
             <td>{{ $item->pegawai->SISA_CUTI_TAHUNAN }}</td>
             <td>
-                <div class="action-buttons d-flex w-100  h-10 justify-content-center gap-2">
+                <div class="action-buttons d-flex justify-content-center gap-2" >
                     <a href="{{ url('/editsuratcuti/'.$item->id) }}" class="btn btn-info">Edit</a> 
                     <a class="btn btn-danger text-white" data-toggle="modal" data-target="#deleteModal{{$item->id}}">Delete</a>
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenters-{{$item->id}}">View</button>
-                    <button onclick="confirmResetCuti({{ $item->pegawai_id }})" class="btn btn-dark" style="color:white; font-size:10px; text-center">Reset Cuti</button> 
+                    <button onclick="confirmResetCuti({{ $item->pegawai_id }})" class="btn btn-dark" style="color:white;  width: 100px; font-size: 15px; text-center">Reset Cuti</button> 
                 </div>
             </td>
             </tr>

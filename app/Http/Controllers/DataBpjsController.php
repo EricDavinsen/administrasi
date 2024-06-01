@@ -48,6 +48,15 @@ class DataBpjsController extends Controller
                 "HUBUNGAN_KELUARGA" => ["required"],
                 "TANGGAL_LAHIR" => ["required"],
             ],
+            [
+                "NOMOR_JKN.required" => "Nomor JKN Harus Diisi",
+                "NIK.required" => "NIK Harus Diisi",
+                "NAMA_LENGKAP.required" => "Nama Harus Diisi",
+                "JENIS_KELAMIN.required" => "Jenis Kelamin Harus Diisi",
+                "STATUS_KAWIN.required" => "Status Kawin Harus Diisi",
+                "HUBUNGAN_KELUARGA.required" => "Hubungan Keluarga Harus Diisi",
+                "TANGGAL_LAHIR.required" => "Tangal Lahir Harus Diisi",
+            ]
         );
 
             $databpjs = DataBpjs::create([
@@ -117,57 +126,26 @@ class DataBpjsController extends Controller
     {
         $databpjs = DataBpjs::where('id', $id)->first();
 
-        if ($request->NOMOR_JKN) {
-            $databpjs->NOMOR_JKN = $request->NOMOR_JKN;
-        }
-
-        if($request->NIK) {
-            $databpjs->NIK = $request->NIK;
-        }
-
-        if ($request->NIP) {
-            $databpjs->NIP = $request->NIP;
-        }
-
-        if ($request->NAMA_LENGKAP) {
-            $databpjs->NAMA_LENGKAP = $request->NAMA_LENGKAP;
-        }
-
-        if ($request->JENIS_KELAMIN) {
-            $databpjs->JENIS_KELAMIN = $request->JENIS_KELAMIN;
-        }
-
-        if ($request->STATUS_KAWIN) {
-            $databpjs->STATUS_KAWIN = $request->STATUS_KAWIN;
-        }
-
-        if ($request->HUBUNGAN_KELUARGA) {
-            $databpjs->HUBUNGAN_KELUARGA = $request->HUBUNGAN_KELUARGA;
-        }
-
-        if ($request->TANGGAL_LAHIR) {
-            $databpjs->TANGGAL_LAHIR = $request->TANGGAL_LAHIR;
-        }
-
-        if ($request->TANGGAL_MULAI_TMT) {
-            $databpjs->TANGGAL_MULAI_TMT = $request->TANGGAL_MULAI_TMT;
-        }
-
-        if ($request->TANGGAL_SELESAI_TMT) {
-            $databpjs->TANGGAL_SELESAI_TMT = $request->TANGGAL_SELESAI_TMT;
-        }
-
-        if ($request->GAJI_POKOK) {
-            $databpjs->GAJI_POKOK = $request->GAJI_POKOK;
-        }
-
-        if ($request->NAMA_FASKES) {
-            $databpjs->NAMA_FASKES = $request->NAMA_FASKES;
-        }
-
-        if ($request->NO_TELEPON) {
-            $databpjs->NO_TELEPON = $request->NO_TELEPON;
-        }
+        $this->validate($request,
+            [
+                "NOMOR_JKN" => ["required"],
+                "NIK" => ["required"],
+                "NAMA_LENGKAP" => ["required"],
+                "JENIS_KELAMIN" => ["required"],
+                "STATUS_KAWIN" => ["required"],
+                "HUBUNGAN_KELUARGA" => ["required"],
+                "TANGGAL_LAHIR" => ["required"],
+            ],
+            [
+                "NOMOR_JKN.required" => "Nomor JKN Harus Diisi",
+                "NIK.required" => "NIK Harus Diisi",
+                "NAMA_LENGKAP.required" => "Nama Harus Diisi",
+                "JENIS_KELAMIN.required" => "Jenis Kelamin Harus Diisi",
+                "STATUS_KAWIN.required" => "Status Kawin Harus Diisi",
+                "HUBUNGAN_KELUARGA.required" => "Hubungan Keluarga Harus Diisi",
+                "TANGGAL_LAHIR.required" => "Tangal Lahir Harus Diisi",
+            ]
+        );
 
         $updateData = DataBpjs::where('id', $id)
         ->limit(1)
@@ -177,9 +155,9 @@ class DataBpjsController extends Controller
                 'NIK' => $databpjs->NIK,
                 'NIP' => $databpjs->NIP,
                 'NAMA_LENGKAP' => $databpjs->NAMA_LENGKAP,
-                'JENIS_KELAMIN' => $databpjs->JENIS_KELAMIN,
-                'STATUS_KAWIN' => $databpjs->STATUS_KAWIN,
-                'HUBUNGAN_KELUARGA' => $databpjs->HUBUNGAN_KELUARGA,
+                'JENIS_KELAMIN' => $request->JENIS_KELAMIN,
+                'STATUS_KAWIN' => $request->STATUS_KAWIN,
+                'HUBUNGAN_KELUARGA' => $request->HUBUNGAN_KELUARGA,
                 'TANGGAL_LAHIR' => $databpjs->TANGGAL_LAHIR,
                 'TANGGAL_MULAI_TMT' => $databpjs->TANGGAL_MULAI_TMT,
                 'TANGGAL_SELESAI_TMT' => $databpjs->TANGGAL_SELESAI_TMT,

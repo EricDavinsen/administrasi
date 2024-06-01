@@ -49,7 +49,7 @@
         <div class="d-flex w-100 justify-content-end pegawai-button mb-3 gap-3">
             <button type="submit" class="btn btn-success no-print" value="print" onclick="window.print()">Print</button>
             <a href="{{ url('/editdatapribadi/' . $datapribadi->pegawai_id) }}" class="btn btn-md btn-warning no-print" style="color:white">Edit</a>
-            <a class="btn btn-danger text-white" data-toggle="modal" data-target="#deleteModal{{$datapribadi->id}}">Delete</a>
+            <a class="btn btn-danger text-white no-print" data-toggle="modal" data-target="#deleteModal{{$datapribadi->id}}">Delete</a>
             <a href="{{ url('/dashboardpegawai/' . $datapribadi->pegawai_id) }}" class="btn btn-md btn-info no-print" style="color:white">Back</a>
         </div>
     </div>
