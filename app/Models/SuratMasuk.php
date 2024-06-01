@@ -31,13 +31,13 @@ class SuratMasuk extends Model
         "email_verified_at" => "datetime",
     ];
     protected $fillable = [
+        "sifat_id",
         "jenis_id",
         "KODE_SURAT",
         "NOMOR_SURAT",
         "TANGGAL_SURAT",
         "TANGGAL_MASUK",
         "ASAL_SURAT",
-        "SIFAT_SURAT",
         "PERIHAL_SURAT",
         "FILE_SURAT"
     ];
@@ -70,4 +70,8 @@ class SuratMasuk extends Model
         return $this->belongsTo(JenisSurat::class, 'jenis_id', 'id');
     }
     
+    public function sifat():BelongsTo
+    {
+        return $this->belongsTo(SifatSurat::class, 'sifat_id', 'id');
+    }
 }

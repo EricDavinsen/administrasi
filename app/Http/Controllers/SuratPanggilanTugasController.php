@@ -47,6 +47,15 @@ class SuratPanggilanTugasController extends Controller
                 "KEPERLUAN" => ["required"],
                 "FILE_SURAT" => ["required"],
             ],
+            [
+                "pegawai_id.required" => "Nama Harus Diisi",
+                "NO_SPT.required" => "Nomor Surat Harus Diisi",
+                "TANGGAL_SPT.required" => "Tangal Surat Harus Diisi",
+                "TANGGAL_MULAI.required" => "Tangal Mulai Harus Diisi",
+                "TANGGAL_SELESAI.required" => "Tangal Selesai Harus Diisi",
+                "KEPERLUAN.required" => "Keperluan Harus Diisi",
+                "FILE_SURAT.required" => "File Surat Harus Diisi",
+            ]
         );
 
         $file = $request->file("FILE_SURAT");
@@ -124,24 +133,26 @@ class SuratPanggilanTugasController extends Controller
         $spt = SuratPanggilanTugas::where('id', $id)->first();
         $pegawai = Pegawai::where('id', $request->pegawai_id)->first();
 
-        if ($request->NO_SPT) {
-            $spt->NO_SPT = $request->NO_SPT;
-        }
-        if ($request->TANGGAL_SPT) {
-            $spt->TANGGAL_SPT = $request->TANGGAL_SPT;
-        }
-        if ($request->TANGGAL_MULAI) {
-            $spt->TANGGAL_MULAI = $request->TANGGAL_MULAI;
-        }
-        if ($request->TANGGAL_SELESAI) {
-            $spt->TANGGAL_SELESAI = $request->TANGGAL_SELESAI;
-        }
-        if ($request->KEPERLUAN) {
-            $spt->KEPERLUAN = $request->KEPERLUAN;
-        }
-        if ($request->FILE_SURAT) {
-            $spt->FILE_SURAT = $request->FILE_SURAT;
-        }
+        $this->validate(
+            $request,
+            [
+                "pegawai_id" => ["required"],
+                "NO_SPT" => ["required"],
+                "TANGGAL_SPT" => ["required"],
+                "TANGGAL_MULAI" => ["required"],
+                "TANGGAL_SELESAI" => ["required"],
+                "KEPERLUAN" => ["required"],
+            ],
+            [
+                "pegawai_id.required" => "Nama Harus Diisi",
+                "NO_SPT.required" => "Nomor Surat Harus Diisi",
+                "TANGGAL_SPT.required" => "Tangal Surat Harus Diisi",
+                "TANGGAL_MULAI.required" => "Tangal Mulai Harus Diisi",
+                "TANGGAL_SELESAI.required" => "Tangal Selesai Harus Diisi",
+                "KEPERLUAN.required" => "Keperluan Harus Diisi",
+            ]
+        );
+
         $updateSurat = SuratPanggilanTugas::where('id', $id)
         ->limit(1)
         ->update(

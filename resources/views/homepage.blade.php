@@ -35,15 +35,21 @@
                                         @csrf
                                         <p>Please login to your account</p>
                                         <div class="form-outline mb-4">
-                                            <label class="form-label" for="form2Example11">Email or Username</label>
-                                            <input type="text" id="emailinput" name="email" class="form-control"
-                                                placeholder="Please enter your email address" />
+                                            <label class="form-label" for="emailinput">Email or Username</label>
+                                            <input type="text" id="emailinput" name="email" class="form-control @error('email') is-invalid @enderror"
+                                                placeholder="Please enter your email address" value="{{ old('email') }}" />
+                                            @error('email')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
                                         </div>
 
                                         <div class="form-outline mb-4">
-                                            <label class="form-label" for="form2Example22">Password</label>
+                                            <label class="form-label" for="passwordinput">Password</label>
                                             <input type="password" id="passwordinput" name="password"
-                                                class="form-control" placeholder="********" />
+                                                class="form-control @error('password') is-invalid @enderror" placeholder="********" />
+                                            @error('password')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
                                         </div>
 
                                         <div class="text-center pt-1 mb-3 pb-1">

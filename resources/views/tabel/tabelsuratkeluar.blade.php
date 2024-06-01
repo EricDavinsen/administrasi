@@ -18,7 +18,7 @@
             <td>{{ \Carbon\Carbon::parse($item->TANGGAL_SURAT)->format('d-m-Y') }}</td>
             <td>{{ $item->jenis->JENIS_SURAT }}</td>
             <td>{{ $item->TUJUAN_SURAT }}</td>
-            <td>{{ $item->SIFAT_SURAT }}</td>
+            <td>{{ $item->sifat->SIFAT_SURAT }}</td>
             <td>{{ $item->PERIHAL_SURAT }}</td>
             <td>
                 <div class="action-buttons d-flex w-100 h-10 justify-content-center gap-2">

@@ -3,25 +3,25 @@
 namespace App\Http\Controllers;
 
 use Illuminate\View\View;
-use App\Models\JenisSurat;
+use App\Models\SifatSurat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class JenisSuratController extends Controller
+class SifatSuratController extends Controller
 {
     public function index() : View
     {
-        $jenissurat = JenisSurat::oldest()->get();
+        $sifatsurat = SifatSurat::oldest()->get();
         
-        return view("jenissurat")->with([
-            'jenissurat' => $jenissurat,
+        return view("sifatsurat")->with([
+            'sifatsurat' => $sifatsurat,
             'users' => Auth::guard('users')->user()
         ]);
     }
 
     public function indexcreate() : View
     {
-        return view("tambah/tambahjenissurat")->with([
+        return view("tambah/tambahsifatsurat")->with([
             'users' => Auth::guard('users')->user()
         ]);
     }
@@ -31,24 +31,24 @@ class JenisSuratController extends Controller
         $this->validate(
             $request,
             [
-                "JENIS_SURAT" => ["required"],
+                "SIFAT_SURAT" => ["required"],
             ],
             [
-                "JENIS_SURAT.required" => "Jenis Surat Harus Diisi",
+                "SIFAT_SURAT.required" => "Sifat Surat Harus Diisi",
             ]
         );
 
         $jenisData = $request->all();
-        $jenisData = JenisSurat::create($jenisData);
+        $jenisData = SifatSurat::create($jenisData);
         if ($jenisData) {
             return redirect()
-                ->intended("/jenissurat")
+                ->intended("/sifatsurat")
                 ->with([
                 notify()->success('Jenis Surat Telah Ditambahkan'),
                 "success" => "Jenis Surat Telah Ditambahkan"]);
         }
         return redirect()
-            ->intended("/createjenissurat")
+            ->intended("/createsifatsurat")
             ->with([
                 notify()->error('Gagal Menambah Jenis Surat'),
                 "error" => "Gagal Menambah Jenis Surat"]);
@@ -56,16 +56,16 @@ class JenisSuratController extends Controller
 
     public function destroy($id)
     {
-        $jenissurat = JenisSurat::where('id', $id);
+        $sifatsurat = SifatSurat::where('id', $id);
 
-            if ($jenissurat) {
-                $jenissurat->delete();
-                return redirect()->intended('/jenissurat')
+            if ($sifatsurat) {
+                $sifatsurat->delete();
+                return redirect()->intended('/sifatsurat')
                     ->with([ 
                         notify()->success('Jenis Surat Telah Dihapus'),
                         "success" => "Jenis Surat Telah Dihapus"]);
             }else {
-                return redirect()->intended('/jenissurat')
+                return redirect()->intended('/sifatsurat')
                     ->with([
                         notify()->error('Gagal Menghapus Jenis Surat'),
                         "error" => "Gagal Menghapus Jenis Surat"]);
@@ -74,41 +74,41 @@ class JenisSuratController extends Controller
 
     public function edit($id)
     {
-        $jenissurat = JenisSurat::where('id', $id)->first();
+        $sifatsurat = SifatSurat::where('id', $id)->first();
 
-        return view("edit/editjenissurat")->with([
-            'jenissurat' => $jenissurat,
+        return view("edit/editsifatsurat")->with([
+            'sifatsurat' => $sifatsurat,
             'users' => Auth::guard('users')->user()
         ]);
     }
 
     public function update(Request $request, $id)
     {
-        $jenissurat = JenisSurat::where('id', $id)->first();
+        $sifatsurat = SifatSurat::where('id', $id)->first();
 
         $this->validate(
             $request,
             [
-                "JENIS_SURAT" => ["required"],
+                "SIFAT_SURAT" => ["required"],
             ],
             [
-                "JENIS_SURAT.required" => "Jenis Surat Harus Diisi",
+                "SIFAT_SURAT.required" => "Sifat Surat Harus Diisi",
             ]
-        );
-        
-        $updateSurat = JenisSurat::where('id', $id)
+            );
+      
+        $updateSurat = SifatSurat::where('id', $id)
         ->limit(1)
         ->update(
             array(
-                'JENIS_SURAT' => $jenissurat->JENIS_SURAT,
+                'SIFAT_SURAT' => $sifatsurat->SIFAT_SURAT,
             ),
         );
 
     if ($updateSurat) {
-        return redirect()->intended('/jenissurat')->with([ notify()->success('Jenis Surat Telah Diupdate'),
+        return redirect()->intended('/sifatsurat')->with([ notify()->success('Jenis Surat Telah Diupdate'),
             'success' => 'Jenis Surat Telah Diupdate']);
     }
-    return redirect()->intended('/editjenissurat')->with([ notify()->error('Batal Mengupdate Jenis Surat'),
+    return redirect()->intended('/editsifatsurat')->with([ notify()->error('Batal Mengupdate Jenis Surat'),
         'error' => 'Batal Mengupdate Jenis Surat']);
     }
 }

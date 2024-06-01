@@ -24,11 +24,15 @@
                     <td>{{ $item->INSTRUKSI }}</td>
                     <td>{{ $item->INFORMASI_LAINNYA}}</td>
                     <td>
-                        <div class="action-buttons d-flex w-100 h-10 justify-content-center gap-2">
+                        <div class="action-buttons d-flex justify-content-center gap-2" >
                             <a href="{{ url('/editdisposisi/'.$item->id) }}" class="btn btn-info">Edit</a> 
                             <a class="btn btn-danger text-white" data-toggle="modal" data-target="#deleteModal{{$item->id}}">Delete</a>
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenters-{{$item->id}}">Hasil Disposisi</button>
-                            <a href="{{ url('/lembardisposisi/' . $item->id) }}" class="btn btn-success">Lembar Disposisi</a>
+                            <button type="button" class="btn btn-primary text-wrap" data-toggle="modal" data-target="#exampleModalCenters-{{$item->id}}" style="width: 150px">
+                                Hasil Disposisi
+                            </button>
+                            <a href="{{ url('/lembardisposisi/' . $item->id) }}" class="btn btn-success text-wrap" style="width: 150px">
+                               Lembar Disposisi
+                            </a>
                         </div>
                     </td>
                 </tr>

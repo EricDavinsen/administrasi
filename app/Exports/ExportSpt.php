@@ -17,7 +17,7 @@ class ExportSpt implements FromCollection, WithHeadings
     public function collection()
     {
         $spt = SuratPanggilanTugas::orderBy("TANGGAL_SPT", "asc")->get();
-        // Select only the columns you want to export
+
         return $spt->map(function($item, $index) {
             return [
                 'No' => $index + 1,

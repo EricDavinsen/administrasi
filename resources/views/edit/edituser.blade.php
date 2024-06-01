@@ -5,16 +5,16 @@
                          @csrf
                          @method('put')
                          <div class="form-group">
-                            <label for="formGroupExampleInput">Username</label>
-                            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Masukan Username" name="username" value="{{ $users->username }}">
+                            <label for="formGroupUsername">Username</label>
+                            <input type="text" class="form-control" id="formGroupUsername" placeholder="Masukan Username" name="username" value="{{ old('username', $users->username) }}">
                         </div>
                         <div class="form-group">
-                            <label for="formGroupExampleInput2">Email</label>
-                            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Masukan Email" name="email" value="{{ $users->email }}">
+                            <label for="formGroupEmail">Email</label>
+                            <input type="email" class="form-control" id="formGroupEmail" placeholder="Masukan Email" name="email" value="{{ old('email', $users->email) }}">
                         </div>
                         <div class="form-group">
-                            <label for="formGroupExampleInput2">Password</label>
-                            <input type="password" class="form-control" id="formGroupExampleInput2" placeholder="Masukan Password" name="password" value="{{ $users->password }}">
+                            <label for="formGroupPassword">Password</label>
+                            <input type="password" class="form-control" id="formGroupPassword" placeholder="Masukan Password" name="password">
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
                         <a href="{{ url('/daftaruser') }}" class="btn btn-danger"> Kembali</a>

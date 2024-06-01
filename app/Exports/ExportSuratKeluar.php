@@ -15,7 +15,6 @@ class ExportSuratKeluar implements FromCollection, WithHeadings
      */
     public function collection()
     {
-        // Select only the columns you want to export
         $suratkeluar = SuratKeluar::orderBy("TANGGAL_SURAT", "asc")->get();
       
         return $suratkeluar->map(function($item, $index) {
@@ -23,9 +22,9 @@ class ExportSuratKeluar implements FromCollection, WithHeadings
                 'No' => $index + 1,
                 'NOMOR_SURAT' => $item->NOMOR_SURAT,
                 'TANGGAL_SURAT' => \Carbon\Carbon::parse($item->TANGGAL_SURAT)->format('d-m-Y'),
-                'JENIS_SURAT' => $item->JENIS_SURAT,
+                'JENIS_SURAT' => $item->jenis->JENIS_SURAT,
                 'TUJUAN_SURAT' => $item->TUJUAN_SURAT,
-                'SIFAT_SURAT' => $item->SIFAT_SURAT,
+                'SIFAT_SURAT' => $item->sifat->SIFAT_SURAT,
                 'PERIHAL_SURAT' => $item->PERIHAL_SURAT,
             ];
         });

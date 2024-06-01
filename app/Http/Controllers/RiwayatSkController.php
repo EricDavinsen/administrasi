@@ -42,6 +42,12 @@ class RiwayatSkController extends Controller
                 "TANGGAL_SK" => ["required"],
                 "TMT_SK" => ["required"],
             ],
+            [
+                "JABATAN.required" => "Jabatan Harus Diisi",
+                "NOMOR_SK.required" => "Nomor SK Harus Diisi",
+                "TANGGAL_SK.required" => "Tangal SK Harus Diisi",
+                "TMT_SK.required" => "TMT SK Harus Diisi",
+            ]
         );
 
         if ($request->hasFile('FILE_SK')) {
@@ -116,25 +122,20 @@ class RiwayatSkController extends Controller
     {
         $riwayatsk = RiwayatSk::where('id', $id)->first();
 
-        if ($request->JABATAN) {
-            $riwayatsk->JABATAN = $request->JABATAN;
-        }
-
-        if ($request->NOMOR_SK) {
-            $riwayatsk->NOMOR_SK = $request->NOMOR_SK;
-        }
-
-        if ($request->TANGGAL_SK) {
-            $riwayatsk->TANGGAL_SK = $request->TANGGAL_SK;
-        }
-
-        if($request->TMT_SK) {
-            $riwayatsk->TMT_SK = $request->TMT_SK;
-        }
-
-        if($request->FILE_SK) {
-            $riwayatsk->FILE_SK = $request->FILE_SK;
-        }
+        $this->validate($request,
+        [
+            "JABATAN" => ["required"],
+            "NOMOR_SK" => ["required"],
+            "TANGGAL_SK" => ["required"],
+            "TMT_SK" => ["required"],
+        ],
+        [
+            "JABATAN.required" => "Jabatan Harus Diisi",
+            "NOMOR_SK.required" => "Nomor SK Harus Diisi",
+            "TANGGAL_SK.required" => "Tangal SK Harus Diisi",
+            "TMT_SK.required" => "TMT SK Harus Diisi",
+        ]
+    );
 
         $updateData = RiwayatSk::where('id', $id)
         ->limit(1)

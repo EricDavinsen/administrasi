@@ -39,6 +39,10 @@ class PenilaianTahunanController extends Controller
                 "TAHUN_PENILAIAN" => ["required"],
                 "FILE_PENILAIAN" => ["required"],
             ],
+            [
+                "TAHUN_PENILAIAN.required" => "Tahun Penilaian Harus Diisi",
+                "FILE_PENILAIAN.required" => "File Penilaian Harus Diisi",
+            ]
         );
 
         $file = $request->file("FILE_PENILAIAN");
@@ -101,13 +105,14 @@ class PenilaianTahunanController extends Controller
     {
         $penilaiantahunan = PenilaianTahunan::where('id', $id)->first();
 
-        if ($request->TAHUN_PENILAIAN) {
-            $penilaiantahunan->TAHUN_PENILAIAN = $request->TAHUN_PENILAIAN;
-        }
-     
-        if ($request->FILE_PENILAIAN) {
-            $penilaiantahunan->FILE_PENILAIAN = $request->FILE_PENILAIAN;
-        }
+        $this->validate($request,
+            [
+                "TAHUN_PENILAIAN" => ["required"],
+            ],
+            [
+                "TAHUN_PENILAIAN.required" => "Tahun Penilaian Harus Diisi",
+            ]
+        );
 
         $updateData = PenilaianTahunan::where('id', $id)
         ->limit(1)

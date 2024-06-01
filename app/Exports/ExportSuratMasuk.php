@@ -16,7 +16,7 @@ class ExportSuratMasuk implements FromCollection, WithHeadings
     public function collection()
     {
         $suratmasuk = SuratMasuk::orderBy("TANGGAL_SURAT", "asc")->get();
-        // Select only the columns you want to export
+
         return $suratmasuk->map(function($item, $index) {
             return [
                 'No' => $index + 1,
@@ -24,9 +24,9 @@ class ExportSuratMasuk implements FromCollection, WithHeadings
                 'NOMOR_SURAT' => $item->NOMOR_SURAT,
                 'TANGGAL_SURAT' => \Carbon\Carbon::parse($item->TANGGAL_SURAT)->format('d-m-Y'),
                 'TANGGAL_MASUK' => \Carbon\Carbon::parse($item->TANGGAL_MASUK)->format('d-m-Y'),
-                'JENIS_SURAT' => $item->JENIS_SURAT,
+                'JENIS_SURAT' => $item->jenis->JENIS_SURAT,
                 'ASAL_SURAT' => $item->ASAL_SURAT,
-                'SIFAT_SURAT' => $item->SIFAT_SURAT,
+                'SIFAT_SURAT' => $item->sifat->SIFAT_SURAT,
                 'PERIHAL_SURAT' => $item->PERIHAL_SURAT,
             ];
         });

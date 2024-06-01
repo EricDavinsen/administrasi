@@ -57,6 +57,11 @@ class DisposisiController extends Controller
                 "PENERUS" => ["required"],
                 "INSTRUKSI" => ["required"],
             ],
+            [
+                "pegawai_id.required" => "Nama Harus Diisi",
+                "PENERUS.required" => "Penerus Harus Diisi",
+                "INSTRUKSI.required" => "Instruksi Harus Diisi",
+            ]
         );
 
     if ($request->hasFile('HASIL_LAPORAN')) {
@@ -139,30 +144,28 @@ class DisposisiController extends Controller
         $disposisi = Disposisi::where('id', $id)->first();
         $pegawai = Pegawai::where('id', $request->pegawai_id)->first();
 
-        if ($request->PENERUS) {
-            $disposisi->PENERUS = $request->PENERUS;
-        }
-
-        if ($request->INSTRUKSI) {
-            $disposisi->INSTRUKSI = $request->INSTRUKSI;
-        }
-
-        if ($request->INFORMASI_LAINNYA) {
-            $disposisi->INFORMASI_LAINNYA = $request->INFORMASI_LAINNYA;
-        }
-
-        if ($request->HASIL_LAPORAN) {
-            $disposisi->HASIL_LAPORAN = $request->HASIL_LAPORAN;
-        }
+        $this->validate($request,
+            [
+                "pegawai_id" => ["required"],
+                "PENERUS" => ["required"],
+                "INSTRUKSI" => ["required"],
+            ],
+            [
+                "pegawai_id.required" => "Nama Harus Diisi",
+                "PENERUS.required" => "Penerus Harus Diisi",
+                "INSTRUKSI.required" => "Instruksi Harus Diisi",
+            ]
+        );
+        
         $updateDispo = Disposisi::where('id', $id)
         ->limit(1)
         ->update(
             array(
                 'pegawai_id' => $pegawai->id,
-                'PENERUS' => $disposisi->PENERUS,
-                'INSTRUKSI' => $disposisi->INSTRUKSI,
-                'INFORMASI_LAINNYA' => $disposisi->INFORMASI_LAINNYA,
-                'HASIL_LAPORAN' => $disposisi->HASIL_LAPORAN,
+                'PENERUS' => $request->PENERUS,
+                'INSTRUKSI' => $request->INSTRUKSI,
+                'INFORMASI_LAINNYA' => $request->INFORMASI_LAINNYA,
+                'HASIL_LAPORAN' => $request->HASIL_LAPORAN,
             ),
         );
 

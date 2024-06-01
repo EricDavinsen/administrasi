@@ -4,43 +4,82 @@
                     <form action="{{ url('/updatesuratkeluar/' . $suratkeluar->id) }}"method="post" enctype="multipart/form-data">
                          @csrf
                          @method('put')
-                        <div class="form-group">
+                         <div class="form-group">
                             <label for="formGroupExampleInput2">Nomor Surat</label>
-                            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Masukan Nomor Surat" name="NOMOR_SURAT" value="{{ $suratkeluar->NOMOR_SURAT }}">
+                            <input type="text" class="form-control @error('NOMOR_SURAT') is-invalid @enderror" id="formGroupExampleInput2" placeholder="Masukan Nomor Surat" name="NOMOR_SURAT" value="{{ old('NOMOR_SURAT', $suratkeluar->NOMOR_SURAT) }}">
+                            @error('NOMOR_SURAT')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
+                        
                         <div class="form-group">
                             <label for="formGroupExampleInput2">Tanggal Surat</label>
-                            <input type="date" class="form-control" id="formGroupExampleInput2" name="TANGGAL_SURAT" value="{{ $suratkeluar->TANGGAL_SURAT }}">
+                            <input type="date" class="form-control @error('TANGGAL_SURAT') is-invalid @enderror" id="formGroupExampleInput2" name="TANGGAL_SURAT" value="{{ old('TANGGAL_SURAT', $suratkeluar->TANGGAL_SURAT) }}">
+                            @error('TANGGAL_SURAT')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
+                        
                         <div class="form-group">
                             <label>Jenis Surat</label>
-                            <select class="form-control mb-2" aria-label="Jenis Surat" name="jenis_id" value="{{ $suratkeluar->jenis_id }}">
+                            <select class="form-control mb-2 @error('jenis_id') is-invalid @enderror" aria-label="Jenis Surat" name="jenis_id">
                                 <option value="" hidden>Jenis Surat</option>
                                 @if ($jenissurat->first() != null)
                                     @foreach ($jenissurat as $item)
-                                        <option value="{{ $item->id }}">
-                                            {{ $item->JENIS_SURAT }}</option>
+                                        <option value="{{ $item->id }}" {{ old('jenis_id', $suratkeluar->jenis_id) == $item->id ? 'selected' : '' }}>
+                                            {{ $item->JENIS_SURAT }}
+                                        </option>
                                     @endforeach
                                 @else
-                                    <option value=""disabled>Tidak ada jenis surat</option>
+                                    <option value="" disabled>Tidak ada jenis surat</option>
                                 @endif
                             </select>
+                            @error('jenis_id')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
+                        
                         <div class="form-group">
                             <label for="formGroupExampleInput2">Tujuan</label>
-                            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Masukan Tujuan" name="TUJUAN_SURAT" value="{{ $suratkeluar->TUJUAN_SURAT }}">
+                            <input type="text" class="form-control @error('TUJUAN_SURAT') is-invalid @enderror" id="formGroupExampleInput2" placeholder="Masukan Tujuan" name="TUJUAN_SURAT" value="{{ old('TUJUAN_SURAT', $suratkeluar->TUJUAN_SURAT) }}">
+                            @error('TUJUAN_SURAT')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
+                        
                         <div class="form-group">
-                            <label for="formGroupExampleInput2">Sifat</label>
-                            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Masukan Sifat" name="SIFAT_SURAT" value="{{ $suratkeluar->SIFAT_SURAT }}">
+                            <label>Sifat Surat</label>
+                            <select class="form-control mb-2 @error('sifat_id') is-invalid @enderror" aria-label="Sifat Surat" name="sifat_id">
+                                <option value="" hidden>Sifat Surat</option>
+                                @if ($sifatsurat->first() != null)
+                                    @foreach ($sifatsurat as $item)
+                                        <option value="{{ $item->id }}" {{ old('sifat_id', $suratkeluar->sifat_id) == $item->id ? 'selected' : '' }}>
+                                            {{ $item->SIFAT_SURAT }}
+                                        </option>
+                                    @endforeach
+                                @else
+                                    <option value="" disabled>Tidak ada sifat surat</option>
+                                @endif
+                            </select>
+                            @error('sifat_id')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
+                        
                         <div class="form-group">
                             <label for="formGroupExampleInput2">Perihal</label>
-                            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Masukan Perihal" name="PERIHAL_SURAT" value="{{ $suratkeluar->PERIHAL_SURAT }}">
+                            <input type="text" class="form-control @error('PERIHAL_SURAT') is-invalid @enderror" id="formGroupExampleInput2" placeholder="Masukan Perihal" name="PERIHAL_SURAT" value="{{ old('PERIHAL_SURAT', $suratkeluar->PERIHAL_SURAT) }}">
+                            @error('PERIHAL_SURAT')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
+                        
                         <div class="form-group">
                             <label for="formGroupExampleInput2">File</label>
-                            <input type="file" class="form-control" id="formGroupExampleInput2" name="FILE_SURAT" value="{{ $suratkeluar->FILE_SURAT }}">
+                            <input type="file" class="form-control @error('FILE_SURAT') is-invalid @enderror" id="formGroupExampleInput2" name="FILE_SURAT" value="{{ old('FILE_SURAT', $suratkeluar->FILE_SURAT) }}">
+                            @error('FILE_SURAT')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <button type="submit" name="edit" class="btn btn-primary">Submit</button>

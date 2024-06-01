@@ -33,11 +33,11 @@ class UserController extends Controller
             'email' => 'required|unique:users,email',
             'password' => 'required',
         ],[
-            'username.required' => 'Username Tidak Boleh Kosong',
+            'username.required' => 'Username Harus Diisi',
             'username.unique' => 'Username Tidak Boleh Sama',   
-            'email.required' => 'Email Tidak Boleh Kosong',
+            'email.required' => 'Email Harus Diisi',
             'email.unique' => 'Email Tidak Boleh Sama',
-            'password.required' => 'Password Tidak Boleh Kosong',
+            'password.required' => 'Password Harus Diisi',
         ]);
 
         $users = User::create([
@@ -92,15 +92,17 @@ class UserController extends Controller
     {
         $users = User::where('id', $id)->first();
 
-        if ($request->username) {
-            $users->username = $request->username;
-        }
-        if ($request->email) {
-            $users->email = $request->email;
-        }
-        if ($request->password) {
-            $users->password = $request->password;
-        }
+        $request->validate([
+            'username' => 'required|unique:users,username',
+            'email' => 'required|unique:users,email',
+            'password' => 'required',
+        ],[
+            'username.required' => 'Username Harus Diisi',
+            'username.unique' => 'Username Tidak Boleh Sama',   
+            'email.required' => 'Email Harus Diisi',
+            'email.unique' => 'Email Tidak Boleh Sama',
+            'password.required' => 'Password Harus Diisi',
+        ]);
       
         $updateUser = User::where('id', $id)
         ->limit(1)

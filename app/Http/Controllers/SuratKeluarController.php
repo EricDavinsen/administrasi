@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\SifatSurat;
 use Illuminate\View\View;
 use App\Models\JenisSurat;
 use App\Models\SuratKeluar;
@@ -16,10 +17,12 @@ class SuratKeluarController extends Controller
     {
         $suratkeluar = SuratKeluar::latest()->get();
         $jenissurat = JenisSurat::all();
+        $sifatsurat = SifatSurat::all();
         
         return view("suratkeluar")->with([
             'suratkeluar' => $suratkeluar,
             'jenissurat' => $jenissurat,
+            'sifatsurat' => $sifatsurat,
             'users' => Auth::guard('users')->user()
         ]);
         
@@ -29,6 +32,7 @@ class SuratKeluarController extends Controller
     {
         return view("tambah/tambahsuratkeluar")->with([
             'jenissurat' => JenisSurat::orderBy('JENIS_SURAT', 'asc')->get(),
+            'sifatsurat' => SifatSurat::orderBy('SIFAT_SURAT', 'asc')->get(),
             'users' => Auth::guard('users')->user()
         ]);
     }
@@ -36,17 +40,27 @@ class SuratKeluarController extends Controller
     public function store(Request $request)
     {
         $jenissurat = JenisSurat::where('id', $request->jenis_id)->first();
+        $sifatsurat = SifatSurat::where('id', $request->sifat_id)->first();
         $this->validate(
             $request,
             [
+                "sifat_id" => ["required"],
                 "jenis_id" => ["required"],
                 "NOMOR_SURAT" => ["required"],
                 "TANGGAL_SURAT" => ["required"],
                 "TUJUAN_SURAT" => ["required"],
-                "SIFAT_SURAT" => ["required"],
                 "PERIHAL_SURAT" => ["required"],
                 "FILE_SURAT" => ["required"],
             ],
+            [
+                "sifat_id.required" => "Sifat Surat Harus Diisi",
+                "jenis_id.required" => "Jenis Surat Harus Diisi",
+                "NOMOR_SURAT.required" => "Nomor Surat Harus Diisi",
+                "TANGGAL_SURAT.required" => "Tangal Surat Harus Diisi",
+                "TUJUAN_SURAT.required" => "Tangal Surat Harus Diisi",
+                "PERIHAL_SURAT.required" => "Perihal Surat Harus Diisi",
+                "FILE_SURAT.required" => "File Surat Harus Diisi",
+            ]
         );
 
         $file = $request->file("FILE_SURAT");
@@ -55,11 +69,11 @@ class SuratKeluarController extends Controller
         
       
         $suratKeluar = SuratKeluar::create([
+            "sifat_id" => $sifatsurat->id,
             "jenis_id" => $jenissurat->id,
             "NOMOR_SURAT" => $request->NOMOR_SURAT,
             "TANGGAL_SURAT" => $request->TANGGAL_SURAT,
             "TUJUAN_SURAT" => $request->TUJUAN_SURAT,
-            "SIFAT_SURAT" => $request->SIFAT_SURAT,
             "PERIHAL_SURAT" => $request->PERIHAL_SURAT,
             "FILE_SURAT" => $fileName,
     ]);
@@ -111,6 +125,7 @@ class SuratKeluarController extends Controller
         return view("edit/editsuratkeluar")->with([
             'suratkeluar' => $suratkeluar,
             'jenissurat' => JenisSurat::orderBy('JENIS_SURAT', 'asc')->get(),
+            'sifatsurat' => SifatSurat::orderBy('SIFAT_SURAT', 'asc')->get(),
             'users' => Auth::guard('users')->user()
         ]);
     }
@@ -119,34 +134,37 @@ class SuratKeluarController extends Controller
     {
         $suratkeluar = SuratKeluar::where('id', $id)->first();
         $jenissurat = JenisSurat::where('id', $request->jenis_id)->first();
+        $sifatsurat = SifatSurat::where('id', $request->sifat_id)->first();
 
-        if ($request->NOMOR_SURAT) {
-            $suratkeluar->NOMOR_SURAT = $request->NOMOR_SURAT;
-        }
-        if ($request->TANGGAL_SURAT) {
-            $suratkeluar->TANGGAL_SURAT = $request->TANGGAL_SURAT;
-        }
-        if ($request->TUJUAN_SURAT) {
-            $suratkeluar->TUJUAN_SURAT = $request->TUJUAN_SURAT;
-        }
-        if ($request->SIFAT_SURAT) {
-            $suratkeluar->SIFAT_SURAT = $request->SIFAT_SURAT;
-        }
-        if ($request->PERIHAL_SURAT) {
-            $suratkeluar->PERIHAL_SURAT = $request->PERIHAL_SURAT;
-        }
-        if ($request->FILE_SURAT) {
-            $suratkeluar->FILE_SURAT = $request->FILE_SURAT;
-        }
+        $this->validate(
+            $request,
+            [
+                "sifat_id" => ["required"],
+                "jenis_id" => ["required"],
+                "NOMOR_SURAT" => ["required"],
+                "TANGGAL_SURAT" => ["required"],
+                "TUJUAN_SURAT" => ["required"],
+                "PERIHAL_SURAT" => ["required"],
+            ],
+            [
+                "sifat_id.required" => "Sifat Surat Harus Diisi",
+                "jenis_id.required" => "Jenis Surat Harus Diisi",
+                "NOMOR_SURAT.required" => "Nomor Surat Harus Diisi",
+                "TANGGAL_SURAT.required" => "Tangal Surat Harus Diisi",
+                "TUJUAN_SURAT.required" => "Tangal Surat Harus Diisi",
+                "PERIHAL_SURAT.required" => "Perihal Surat Harus Diisi",
+            ]
+        );
+
         $updateSurat = SuratKeluar::where('id', $id)
         ->limit(1)
         ->update(
             array(
+                'sifat_id' => $sifatsurat->id,
                 'jenis_id' => $jenissurat->id,
                 'NOMOR_SURAT' => $suratkeluar->NOMOR_SURAT,
                 'TANGGAL_SURAT' => $suratkeluar->TANGGAL_SURAT,
                 'TUJUAN_SURAT' => $suratkeluar->TUJUAN_SURAT,
-                'SIFAT_SURAT' => $suratkeluar->SIFAT_SURAT,
                 'PERIHAL_SURAT' => $suratkeluar->PERIHAL_SURAT,
                 'FILE_SURAT' => $suratkeluar->FILE_SURAT,
             ),

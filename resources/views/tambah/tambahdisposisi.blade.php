@@ -5,21 +5,23 @@
                          @csrf
                          <div class="form-group">
                             <label>Nama</label>
-                            <select class="form-control mb-2" aria-label="Select Pegawai" name="pegawai_id">
+                            <select class="form-control mb-2 @error('pegawai_id') is-invalid @enderror" aria-label="Select Pegawai" name="pegawai_id">
                                 <option value="" hidden>Pilih Pegawai</option>
-                                @if ($pegawai->first() != null)
+                                @if ($pegawai->count() > 0)
                                     @foreach ($pegawai as $item)
-                                        <option value="{{ $item->id }}">
-                                            {{ $item->NAMA_PEGAWAI }}</option>
+                                        <option value="{{ $item->id }}">{{ $item->NAMA_PEGAWAI }}</option>
                                     @endforeach
                                 @else
-                                    <option value=""disabled>Tidak ada pegawai</option>
+                                    <option value="" disabled>Tidak ada pegawai</option>
                                 @endif
                             </select>
+                            @error('pegawai_id')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="form-group">
-                            <label for="formGroupExampleInput2">Diteruskan</label>
-                            <select class="form-control" name="PENERUS">
+                            <label for="PENERUS">Diteruskan</label>
+                            <select class="form-control @error('PENERUS') is-invalid @enderror" name="PENERUS" id="PENERUS">
                                 <option value="" disabled selected hidden>Diteruskan</option>
                                 <option>Staf PNS</option>
                                 <option>Supervisor Pusdalops</option>
@@ -27,10 +29,13 @@
                                 <option>Operator Pusdalops</option>
                                 <option>Admin Pusdalops</option>
                             </select>
+                            @error('PENERUS')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="form-group">
-                            <label for="formGroupExampleInput2">Instruksi</label>
-                            <select class="form-control" name="INSTRUKSI">
+                            <label for="INSTRUKSI">Instruksi</label>
+                            <select class="form-control @error('INSTRUKSI') is-invalid @enderror" name="INSTRUKSI" id="INSTRUKSI">
                                 <option value="" disabled selected hidden>Pilih Instruksi</option>
                                 <option>Mohon Arahan/Saran</option>
                                 <option>Mohon Telaah</option>
@@ -41,16 +46,24 @@
                                 <option>Setuju Untuk Dilaksanakan</option>
                                 <option>Untuk perhatian</option>
                             </select>
+                            @error('INSTRUKSI')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="form-group">
-                            <label for="formGroupExampleInput">Informasi Lainnya</label>
-                            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Masukan Informasi Lainnya" name="INFORMASI_LAINNYA">
+                            <label for="INFORMASI_LAINNYA">Informasi Lainnya</label>
+                            <input type="text" class="form-control @error('INFORMASI_LAINNYA') is-invalid @enderror" id="INFORMASI_LAINNYA" placeholder="Masukan Informasi Lainnya" name="INFORMASI_LAINNYA">
+                            @error('INFORMASI_LAINNYA')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="form-group">
-                            <label for="formGroupExampleInput2">Hasil Disposisi</label>
-                            <input type="file" class="form-control" id="formGroupExampleInput2" name="HASIL_LAPORAN">
+                            <label for="HASIL_LAPORAN">Hasil Disposisi</label>
+                            <input type="file" class="form-control @error('HASIL_LAPORAN') is-invalid @enderror" id="HASIL_LAPORAN" name="HASIL_LAPORAN">
+                            @error('HASIL_LAPORAN')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
-
                         <button type="submit" class="btn btn-primary">Submit</button>
                         <a href="{{ url('/suratmasuk') }}" class="btn btn-danger"> Kembali</a>
                     </form>
