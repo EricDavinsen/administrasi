@@ -17,8 +17,26 @@
         </div>
         <div class="col-12">
             <div class="mb-3">
-                <textarea name="title" class="form-control"  rows="10" style="height:100%;">{{ $data->title }}</textarea>
+                <!-- <textarea name="title" class="form-control mb-3"  rows="10" style="height:100%;">{{ $data->title }}</textarea> -->
+                <p >Judul Acara:</p>
+                <input type="text" name="title"  value="{{$data->title ?? request()->title}}" class="form-control mb-3">
+                <div class="row">
+                    <div class="col-6">
+                        <p >Waktu Mulai:</p>
+                        <input id="clockactrue_1" value="{{$data->start_time ?? request()->start_time}}" name="start_time" class="form-control clockpicker" type="text"/>
+                    </div>
+                    <div class="col-6">
+                        <p >Waktu Selesai:</p>
+                        <input id="clockactrue_2" value="{{$data->end_time ?? request()->end_time}}" name="end_time" class="form-control clockpicker" type="text"/>
+                    </div>
+                </div>
             </div>
+                
+                <p>Tempat:</p>
+                    <input type="text" name="location"  value="{{$data->location ?? request()->location}}" class="form-control mb-3">
+
+                <p>Disposisi:</p>
+                    <input type="text" name="disposition"  value="{{$data->disposition ?? request()->disposition}}" class="form-control mb-3">
         </div>
         <div class="col-12">
             <div class="mb-3">
@@ -49,4 +67,15 @@
             </div>
         </div>
     </div>
+
+    <script type="text/javascript" src="{{ asset('/timepicker/bootstrap-clockpicker.min.js') }}"></script>
+
+    <script type="text/javascript">
+     $('#clockactrue_1').clockpicker({
+        autoclose: true
+    });
+     $('#clockactrue_2').clockpicker({
+        autoclose: true
+    });
+    </script>
 </x-modal-action>

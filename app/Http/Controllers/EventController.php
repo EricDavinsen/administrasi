@@ -28,10 +28,14 @@ class EventController extends Controller
         ->where('end_date', '<=' , $end)->get()
         ->map( fn ($item) => [
             'id' => $item->id,
-            'title' => $item->title,
             'start' => $item->start_date,
             'end' => date('Y-m-d',strtotime($item->end_date. '+1 days')),
+            'title' => $item->title,
             'category' => $item->category,
+            'start_time' => $item->start_time,
+            'end_time' => $item->end_time,
+            'location' => $item->location,
+            'disposition' => $item->disposition,
             'className' => ['bg-'. $item->category]
         ]);
 
@@ -78,9 +82,14 @@ class EventController extends Controller
         if ($request->has('delete')) {
             return $this->destroy($event);
         }
+
         $event->start_date = $request->start_date;
         $event->end_date = $request->end_date;
         $event->title = $request->title;
+        $event->start_time = $request->start_time;
+        $event->end_time = $request->end_time;
+        $event->location = $request->location;
+        $event->disposition = $request->disposition;
         $event->category = $request->category;
 
         $event->save();
@@ -99,7 +108,7 @@ class EventController extends Controller
         $event->delete();
         return response()->json([
             'status' => 'success',
-            'message' => 'Save data successfully'
+            'message' => 'Delete data successfully'
         ]);
     }
 }

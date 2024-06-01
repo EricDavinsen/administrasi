@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Absen;
+use App\Models\Event;
 use App\Models\Pegawai;
 use App\Models\Disposisi;
 use App\Models\SuratCuti;
@@ -25,8 +27,13 @@ class DashboardController extends Controller
         $pegawai = Pegawai::count();
         $disposisi = Disposisi::count();
         $user = User::count();
+        $now = Carbon::now();
+        $startOfWeek = $now->startOfWeek()->format('Y-m-d H:i:s');
+        $endOfWeek = $now->endOfWeek()->format('Y-m-d H:i:s');
+
+        $events = Event::whereBetween('start_date', [$startOfWeek, $endOfWeek])->get();
     
-        return view('dashboardpage', compact('suratmasuk','suratkeluar','suratcuti','spt','pegawai','disposisi','user'))->with([
+        return view('dashboardpage', compact('suratmasuk','suratkeluar','suratcuti','spt','pegawai','disposisi','user','events'))->with([
             'users' => Auth::guard('users')->user(),
             
         ]);

@@ -49,6 +49,12 @@
                             success: function (res) {
                                 modal.modal('hide')
                                 calendar.refetchEvents()
+
+                                iziToast.success({
+                                    title: 'Success',
+                                    message: res.message,
+                                    position: 'topRight'
+                                });
                             },
                             error: function (res) {
 
@@ -77,6 +83,12 @@
                             success: function (res) {
                                 modal.modal('hide')
                                 calendar.refetchEvents()
+
+                                iziToast.success({
+                                    title: 'Success',
+                                    message: res.message,
+                                    position: 'topRight'
+                                });
                             }
                         })
                     })
@@ -93,7 +105,11 @@
                     start_date: event.startStr,
                     end_date: event.end.toISOString().substring(0, 10),
                     title: event.title,
-                    category: event.extendedProps.category
+                    category: event.extendedProps.category,
+                    start_time: event.extendedProps.start_time,
+                    end_time: event.extendedProps.end_time,
+                    location: event.extendedProps.location,
+                    disposition: event.extendedProps.disposition,
                 },
                 headers: {
                     'X-CSRF-TOKEN': csrfToken,
@@ -111,7 +127,7 @@
                     info.revert()
                     iziToast.error({
                         title: 'Error',
-                        message: message ?? 'Something wrong',
+                        message: message ?? 'Something went wrong',
                         position: 'topRight'
                     });
                 }
@@ -127,6 +143,10 @@
                     start_date: event.startStr,
                     end_date: event.end.toISOString().substring(0, 10),
                     title: event.title,
+                    start_time: event.extendedProps.start_time,
+                    end_time: event.extendedProps.end_time,
+                    location: event.extendedProps.location,
+                    disposition: event.extendedProps.disposition,
                     category: event.extendedProps.category
                 },
                 headers: {
@@ -145,7 +165,7 @@
                     info.revert()
                     iziToast.error({
                         title: 'Error',
-                        message: message ?? 'Something wrong',
+                        message: message ?? 'Something went wrong',
                         position: 'topRight'
                     });
                 }

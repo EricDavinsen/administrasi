@@ -28,9 +28,13 @@
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
             <link href="{{ asset('/css/styles.css') }}" rel="stylesheet" type="text/css" />
             <link href="{{ asset('/css/sidebar.css') }}" rel="stylesheet" type="text/css" />
+            <!-- <link href="{{ asset('/timepicker/jquery-clockpicker.min.css') }}" rel="stylesheet" type="text/css" /> -->
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
             <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
             
+            <!-- <script src="{{ asset('/timepicker/jquery-clockpicker.min.js') }}"></script> -->
+            <link href="{{ asset('/timepicker/bootstrap-clockpicker.min.css') }}" rel="stylesheet" type="text/css" />
+           
     </head>
 
     <body class="background-menu">
