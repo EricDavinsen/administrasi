@@ -54,7 +54,7 @@ class DiklatController extends Controller
 
         if ($request->hasFile('SERTIFIKAT')) {
             $document = $request->file('SERTIFIKAT');
-            $fileName = $request->file("SERTIFIKAT")->getClientOriginalName();
+            $fileName = time() . '_' .$request->file("SERTIFIKAT")->getClientOriginalName();
             $document->move('document/', $fileName);
             $diklat = Diklat::create([
                 'pegawai_id' => $pegawai->id,
@@ -151,32 +151,34 @@ class DiklatController extends Controller
         ]
     );
 
+        $oldFile = $diklat->SERTIFIKAT;
+
         $updateData = Diklat::where('id', $id)
         ->limit(1)
         ->update(
             array(
-                'NAMA_DIKLAT' => $diklat->NAMA_DIKLAT,
-                'TANGGAL_MULAI' => $diklat->TANGGAL_MULAI,
-                'TANGGAL_SELESAI' => $diklat->TANGGAL_SELESAI,
-                'JUMLAH_JAM' => $diklat->JUMLAH_JAM,
-                'PENYELENGGARA' => $diklat->PENYELENGGARA,
-                'SERTIFIKAT' => $diklat->SERTIFIKAT
+                'NAMA_DIKLAT' => $request->NAMA_DIKLAT,
+                'TANGGAL_MULAI' => $request->TANGGAL_MULAI,
+                'TANGGAL_SELESAI' => $request->TANGGAL_SELESAI,
+                'JUMLAH_JAM' => $request->JUMLAH_JAM,
+                'PENYELENGGARA' => $request->PENYELENGGARA,
+                'SERTIFIKAT' => $oldFile,
             ),
         );
 
         if ($request->hasFile('SERTIFIKAT')) {
-            $updatefile = Diklat::find($id);
             $document = $request->file('SERTIFIKAT');
-            $fileName = $request->file("SERTIFIKAT")->getClientOriginalName();
+            $fileName = time() . '_' .$document->getClientOriginalName();
             $document->move('document/', $fileName);
-            $exist_file = $updatefile['SERTIFIKAT'];
-            $update['SERTIFIKAT'] =  $fileName;
-            $updatefile->update($update);
+    
+            $diklat->SERTIFIKAT = $fileName;
+            $diklat->save();
+    
+            if (file_exists('document/' . $oldFile)) {
+                unlink('document/' . $oldFile);
+            }
         }
-       
-        if (isset($exist_file) && file_exists($exist_file)) {
-            unlink($exist_file);
-        }
+    
 
     if ($updateData) {
         return redirect()->intended("/diklat/$diklat->pegawai_id")->with([ notify()->success('Diklat Telah Diupdate'),
@@ -187,6 +189,7 @@ class DiklatController extends Controller
     }
     function export_excel($id)
     {
-        return Excel::download(new ExportDiklat, 'diklat.xlsx');
+        $pegawai = Pegawai::where('id', $id)->first();
+        return Excel::download(new ExportDiklat, 'Diklat_'.$pegawai->NAMA_PEGAWAI.'.xlsx');
     }
 }

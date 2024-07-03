@@ -48,9 +48,24 @@
     <div class="surat_container" data-aos="fade-up" data-aos-delay="50" data-aos-duration="2000">
         <h1 class="h3 mb-0 text-gray-800 mb-2">Data Keluarga</h1>
         <div class="d-flex w-100 justify-content-start pegawai-button gap-3 mb-3">
-            <a href="{{ url('/createdatakeluarga/'.$pegawai->id) }}" class="btn btn-md btn-success">Tambah</a>
-            <a href="{{ url('/exportdatakeluarga/'.$pegawai->id) }}" class="btn btn-md btn-warning text-white">Export</a>
-            <a href="{{ url('/dashboardpegawai/'.$pegawai->id) }}" class="btn btn-md btn-info">Back</a>
+            <a href="{{ url('/createdatakeluarga/'.$pegawai->id) }}" class="btn btn-md btn-success">
+                <div class="d-flex gap-2">
+                    <box-icon name='add-to-queue' animation='tada-hover' color='white'></box-icon>
+                    Tambah
+                </div>
+            </a>
+            <a href="{{ url('/exportdatakeluarga/'.$pegawai->id) }}" class="btn btn-md btn-warning text-white">
+                <div class="d-flex gap-2">
+                    <box-icon name='export' animation='tada-hover' color='white'></box-icon>
+                    Export
+                </div>
+            </a>
+            <a href="{{ url('/dashboardpegawai/'.$pegawai->id) }}" class="btn btn-md btn-info">
+                <div class="d-flex gap-2">
+                    <box-icon name='arrow-back' color="white" animation='tada-hover'></box-icon>
+                    <span>Kembali</span>
+                </div>
+            </a>
         </div>
     </div>
     @include ('tabel/tabeldatakeluarga', $datakeluarga)
@@ -68,11 +83,11 @@
                         Apakah anda ingin menghapus data ini?
                     </div>
                     <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
                         <form action="{{ url('/deletedatakeluarga/'.$data->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger">Delete</button>
+                            <button type="submit" class="btn btn-danger">Hapus</button>
                         </form>
                     </div>
                 </div>

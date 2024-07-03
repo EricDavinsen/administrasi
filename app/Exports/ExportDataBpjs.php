@@ -16,7 +16,7 @@ class ExportDataBpjs implements FromCollection, WithHeadings
      */
     public function collection()
     {
-        $databpjs = DataBpjs::get();
+        $databpjs = DataBpjs::where('pegawai_id', request('id'))->get();
         
         return $databpjs->map(function($item, $index) {
             return [
@@ -24,16 +24,16 @@ class ExportDataBpjs implements FromCollection, WithHeadings
                 "NOMOR_JKN" => $item->NOMOR_JKN,
                 "NIK" => $item->NIK,
                 "NIP" => $item->NIP,
-                "NAMA_LENGKAP" => $item->NAMA_LENGKAP,
-                "JENIS_KELAMIN" => $item->JENIS_KELAMIN,
-                "STATUS_KAWIN" => $item->STATUS_KAWIN,
-                "HUBUNGAN_KELUARGA" => $item->HUBUNGAN_KELUARGA,
+                "NAMA_LENGKAP" =>  optional($item->keluarga)->NAMA_KELUARGA,
+                "JENIS_KELAMIN" =>  optional($item->keluarga)->JENIS_KELAMIN,
+                "STATUS_KAWIN" =>  $item->STATUS_KAWIN,
+                "STATUS" =>  optional($item->keluarga)->STATUS,
                 "TANGGAL_LAHIR" => \Carbon\Carbon::parse($item->TANGGAL_LAHIR)->format('d-m-Y'),
                 "TANGGAL_MULAI_TMT" => \Carbon\Carbon::parse($item->TANGGAL_MULAI_TMT)->format('d-m-Y'),
                 "TANGGAL_SELESAI_TMT" => \Carbon\Carbon::parse($item->TANGGAL_SELESAI_TMT)->format('d-m-Y'),
                 "GAJI_POKOK" => $item->GAJI_POKOK,
                 "NAMA_FASKES" => $item->NAMA_FASKES,
-                "NO_TELEPON" => $item->NO_TELEPON,
+                "NO_TELEPON" =>  optional($item->keluarga)->NO_TELEPON,
             ];
         });
     }
@@ -51,7 +51,7 @@ class ExportDataBpjs implements FromCollection, WithHeadings
             "Nama Lengkap",
             "Jenis Kelamin",
             "Status Kawin",
-            "Hubungan Keluarga",
+            "Hub Keluarga",
             "Tanggal Lahir",
             "Tanggal Mulai TMT",
             "Tanggal Selesai TMT",

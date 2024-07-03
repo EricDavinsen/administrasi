@@ -1,4 +1,4 @@
-<nav id="sidebar">
+<nav id="sidebar" class="no-print">
     <div class="p-4 pt-5 ">
         <div class="sidebar-logo">
             <img src="{{ ('/img/logo.png') }}" 
@@ -104,7 +104,30 @@
             @endif
         </ul>
         
-            <a href="{{ url('logout') }}" class="btn-logout"> Logout </a>
+        <a href="#" class="btn-logout d-flex align-items-center justify-content-center gap-2" data-toggle="modal" data-target="#logoutModal">
+            <box-icon type='solid' name='log-out' animation='tada-hover' color='white'></box-icon>
+            Logout
+        </a>
+
+        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="logoutModalLabel">Konfirmasi Logout</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" style="color: black">
+                        Apakah Anda yakin ingin keluar dari sistem?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                        <a href="{{ url('logout') }}" class="btn btn-danger">Keluar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </div>              
 </nav>

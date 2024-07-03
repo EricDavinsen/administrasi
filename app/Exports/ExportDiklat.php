@@ -15,7 +15,7 @@ class ExportDiklat implements FromCollection, WithHeadings
      */
     public function collection()
     {
-        $diklat = Diklat::get();
+        $diklat = Diklat::where('pegawai_id', request('id'))->get();
         
         return $diklat->map(function($item, $index) {
             return [

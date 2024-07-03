@@ -66,7 +66,7 @@ class SuratMasukController extends Controller
         );
 
         $file = $request->file("FILE_SURAT");
-        $fileName = $request->file("FILE_SURAT")->getClientOriginalName();
+        $fileName = time() . '_' .$request->file("FILE_SURAT")->getClientOriginalName();
         $file->move('document/', $fileName);
         
         $suratMasuk = SuratMasuk::create([
@@ -156,38 +156,35 @@ class SuratMasukController extends Controller
                 "PERIHAL_SURAT.required" => "Perihal Surat Harus Diisi",
             ]
         );
+        $oldFile = $suratmasuk->FILE_SURAT;
+
         $updateSurat = SuratMasuk::where('id', $id)
-        ->limit(1)
-        ->update(
-            array(
+            ->limit(1)
+            ->update([
                 'sifat_id' => $sifatsurat->id,
                 'jenis_id' => $jenissurat->id,
-                'KODE_SURAT' => $suratmasuk->KODE_SURAT,
-                'NOMOR_SURAT' => $suratmasuk->NOMOR_SURAT,
-                'TANGGAL_SURAT' => $suratmasuk->TANGGAL_SURAT,
-                'TANGGAL_MASUK' => $suratmasuk->TANGGAL_MASUK,
-                'ASAL_SURAT' => $suratmasuk->ASAL_SURAT,
-                'PERIHAL_SURAT' => $suratmasuk->PERIHAL_SURAT,
-                'FILE_SURAT' => $suratmasuk->FILE_SURAT,
-            ),
-        );
-
- 
+                'KODE_SURAT' => $request->KODE_SURAT,
+                'NOMOR_SURAT' => $request->NOMOR_SURAT,
+                'TANGGAL_SURAT' => $request->TANGGAL_SURAT,
+                'TANGGAL_MASUK' => $request->TANGGAL_MASUK,
+                'ASAL_SURAT' => $request->ASAL_SURAT,
+                'PERIHAL_SURAT' => $request->PERIHAL_SURAT,
+                'FILE_SURAT' => $oldFile,
+            ]);
+    
         if ($request->hasFile('FILE_SURAT')) {
-            $updatefile = SuratMasuk::find($id);
             $document = $request->file('FILE_SURAT');
-            $fileName = $request->file("FILE_SURAT")->getClientOriginalName();
+            $fileName = time() . '_' .$document->getClientOriginalName();
             $document->move('document/', $fileName);
-            $exist_file = $updatefile['FILE_SURAT'];
-            $update['FILE_SURAT'] =  $fileName;
-            $updatefile->update($update);
+    
+            $suratmasuk->FILE_SURAT = $fileName;
+            $suratmasuk->save();
+    
+            if (file_exists('document/' . $oldFile)) {
+                unlink('document/' . $oldFile);
+            }
         }
-       
-        
-        if (isset($exist_file) && file_exists($exist_file)) {
-            unlink($exist_file);
-        }
-
+    
     if ($updateSurat) {
         return redirect()->intended('/suratmasuk')->with([ notify()->success('Surat Masuk Telah Diupdate'),
             'success' => 'Surat Masuk Telah Diupdate']);
@@ -199,22 +196,36 @@ class SuratMasukController extends Controller
 
     function export_excel()
     {
-        return Excel::download(new ExportSuratMasuk, 'suratmasuk.xlsx');
+        return Excel::download(new ExportSuratMasuk, 'Surat_Masuk.xlsx');
     }
 
-    public function filter(Request $request){
-        $start_date = $request->start_date;
-        $end_date = $request->end_date;
-        if ($start_date && $end_date) { 
-            $suratmasuk = SuratMasuk::whereBetween('TANGGAL_SURAT', [$start_date, $end_date])
-                ->get();
-        } else {
-            $suratmasuk = SuratMasuk::latest()->get();
+    public function filter(Request $request) {
+        $month = $request->month;
+        $year = $request->year;
+        $showAll = $request->query('show_all', false);
+    
+        $query = SuratMasuk::query();
+    
+        if (!$showAll) {
+            if ($month) {
+                $query->whereMonth('TANGGAL_SURAT', $month);
+                $usingfilter=true;
+            }
+    
+            if ($year) {
+                $query->whereYear('TANGGAL_SURAT', $year);
+                $usingfilter=true;
+            }
         }
-
+    
+        $suratmasuk = $query->get();
+        $noData = $suratmasuk->isEmpty();
+    
         return view("suratmasuk")->with([
             'suratmasuk' => $suratmasuk,
-            'users' => Auth::guard('users')->user()
+            'users' => Auth::guard('users')->user(),
+            'noData' => $noData,
+            'usingfilter' => $usingfilter
         ]);
     }
 }

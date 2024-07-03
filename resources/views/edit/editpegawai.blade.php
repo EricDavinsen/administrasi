@@ -108,7 +108,15 @@
                     </div>
                     <div class="form-group">
                         <label for="formGroupFoto">Foto</label>
-                        <input type="file" class="form-control @error('FOTO_PEGAWAI') is-invalid @enderror" id="formGroupFoto" name="FOTO_PEGAWAI" placeholder="Masukan Foto">
+                        <input type="file" class="form-control @error('FOTO_PEGAWAI') is-invalid @enderror" id="formGroupFoto" name="FOTO_PEGAWAI" placeholder="Masukan Foto" accept="image/*" onchange="loadFile(event)">
+
+                        <!-- Check if there's an existing photo -->
+                        @if(old('FOTO_PEGAWAI') || isset($pegawai->FOTO_PEGAWAI))
+                                <img id="output" class="mt-3" width="200" src="{{ old('FOTO_PEGAWAI') ? asset('images/' . old('FOTO_PEGAWAI')) : asset('images/' . $pegawai->FOTO_PEGAWAI) }}" />
+                        @else
+                            <img id="output" class="mt-3" width="200" />
+                        @endif
+
                         @error('FOTO_PEGAWAI')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror

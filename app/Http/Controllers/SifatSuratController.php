@@ -84,8 +84,6 @@ class SifatSuratController extends Controller
 
     public function update(Request $request, $id)
     {
-        $sifatsurat = SifatSurat::where('id', $id)->first();
-
         $this->validate(
             $request,
             [
@@ -100,7 +98,7 @@ class SifatSuratController extends Controller
         ->limit(1)
         ->update(
             array(
-                'SIFAT_SURAT' => $sifatsurat->SIFAT_SURAT,
+                'SIFAT_SURAT' => $request->SIFAT_SURAT,
             ),
         );
 

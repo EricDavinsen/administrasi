@@ -15,7 +15,7 @@ class ExportRiwayatSk implements FromCollection, WithHeadings
      */
     public function collection()
     {
-        $riwayatsk = RiwayatSk::get();
+        $riwayatsk = RiwayatSk::where('pegawai_id', request('id'))->get();
         
         return $riwayatsk->map(function($item, $index) {
             return [

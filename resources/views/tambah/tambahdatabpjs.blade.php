@@ -25,20 +25,20 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="formGroupExampleInput">Nama Lengkap</label>
-                            <input type="text" class="form-control @error('NAMA_LENGKAP') is-invalid @enderror" id="formGroupExampleInput" name="NAMA_LENGKAP" placeholder="Masukan Nama Lengkap" value="{{ old('NAMA_LENGKAP') }}">
-                            @error('NAMA_LENGKAP')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="formGroupExampleInput2">Jenis Kelamin</label>
-                            <select class="form-control @error('JENIS_KELAMIN') is-invalid @enderror" name="JENIS_KELAMIN">
-                                <option value="" disabled selected hidden>Pilih Jenis Kelamin</option>
-                                <option>Laki-Laki</option>
-                                <option>Perempuan</option>
+                            <label>Nama Lengkap</label>
+                            <select class="form-control mb-2 @error('keluarga_id') is-invalid @enderror" aria-label="Select Keluarga" name="keluarga_id" id="keluarga_id">
+                                <option value="" hidden>Nama Lengkap</option>
+                                @if ($datakeluarga->count() > 0)
+                                    @foreach ($datakeluarga as $item)
+                                        <option value="{{ $item->id }}" {{ old('keluarga_id') == $item->id ? 'selected' : '' }}>
+                                            {{ $item->NAMA_KELUARGA }}
+                                        </option>
+                                    @endforeach
+                                @else
+                                    <option value="" disabled>Tidak ada data</option>
+                                @endif
                             </select>
-                            @error('JENIS_KELAMIN')
+                            @error('keluarga_id')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
@@ -51,27 +51,6 @@
                                 <option>Cerai</option>
                             </select>
                             @error('STATUS_KAWIN')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="formGroupExampleInput2">Hubungan Keluarga</label>
-                            <select class="form-control @error('HUBUNGAN_KELUARGA') is-invalid @enderror" name="HUBUNGAN_KELUARGA">
-                                <option value="" disabled selected hidden>Pilih Hubungan Keluarga</option>
-                                <option>Suami</option>
-                                <option>Anak</option>
-                                <option>Istri</option>
-                                <option>Pekerja</option>
-                                <option>Tanggungan</option>
-                            </select>
-                            @error('HUBUNGAN_KELUARGA')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="formGroupExampleInput2">Tanggal Lahir</label>
-                            <input type="date" class="form-control @error('TANGGAL_LAHIR') is-invalid @enderror" id="TANGGAL_LAHIR" name="TANGGAL_LAHIR">
-                            @error('TANGGAL_LAHIR')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
@@ -103,13 +82,7 @@
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="form-group">
-                            <label for="formGroupExampleInput">No Telepon</label>
-                            <input type="text" class="form-control @error('NO_TELEPON') is-invalid @enderror" id="formGroupExampleInput" name="NO_TELEPON" placeholder="Masukan Nomor Telepon">
-                            @error('NO_TELEPON')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
+                
                         <button type="submit" class="btn btn-primary">Submit</button>
                         <a href="{{ url('/databpjs/'.$pegawai->id)  }}" class="btn btn-danger"> Kembali</a>
                     </form>

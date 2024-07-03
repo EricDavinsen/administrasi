@@ -23,9 +23,22 @@
             <td>{{ \Carbon\Carbon::parse($item->TMT_SK)->format('d-m-Y') }}</td>
             <td>
                 <div class="action-buttons d-flex w-100 h-10 justify-content-center gap-2">
-                    <a href="{{ url('/editriwayatsk/'.$item->id) }}" class="btn btn-info">Edit</a> 
-                    <a class="btn btn-danger text-white" data-toggle="modal" data-target="#deleteModal{{$item->id}}">Delete</a>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenters-{{$item->id}}">File SK</button>
+                    <a href="{{ url('/editriwayatsk/'.$item->id) }}" class="btn btn-info">
+                        <div class="d-flex gap-2">
+                            <box-icon type='solid' name='edit' color="white" animation='tada-hover'></box-icon>
+                            <span>Edit</span>
+                        </div>
+                    </a>
+                    <a class="btn btn-danger text-white" data-toggle="modal" data-target="#deleteModal{{$item->id}}">
+                        <div class="d-flex gap-2">
+                            <box-icon type='solid' name='trash-alt' color="white" animation='tada-hover'></box-icon>
+                            <span>Hapus</span>
+                        </div>
+                    </a>
+                    <button type="button" class="btn btn-primary d-flex align-items-center gap-1" data-toggle="modal" data-target="#exampleModalCenters-{{$item->id}}">
+                        <box-icon type='solid' name='file-pdf' animation='tada-hover' color='white'></box-icon>
+                        File
+                    </button>
                 </div>
             </td>
             </tr>

@@ -2,15 +2,15 @@
 
 @section('content')
                     <form action="{{ url('/updatedisposisi/' . $disposisi->id) }}"method="post" enctype="multipart/form-data">
-                         @csrf
-                         @method('put')
-                         <div class="form-group">
+                    @csrf
+                    @method('put')
+                    <div class="form-group">
                         <label>Nama</label>
-                        <select class="form-control mb-2" aria-label="Select Pegawai" name="pegawai_id">
-                            <option value="" hidden>Pilih Pegawai</option>
+                        <select class="js-example-basic-multiple form-control mb-2" aria-label="Select Pegawai" multiple="multiple" name="pegawai_id[]">
+                            <option value="" disabled selected hidden>Pilih Pegawai</option> 
                             @if ($pegawai->count() > 0)
                                 @foreach ($pegawai as $item)
-                                    <option value="{{ $item->id }}" {{ $item->id == $disposisi->pegawai_id ? 'selected' : '' }}>
+                                    <option value="{{ $item->id }}" {{ in_array($item->id, $disposisi->pegawais->pluck('id')->toArray()) ? 'selected' : '' }}>
                                         {{ $item->NAMA_PEGAWAI }}
                                     </option>
                                 @endforeach

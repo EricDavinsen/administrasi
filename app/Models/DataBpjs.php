@@ -19,6 +19,11 @@ class DataBpjs extends Model
     {
         return $this->belongsTo(DataPribadi::class);
     }
+
+    public function keluarga():BelongsTo
+    {
+        return $this->belongsTo(DataKeluarga::class, 'keluarga_id', 'id');
+    }
     
     use HasFactory, Notifiable;
 
@@ -43,19 +48,15 @@ class DataBpjs extends Model
     ];
     protected $fillable = [
         "pegawai_id",
+        "keluarga_id",
         "NOMOR_JKN",
         "NIK",
         "NIP",
-        "NAMA_LENGKAP",
-        "JENIS_KELAMIN",
         "STATUS_KAWIN",
-        "HUBUNGAN_KELUARGA",
-        "TANGGAL_LAHIR",
         "TANGGAL_MULAI_TMT",
         "TANGGAL_SELESAI_TMT",
         "GAJI_POKOK",
         "NAMA_FASKES",
-        "NO_TELEPON",
     ];
 
     public function getCreatedAtAttribute()

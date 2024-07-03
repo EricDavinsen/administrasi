@@ -16,9 +16,17 @@ class ExportSuratCuti implements FromCollection, WithHeadings
     public function collection()
     {
 
-        $suratcuti = SuratCuti::orderBy('pegawai_id->NAMA_PEGAWAI', 'asc')->get();
+        $suratcuti = SuratCuti::orderBy('pegawai_id', 'asc')->get();
 
         return $suratcuti->map(function($item, $index) {
+            if ($item->LAMA_CUTI == 0) {
+                $lamaCuti = '1 hari';
+            } else {
+                $lamaCuti = $item->LAMA_CUTI . ' hari';
+            }
+
+            $cutitahunan = $item->pegawai->SISA_CUTI_TAHUNAN . ' hari';
+
             return [
                 'No' => $index + 1,
                 'NO_CUTI' => $item->NO_CUTI,
@@ -27,8 +35,8 @@ class ExportSuratCuti implements FromCollection, WithHeadings
                 'ALASAN_CUTI' => $item->ALASAN_CUTI,
                 'TANGGAL_MULAI' => \Carbon\Carbon::parse($item->TANGGAL_MULAI)->format('d-m-Y'),
                 'TANGGAL_SELESAI' => \Carbon\Carbon::parse($item->TANGGAL_SELESAI)->format('d-m-Y'),
-                'LAMA_CUTI' => $item->LAMA_CUTI,
-                'SISA_CUTI_TAHUNAN' => $item->pegawai->SISA_CUTI_TAHUNAN,
+                'LAMA_CUTI' => $lamaCuti,
+                'SISA_CUTI_TAHUNAN' => $cutitahunan,
             ];
         });
     }

@@ -59,14 +59,6 @@ class EventController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Event $event)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
     public function edit(Event $event)
@@ -96,7 +88,7 @@ class EventController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'message' => 'Save data successfully'
+            'message' => 'Agenda Telah Disimpan'
         ]);
     }
 
@@ -108,7 +100,7 @@ class EventController extends Controller
         $event->delete();
         return response()->json([
             'status' => 'success',
-            'message' => 'Delete data successfully'
+            'message' => 'Agenda Berhasil Dihapus'
         ]);
     }
 }

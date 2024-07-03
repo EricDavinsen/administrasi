@@ -16,15 +16,17 @@ class ExportDataKeluarga implements FromCollection, WithHeadings
      */
     public function collection()
     {
-        $datakeluarga = DataKeluarga::get();
+        $datakeluarga = DataKeluarga::where('pegawai_id', request('id'))->get();
         
         return $datakeluarga->map(function($item, $index) {
             return [
                 'No' => $index + 1,
                 "NAMA_KELUARGA" => $item->NAMA_KELUARGA,
                 "TANGGAL_LAHIR" => \Carbon\Carbon::parse($item->TANGGAL_LAHIR)->format('d-m-Y'),
+                "JENIS_KELAMIN" => $item->JENIS_KELAMIN,
                 "STATUS" => $item->STATUS,
                 "PEKERJAAN" => $item->PEKERJAAN,
+                "NO_TELEPON" => $item->NO_TELEPON
             ];
         });
     }
@@ -38,8 +40,10 @@ class ExportDataKeluarga implements FromCollection, WithHeadings
             "No",
             "Nama Keluarga",
             "Tanggal Lahir",
+            "Jenis Kelamin",
             "Status",
             "Pekerjaan",
+            "No. Telepon"
         ];
     }
 }

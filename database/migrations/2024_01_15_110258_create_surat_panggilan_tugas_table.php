@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('surat_panggilan_tugas', function (Blueprint $table) {
+        Schema::create('surat_perintah_tugas', function (Blueprint $table) {
             $table->id("id");
             $table->string('NO_SPT');
             $table->date('TANGGAL_SPT');
@@ -34,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('surat_panggilan_tugas');
+        Schema::dropIfExists('surat_perintah_tugas');
     }
 };

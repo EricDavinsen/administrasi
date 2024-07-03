@@ -70,19 +70,21 @@
     @if ($users->role == 'admin')
     <!-- Content Row -->
     <div class="row">
+    <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 p-3">
-            <div class="agenda_card card p-5" style="background-color: #343a40; color: white;">
-                <div class="d-flex justify-content-between">
-                    <i class="fa-solid fa-calendar-days text-gray-300" style="font-size: 50px"></i>
-                    <h3 class="text-center" style="font-weight:bold; color: white">Agenda Mingguan</h3>
-                    <i class="fa-solid fa-calendar-days text-gray-300" style="font-size: 50px"></i>
-                </div>
-                <hr class="garis_title">
-                <div class="card-body row">
-                    @if (count($events) == 0)
-                        <h5 class="text-center" style="color: #00ff15">~ Tidak ada agenda minggu ini ~</h5>
-                    @endif
-                    @foreach($events as $event)
+            <a href="{{ url('events') }}" class="agenda-card-link">
+                <div class="agenda_card card p-5" style="background-color: #343a40; color: white;">
+                    <div class="d-flex justify-content-between">
+                        <box-icon name='calendar-exclamation' size='lg' color='white' animation='tada-hover'></box-icon>
+                        <h3 class="text-center" style="font-weight:bold; color: white">Agenda Harian</h3>
+                        <box-icon name='bell' type='solid' size='lg' color='white' animation='tada-hover'></box-icon>
+                    </div>
+                    <hr class="garis_title">
+                    <div class="card-body row">
+                        @if (count($events) == 0)
+                        <h5 class="text-center" style="color: white">~ Tidak ada agenda pada hari ini ~</h5>
+                        @endif
+                        @foreach($events as $event)
                         <div class="event-list col-6 mb-3">
                             <p style="font-size: 18px;">
                                 <strong>{{ $loop->iteration }}.</strong> <br>
@@ -93,9 +95,10 @@
                                 <strong>Disposisi:</strong> {{ $event->disposition }}
                             </p>
                         </div>
-                    @endforeach
+                        @endforeach
+                    </div>
                 </div>
-            </div>
+            </a>
         </div>
 
         <div class="col-xs-12 col-sm-6 col-md-3 p-3">

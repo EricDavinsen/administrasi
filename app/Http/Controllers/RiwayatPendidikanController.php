@@ -52,7 +52,7 @@ class RiwayatPendidikanController extends Controller
 
         if ($request->hasFile('IJAZAH_SEKOLAH')) {
             $document = $request->file('IJAZAH_SEKOLAH');
-            $fileName = $request->file("IJAZAH_SEKOLAH")->getClientOriginalName();
+            $fileName = time() . '_' .$request->file("IJAZAH_SEKOLAH")->getClientOriginalName();
             $document->move('document/', $fileName);
             $riwayatpendidikan = RiwayatPendidikan::create([
                 'pegawai_id' => $pegawai->id,
@@ -144,31 +144,31 @@ class RiwayatPendidikanController extends Controller
             "STTB.required" => "STTB Harus Diisi",
         ]
     );
+        $oldFile = $riwayatpendidikan->IJAZAH_SEKOLAH;
 
         $updateData = RiwayatPendidikan::where('id', $id)
         ->limit(1)
         ->update(
             array(
-                'NAMA_SEKOLAH' => $riwayatpendidikan->NAMA_SEKOLAH,
-                'JURUSAN' => $riwayatpendidikan->JURUSAN,
-                'TAHUN_LULUS' => $riwayatpendidikan->TAHUN_LULUS,
-                'STTB' => $riwayatpendidikan->STTB,
-                'IJAZAH_SEKOLAH' => $riwayatpendidikan->IJAZAH_SEKOLAH
+                'NAMA_SEKOLAH' => $request->NAMA_SEKOLAH,
+                'JURUSAN' => $request->JURUSAN,
+                'TAHUN_LULUS' => $request->TAHUN_LULUS,
+                'STTB' => $request->STTB,
+                'IJAZAH_SEKOLAH' => $oldFile
             ),
         );
 
         if ($request->hasFile('IJAZAH_SEKOLAH')) {
-            $updatefile = RiwayatPendidikan::find($id);
             $document = $request->file('IJAZAH_SEKOLAH');
-            $fileName = $request->file("IJAZAH_SEKOLAH")->getClientOriginalName();
+            $fileName = time() . '_' .$document->getClientOriginalName();
             $document->move('document/', $fileName);
-            $exist_file = $updatefile['IJAZAH_SEKOLAH'];
-            $update['IJAZAH_SEKOLAH'] =  $fileName;
-            $updatefile->update($update);
-        }
-       
-        if (isset($exist_file) && file_exists($exist_file)) {
-            unlink($exist_file);
+    
+            $riwayatpendidikan->IJAZAH_SEKOLAH = $fileName;
+            $riwayatpendidikan->save();
+    
+            if (file_exists('document/' . $oldFile)) {
+                unlink('document/' . $oldFile);
+            }
         }
 
     if ($updateData) {
@@ -181,6 +181,8 @@ class RiwayatPendidikanController extends Controller
 
     function export_excel($id)
     {
-        return Excel::download(new ExportRiwayatPendidikan, 'riwayatpendidikan.xlsx');
+        $pegawai = Pegawai::where('id', $id)->first();
+
+        return Excel::download(new ExportRiwayatPendidikan, 'Riwayat_Pendidikan_'.$pegawai->NAMA_PEGAWAI.'.xlsx');
     }
 }

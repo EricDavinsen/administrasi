@@ -59,7 +59,7 @@ class PegawaiController extends Controller
                 "PENDIDIKAN_TERAKHIR" => ["required"],
                 "STATUS_PEGAWAI" => ["required"],
                 "KEDUDUKAN" => ["required"],
-                "FOTO_PEGAWAI" => ["required"],
+                "FOTO_PEGAWAI" => ["required", "image"], 
             ],
             [
                 "NAMA_PEGAWAI.required" => "Nama Harus Diisi",
@@ -77,62 +77,75 @@ class PegawaiController extends Controller
                 "FOTO_PEGAWAI.required" => "Foto Harus Diisi",
             ]
         );
-
+    
+        $pegawaiData = [
+            'NAMA_PEGAWAI' => $request->NAMA_PEGAWAI,
+            'NIK' => $request->NIK,
+            'NO_KK' => $request->NO_KK,
+            'TANGGAL_LAHIR' => $request->TANGGAL_LAHIR,
+            'JENIS_KELAMIN' => $request->JENIS_KELAMIN,
+            'AGAMA' => $request->AGAMA,
+            'INSTANSI' => $request->INSTANSI,
+            'UNIT' => $request->UNIT,
+            'SUB_UNIT' => $request->SUB_UNIT,
+            'JABATAN_PEGAWAI' => $request->JABATAN_PEGAWAI,
+            'JENIS_PEGAWAI' => $request->JENIS_PEGAWAI,
+            'PENDIDIKAN_TERAKHIR' => $request->PENDIDIKAN_TERAKHIR,
+            'STATUS_PEGAWAI' => $request->STATUS_PEGAWAI,
+            'KEDUDUKAN' => $request->KEDUDUKAN,
+            'SISA_CUTI_TAHUNAN' => 6,
+        ];
+    
+     
         if ($request->hasFile('FOTO_PEGAWAI')) {
             $document = $request->file('FOTO_PEGAWAI');
-            $fileName = $request->file("FOTO_PEGAWAI")->getClientOriginalName();
-            $document->move('images/', $fileName);
-            $pegawai = Pegawai::create([
-                'NAMA_PEGAWAI' => $request->NAMA_PEGAWAI,
-                'NIK' => $request->NIK,
-                "NO_KK" => $request->NO_KK,
-                'TANGGAL_LAHIR' => $request->TANGGAL_LAHIR,
-                'JENIS_KELAMIN' => $request->JENIS_KELAMIN,
-                'AGAMA' => $request->AGAMA,
-                'INSTANSI' => $request->INSTANSI,
-                'UNIT' => $request->UNIT,
-                'SUB_UNIT' => $request->SUB_UNIT,
-                'JABATAN_PEGAWAI' => $request->JABATAN_PEGAWAI,
-                'JENIS_PEGAWAI' => $request->JENIS_PEGAWAI,
-                'PENDIDIKAN_TERAKHIR' => $request->PENDIDIKAN_TERAKHIR,
-                'STATUS_PEGAWAI' => $request->STATUS_PEGAWAI,
-                'KEDUDUKAN' => $request->KEDUDUKAN,
-                'SISA_CUTI_TAHUNAN' => 6,
-                'FOTO_PEGAWAI' => $fileName,
-            ]);
-     
+            $fileName = time() . '_' . $document->getClientOriginalName(); // Ensure unique filename
+            $document->move(public_path('images/'), $fileName);
+            $pegawaiData['FOTO_PEGAWAI'] = $fileName;
         }
-
+    
+        $pegawai = Pegawai::create($pegawaiData);
+    
         if ($pegawai) {
             return redirect()
                 ->intended("/datapegawai")
                 ->with([
-                notify()->success('Pegawai Telah Ditambahkan'),
-                "success" => "Pegawai Telah Ditambahkan"]);
+                    notify()->success('Pegawai Telah Ditambahkan'),
+                    "success" => "Pegawai Telah Ditambahkan"
+                ]);
         }
+    
         return redirect()
             ->intended("/createpegawai")
             ->with([
                 notify()->error('Gagal Menambah Pegawai'),
-                "error" => "Gagal Menambah Pegawai"]);
+                "error" => "Gagal Menambah Pegawai"
+            ]);
     }
 
     public function destroy($id)
     {
-        $pegawai = Pegawai::where('id', $id);
-
-            if ($pegawai) {
-                $pegawai->delete();
-                return redirect()->intended('/datapegawai')
-                    ->with([ 
-                        notify()->success('Pegawai Telah Dihapus'),
-                        "success" => "Pegawai Telah Dihapus"]);
-            }else {
-                return redirect()->intended('/datapegawai')
-                    ->with([
-                        notify()->error('Gagal Menghapus Pegawai'),
-                        "error" => "Gagal Menghapus Pegawai"]);
-            }
+        $pegawai = Pegawai::findOrFail($id);
+    
+        $file = public_path('images/'.$pegawai->FOTO_PEGAWAI);
+    
+        if (file_exists($file)) {
+            @unlink($file);
+        }
+    
+        if ($pegawai->delete()) {
+            return redirect()->intended('/datapegawai')
+                ->with([
+                    notify()->success('Pegawai Telah Dihapus'),
+                    "success" => "Pegawai Telah Dihapus"
+                ]);
+        } else {
+            return redirect()->intended('/datapegawai')
+                ->with([
+                    notify()->error('Gagal Menghapus Pegawai'),
+                    "error" => "Gagal Menghapus Pegawai"
+                ]);
+        }
     }
 
     public function edit($id)
@@ -148,7 +161,7 @@ class PegawaiController extends Controller
     public function update(Request $request, $id)
     {
         $pegawai = Pegawai::where('id', $id)->first();
-
+    
         $this->validate(
             $request,
             [
@@ -180,72 +193,50 @@ class PegawaiController extends Controller
                 "KEDUDUKAN.required" => "Kedudukan Harus Diisi",
             ]
         );
-
-        $updateSurat = Pegawai::where('id', $id)
-        ->limit(1)
-        ->update(
-            array(
-                'NAMA_PEGAWAI' => $request->NAMA_PEGAWAI,
-                'NIK' => $request->NIK,
-                'NO_KK' => $request->NO_KK,
-                'TANGGAL_LAHIR' => $request->TANGGAL_LAHIR,
-                'JENIS_KELAMIN' => $request->JENIS_KELAMIN,
-                'AGAMA' => $request->AGAMA,
-                'INSTANSI' => $request->INSTANSI,
-                'UNIT' => $request->UNIT,
-                'SUB_UNIT' => $request->SUB_UNIT,
-                'JABATAN_PEGAWAI' => $request->JABATAN_PEGAWAI,
-                'JENIS_PEGAWAI' => $request->JENIS_PEGAWAI,
-                'PENDIDIKAN_TERAKHIR' => $request->PENDIDIKAN_TERAKHIR,
-                'STATUS_PEGAWAI' => $request->STATUS_PEGAWAI,
-                'KEDUDUKAN' => $request->KEDUDUKAN,
-                'FOTO_PEGAWAI' => $pegawai->FOTO_PEGAWAI,
-            ),
-        );
-
+    
+        $updateData = [
+            'NAMA_PEGAWAI' => $request->NAMA_PEGAWAI,
+            'NIK' => $request->NIK,
+            'NO_KK' => $request->NO_KK,
+            'TANGGAL_LAHIR' => $request->TANGGAL_LAHIR,
+            'JENIS_KELAMIN' => $request->JENIS_KELAMIN,
+            'AGAMA' => $request->AGAMA,
+            'INSTANSI' => $request->INSTANSI,
+            'UNIT' => $request->UNIT,
+            'SUB_UNIT' => $request->SUB_UNIT,
+            'JABATAN_PEGAWAI' => $request->JABATAN_PEGAWAI,
+            'JENIS_PEGAWAI' => $request->JENIS_PEGAWAI,
+            'PENDIDIKAN_TERAKHIR' => $request->PENDIDIKAN_TERAKHIR,
+            'STATUS_PEGAWAI' => $request->STATUS_PEGAWAI,
+            'KEDUDUKAN' => $request->KEDUDUKAN,
+            'FOTO_PEGAWAI' => $pegawai->FOTO_PEGAWAI,
+        ];
+    
+   
         if ($request->hasFile('FOTO_PEGAWAI')) {
-            $updatefile = Pegawai::find($id);
             $document = $request->file('FOTO_PEGAWAI');
-            $fileName = $request->file("FOTO_PEGAWAI")->getClientOriginalName();
-            $document->move('images/', $fileName);
-            $exist_file = $updatefile['FOTO_PEGAWAI'];
-            $update['FOTO_PEGAWAI'] =  $fileName;
-            $updatefile->update($update);
+            $fileName = time() . '_' . $document->getClientOriginalName();
+            $document->move(public_path('images/'), $fileName);
+    
+            $updateData['FOTO_PEGAWAI'] = $fileName;
+    
+            if ($pegawai->FOTO_PEGAWAI && file_exists(public_path($pegawai->FOTO_PEGAWAI))) {
+                unlink(public_path($pegawai->FOTO_PEGAWAI));
+            }
         }
-       
-        if (isset($exist_file) && file_exists($exist_file)) {
-            unlink($exist_file);
+    
+        $updateSurat = $pegawai->update($updateData);
+    
+        if ($updateSurat) {
+            return redirect()->intended('/datapegawai')->with(['success' => 'Pegawai Telah Diupdate']);
         }
-
-    if ($updateSurat) {
-        return redirect()->intended('/datapegawai')->with([ notify()->success('Pegawai Telah Diupdate'),
-            'success' => 'Pegawai Telah Diupdate']);
-    }
-    return redirect()->intended('/editpegawai')->with([ notify()->error('Batal Mengupdate Pegawai'),
-        'error' => 'Batal Mengupdate Pegawai']);
-
-    }
-
-    public function find(Request $request)
-    {
-        $pegawai = Pegawai::where('NAMA_PEGAWAI', 'like', '%' . $request->search . '%')
-            ->orWhereRaw("DATE_FORMAT(TANGGAL_LAHIR, '%d-%m-%Y') LIKE ?", ["%" . $request->search . "%"])
-            ->orWhere('JENIS_KELAMIN', 'like', '%' . $request->search . '%')
-            ->orWhere('INSTANSI', 'like', '%' . $request->search . '%')
-            ->orWhere('JABATAN_PEGAWAI', 'like', '%' . $request->search . '%')
-            ->orWhere('STATUS_PEGAWAI', 'like', '%' . $request->search . '%')
-            ->get();
-        $pegawai->appends(['search' => $request->search]);
-
-        return view("datapegawai")->with([
-            'pegawai' => $pegawai,
-            'users' => Auth::guard('users')->user()
-        ]);
+    
+        return redirect()->intended('/editpegawai')->with(['error' => 'Batal Mengupdate Pegawai']);
     }
 
     function export_excel()
     {
-        return Excel::download(new ExportPegawai, 'datapegawai.xlsx');
+        return Excel::download(new ExportPegawai, 'Data_Pegawai.xlsx');
     }
 
     public function create($id){
@@ -256,15 +247,6 @@ class PegawaiController extends Controller
         $datakeluarga = DataKeluarga::where('pegawai_id', $id)->get();
         $datapribadi = DataPribadi::where('pegawai_id', $id)->first();
 
-        if($datapribadi == null){
-            return view("tambah/tambahdatapribadi")->with([
-                'pegawai' => $pegawai,
-                'datapribadi' => $datapribadi,
-                'users' => Auth::guard('users')->user(),
-                notify()->error('Isi Data Pribadi Terlebih Dahulu'),
-                'error' => 'Isi Data Pribadi Terlebih Dahulu'
-            ]);
-        }
 
         return view('tampil/cetakinformasi')->with([
             'pegawai' => $pegawai,

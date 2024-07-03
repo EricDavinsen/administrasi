@@ -19,12 +19,12 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label for="pegawai_id">Nama</label>
-                        <select class="form-control mb-2 @error('pegawai_id') is-invalid @enderror" id="pegawai_id" aria-label="Select Pegawai" name="pegawai_id">
-                            <option value="" hidden>Pilih Pegawai</option>
-                            @if ($pegawai->first() != null)
+                        <label>Nama</label>
+                        <select class="js-example-basic-multiple form-control mb-2" aria-label="Select Pegawai" multiple="multiple" name="pegawai_id[]">
+                            <option value="" disabled selected hidden>Pilih Pegawai</option> 
+                            @if ($pegawai->count() > 0)
                                 @foreach ($pegawai as $item)
-                                    <option value="{{ $item->id }}" {{ old('pegawai_id', $spt->pegawai_id) == $item->id ? 'selected' : '' }}>
+                                    <option value="{{ $item->id }}" {{ in_array($item->id, $spt->pegawais->pluck('id')->toArray()) ? 'selected' : '' }}>
                                         {{ $item->NAMA_PEGAWAI }}
                                     </option>
                                 @endforeach
@@ -32,9 +32,6 @@
                                 <option value="" disabled>Tidak ada pegawai</option>
                             @endif
                         </select>
-                        @error('pegawai_id')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
                     </div>
                     <div class="form-group">
                         <label for="TANGGAL_MULAI">Tanggal Mulai</label>

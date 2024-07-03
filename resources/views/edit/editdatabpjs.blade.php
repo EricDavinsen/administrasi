@@ -26,20 +26,22 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="formGroupExampleInput">Nama Lengkap</label>
-                            <input type="text" class="form-control @error('NAMA_LENGKAP') is-invalid @enderror" id="formGroupExampleInput" name="NAMA_LENGKAP" placeholder="Masukan Nama Lengkap" value="{{ old('NAMA_LENGKAP', $databpjs->NAMA_LENGKAP) }}">
-                            @error('NAMA_LENGKAP')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="formGroupExampleInput2">Jenis Kelamin</label>
-                            <select class="form-control @error('JENIS_KELAMIN') is-invalid @enderror" name="JENIS_KELAMIN">
-                                <option value="" disabled selected hidden>Pilih Jenis Kelamin</option>
-                                <option @if(old('JENIS_KELAMIN', $databpjs->JENIS_KELAMIN) == "Laki-Laki") selected @endif>Laki-Laki</option>
-                                <option @if(old('JENIS_KELAMIN', $databpjs->JENIS_KELAMIN) == "Perempuan") selected @endif>Perempuan</option>
+                            <label>Nama Lengkap</label>
+                            <select class="form-control mb-2 @error('keluarga_id') is-invalid @enderror" aria-label="Select Keluarga" name="keluarga_id" id="keluarga_id">
+                                <option value="" hidden>Nama Lengkap</option>
+                                @if ($datakeluarga->count() > 0)
+                                    @foreach ($datakeluarga as $item)
+                                        @if (!in_array($item->id, $usedKeluargaIds) || $item->id == $databpjs->keluarga_id)
+                                            <option value="{{ $item->id }}" {{ old('keluarga_id', $databpjs->keluarga_id) == $item->id ? 'selected' : '' }}>
+                                                {{ $item->NAMA_KELUARGA }}
+                                            </option>
+                                        @endif
+                                    @endforeach
+                                @else
+                                    <option value="" disabled>Tidak ada data</option>
+                                @endif
                             </select>
-                            @error('JENIS_KELAMIN')
+                            @error('keluarga_id')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
@@ -52,27 +54,6 @@
                                 <option @if(old('STATUS_KAWIN', $databpjs->STATUS_KAWIN) == "Cerai") selected @endif>Cerai</option>
                             </select>
                             @error('STATUS_KAWIN')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="formGroupExampleInput2">Hubungan Keluarga</label>
-                            <select class="form-control @error('HUBUNGAN_KELUARGA') is-invalid @enderror" name="HUBUNGAN_KELUARGA">
-                                <option value="" disabled selected hidden>Pilih Hubungan Keluarga</option>
-                                <option @if(old('HUBUNGAN_KELUARGA', $databpjs->HUBUNGAN_KELUARGA) == "Suami") selected @endif>Suami</option>
-                                <option @if(old('HUBUNGAN_KELUARGA', $databpjs->HUBUNGAN_KELUARGA) == "Anak") selected @endif>Anak</option>
-                                <option @if(old('HUBUNGAN_KELUARGA', $databpjs->HUBUNGAN_KELUARGA) == "Istri") selected @endif>Istri</option>
-                                <option @if(old('HUBUNGAN_KELUARGA', $databpjs->HUBUNGAN_KELUARGA) == "Pekerja") selected @endif>Pekerja</option>
-                                <option @if(old('HUBUNGAN_KELUARGA', $databpjs->HUBUNGAN_KELUARGA) == "Tanggungan") selected @endif>Tanggungan</option>
-                            </select>
-                            @error('HUBUNGAN_KELUARGA')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="TANGGAL_LAHIR">Tanggal Lahir</label>
-                            <input type="date" class="form-control @error('TANGGAL_LAHIR') is-invalid @enderror" id="TANGGAL_LAHIR" name="TANGGAL_LAHIR" value="{{ old('TANGGAL_LAHIR', $databpjs->TANGGAL_LAHIR) }}">
-                            @error('TANGGAL_LAHIR')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
@@ -101,13 +82,6 @@
                             <label for="formGroupExampleInput">Nama Faskes</label>
                             <input type="text" class="form-control @error('NAMA_FASKES') is-invalid @enderror" id="formGroupExampleInput" name="NAMA_FASKES" placeholder="Masukan Nama Fasilitas Kesehatan" value="{{ old('NAMA_FASKES', $databpjs->NAMA_FASKES) }}">
                             @error('NAMA_FASKES')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="formGroupExampleInput">No Telepon</label>
-                            <input type="text" class="form-control @error('NO_TELEPON') is-invalid @enderror" id="formGroupExampleInput" name="NO_TELEPON" placeholder="Masukan Nomor Telepon" value="{{ old('NO_TELEPON', $databpjs->NO_TELEPON) }}">
-                            @error('NO_TELEPON')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>

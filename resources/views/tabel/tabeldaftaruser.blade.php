@@ -19,9 +19,19 @@
             <td>{{ $item->email }}</td>
             <td>
                 <div class="action-buttons d-flex w-100  justify-content-center gap-2">
-                    <a href="{{ url('/edituser/'.$item->id) }}" class="btn btn-info">Edit</a> 
+                    <a href="{{ url('/edituser/'.$item->id) }}" class="btn btn-info">
+                        <div class="d-flex gap-2">
+                            <box-icon type='solid' name='edit' color="white" animation='tada-hover'></box-icon>
+                            <span>Edit</span>
+                        </div>
+                    </a>
                     @if ($item->email != "admin")
-                    <a class="btn btn-danger text-white" data-toggle="modal" data-target="#deleteModal{{$item->id}}">Delete</a>
+                    <a class="btn btn-danger text-white" data-toggle="modal" data-target="#deleteModal{{$item->id}}">
+                    <div class="d-flex gap-2">
+                            <box-icon type='solid' name='trash-alt' color="white" animation='tada-hover'></box-icon>
+                            <span>Hapus</span>
+                        </div>
+                    </a>
                     @endif
                 </div>
             </td>

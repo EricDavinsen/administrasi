@@ -40,7 +40,12 @@
         <h1 class="h3 text-gray-800">Disposisi</h1>
         <div class="d-flex w-100">
             <div class="action-buttons mt-4 mb-3">
-                <a href="{{ url('/exportdisposisi') }}" class="btn btn-md btn-info">Export</a>
+                <a href="{{ url('/exportdisposisi') }}" class="btn btn-md btn-info">
+                    <div class="d-flex gap-2">
+                        <box-icon name='export' animation='tada-hover' color='white'></box-icon>
+                        Export
+                    </div>
+                </a>
             </div>
         </div>
     </div>
@@ -75,11 +80,11 @@
                         Apakah anda ingin menghapus data ini?
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
                         <form action="{{ url('/deletedisposisi/'.$data->id) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger">Delete</button>
+                                <button type="submit" class="btn btn-danger">Hapus</button>
                         </form>
                     </div>
                 </div>

@@ -15,13 +15,13 @@ class ExportDisposisi implements FromCollection, WithHeadings
      */
     public function collection()
     {
-        $disposisi = Disposisi::orderBy('NAMA', 'asc')->get();
-        
+        $disposisi = Disposisi::get();
+    
         return $disposisi->map(function($item, $index) {
             return [
                 'No' => $index + 1,
-                'KODE_SURAT' => $item->surat->KODE_SURAT,
-                'NAMA' => $item->NAMA,
+                'KODE_SURAT' => optional($item->surat)->KODE_SURAT,
+                'NAMA' => $item->pegawais->implode('NAMA_PEGAWAI', ', '),
                 'PENERUS' => $item->PENERUS,
                 'INSTRUKSI' => $item->INSTRUKSI,
                 'INFORMASI_LAINNYA' => $item->INFORMASI_LAINNYA,

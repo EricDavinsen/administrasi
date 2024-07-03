@@ -107,7 +107,8 @@
                     </div>
                     <div class="form-group">
                         <label for="formGroupExampleInput2">Foto</label>
-                        <input type="file" class="form-control" id="formGroupExampleInput2" name="FOTO_PEGAWAI" placeholder="Masukan Foto">
+                        <input type="file" class="form-control" id="formGroupExampleInput2" name="FOTO_PEGAWAI" placeholder="Masukan Foto" accept="image/*" onchange="loadFile(event)">
+                        <img id="output" width="200" class="mt-3"/>
                         @error('FOTO_PEGAWAI')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror

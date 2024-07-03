@@ -14,6 +14,11 @@ class Pegawai extends Model
     protected $table = 'pegawai';
     protected $guard = 'pegawai';
 
+    public function keluarga()
+    {
+        return $this->hasMany(DataKeluarga::class, 'pegawai_id', 'id');
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

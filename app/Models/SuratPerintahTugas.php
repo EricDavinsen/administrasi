@@ -8,12 +8,12 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class SuratPanggilanTugas extends Model
+class SuratPerintahTugas extends Model
 {
     use HasFactory, Notifiable;
 
-    protected $table = 'surat_panggilan_tugas';
-    protected $guard = 'surat_panggilan_tugas';
+    protected $table = 'surat_perintah_tugas';
+    protected $guard = 'surat_perintah_tugas';
 
     /**
      * The attributes that should be hidden for serialization.
@@ -62,6 +62,10 @@ class SuratPanggilanTugas extends Model
     public function pegawai():BelongsTo
     {
         return $this->belongsTo(Pegawai::class, 'pegawai_id', 'id');
+    }
+    
+    public function pegawais(){
+        return $this->belongsToMany(Pegawai::class, 'spt_pegawai');
     }
     
 }

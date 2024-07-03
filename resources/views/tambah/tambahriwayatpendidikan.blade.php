@@ -25,7 +25,7 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="formGroupExampleInput2">STTB</label>
+                            <label for="formGroupExampleInput2">No STTB</label>
                             <input type="text" class="form-control @error('STTB') is-invalid @enderror" id="formGroupExampleInput2" name="STTB" placeholder="Masukan STTB">
                             @error('STTB')
                                 <div class="invalid-feedback">{{ $message }}</div>

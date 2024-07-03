@@ -3,18 +3,18 @@
 @section('content')
                     <form action="{{ url('/adddisposisi/' . $suratmasuk->id) }}"method="post" enctype="multipart/form-data">
                          @csrf
-                         <div class="form-group">
-                            <label>Nama</label>
-                            <select class="form-control mb-2 @error('pegawai_id') is-invalid @enderror" aria-label="Select Pegawai" name="pegawai_id">
-                                <option value="" hidden>Pilih Pegawai</option>
-                                @if ($pegawai->count() > 0)
-                                    @foreach ($pegawai as $item)
-                                        <option value="{{ $item->id }}">{{ $item->NAMA_PEGAWAI }}</option>
-                                    @endforeach
-                                @else
-                                    <option value="" disabled>Tidak ada pegawai</option>
-                                @endif
-                            </select>
+                        <div class="form-group">
+                            <label for="pegawai_id">Nama</label>
+                                <select class="js-example-basic-multiple form-control mb-2 @error('pegawai_id') is-invalid @enderror" multiple="multiple" aria-label="Select Pegawai" name="pegawai_id[]">
+                                    <option value="" disabled selected hidden>Pilih Pegawai</option>
+                                    @if ($pegawai->count() > 0)
+                                        @foreach ($pegawai as $item)
+                                            <option value="{{ $item->id }}">{{ $item->NAMA_PEGAWAI }}</option>
+                                        @endforeach
+                                    @else
+                                        <option value="" disabled>Tidak ada pegawai</option>
+                                    @endif
+                                </select>
                             @error('pegawai_id')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror

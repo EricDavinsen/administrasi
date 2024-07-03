@@ -25,13 +25,6 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="formGroupNoKK">NO KARTU KELUARGA</label>
-                            <input type="text" class="form-control" id="formGroupNoKK" name="NO_KK" placeholder="Masukan Nomor Kartu Keluarga" value="{{ old('NO_KK') }}">
-                            @error('NO_KK')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
                             <label for="formGroupTinggiBadan">Tinggi Badan</label>
                             <input type="text" class="form-control" id="formGroupTinggiBadan" name="TINGGI_BADAN" placeholder="Masukan Tinggi Badan" value="{{ old('TINGGI_BADAN') }}">
                             @error('TINGGI_BADAN')

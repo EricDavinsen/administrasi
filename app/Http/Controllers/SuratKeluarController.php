@@ -64,7 +64,7 @@ class SuratKeluarController extends Controller
         );
 
         $file = $request->file("FILE_SURAT");
-        $fileName = $request->file("FILE_SURAT")->getClientOriginalName();
+        $fileName = time() . '_' .$request->file("FILE_SURAT")->getClientOriginalName();
         $file->move('document/', $fileName);
         
       
@@ -155,6 +155,7 @@ class SuratKeluarController extends Controller
                 "PERIHAL_SURAT.required" => "Perihal Surat Harus Diisi",
             ]
         );
+        $oldFile = $suratkeluar->FILE_SURAT;
 
         $updateSurat = SuratKeluar::where('id', $id)
         ->limit(1)
@@ -162,28 +163,26 @@ class SuratKeluarController extends Controller
             array(
                 'sifat_id' => $sifatsurat->id,
                 'jenis_id' => $jenissurat->id,
-                'NOMOR_SURAT' => $suratkeluar->NOMOR_SURAT,
-                'TANGGAL_SURAT' => $suratkeluar->TANGGAL_SURAT,
-                'TUJUAN_SURAT' => $suratkeluar->TUJUAN_SURAT,
-                'PERIHAL_SURAT' => $suratkeluar->PERIHAL_SURAT,
-                'FILE_SURAT' => $suratkeluar->FILE_SURAT,
+                'NOMOR_SURAT' => $request->NOMOR_SURAT,
+                'TANGGAL_SURAT' => $request->TANGGAL_SURAT,
+                'TUJUAN_SURAT' => $request->TUJUAN_SURAT,
+                'PERIHAL_SURAT' => $request->PERIHAL_SURAT,
+                'FILE_SURAT' => $oldFile,
             ),
         );
-
+   
  
         if ($request->hasFile('FILE_SURAT')) {
-            $updatefile = SuratKeluar::find($id);
             $document = $request->file('FILE_SURAT');
-            $fileName = $request->file("FILE_SURAT")->getClientOriginalName();
+            $fileName = time() . '_' .$document->getClientOriginalName();
             $document->move('document/', $fileName);
-            $exist_file = $updatefile['FILE_SURAT'];
-            $update['FILE_SURAT'] =  $fileName;
-            $updatefile->update($update);
-        }
-       
-        
-        if (isset($exist_file) && file_exists($exist_file)) {
-            unlink($exist_file);
+    
+            $suratkeluar->FILE_SURAT = $fileName;
+            $suratkeluar->save();
+    
+            if (file_exists('document/' . $oldFile)) {
+                unlink('document/' . $oldFile);
+            }
         }
 
     if ($updateSurat) {
@@ -197,22 +196,36 @@ class SuratKeluarController extends Controller
 
     function export_excel()
     {
-        return Excel::download(new ExportSuratKeluar, 'suratkeluar.xlsx');
+        return Excel::download(new ExportSuratKeluar, 'Surat_Keluar.xlsx');
     }
 
-    public function filter(Request $request){
-        $start_date = $request->start_date;
-        $end_date = $request->end_date;
-        if ($start_date && $end_date) { 
-            $suratkeluar = SuratKeluar::whereBetween('TANGGAL_SURAT', [$start_date, $end_date])
-                ->get();
-        } else {
-            $suratkeluar = SuratKeluar::latest()->get();
+    public function filter(Request $request) {
+        $month = $request->month;
+        $year = $request->year;
+        $showAll = $request->query('show_all', false);
+    
+        $query = SuratKeluar::query();
+    
+        if ($month && !$showAll) {
+            
+            $query->whereMonth('TANGGAL_SURAT', $month);
+            $usingfilter=true;
         }
-
+    
+        if ($year && !$showAll) {
+           
+            $query->whereYear('TANGGAL_SURAT', $year);
+            $usingfilter=true;
+        }
+    
+        $suratkeluar = $query->get();
+        $noData = $suratkeluar->isEmpty();
+    
         return view("suratkeluar")->with([
             'suratkeluar' => $suratkeluar,
-            'users' => Auth::guard('users')->user()
+            'users' => Auth::guard('users')->user(),
+            'noData' => $noData,
+            'usingfilter' => $usingfilter
         ]);
     }
 }

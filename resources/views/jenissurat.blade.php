@@ -39,9 +39,14 @@
         <div class="surat_container" data-aos="fade-up" data-aos-delay="50" data-aos-duration="2000">
         <h1 class="h3 text-gray-800">Jenis Surat</h1>
             <div class="d-flex w-100">
-                    <div class="action-buttons mt-4 mb-3">
-                        <a href="{{ url('/createjenissurat') }}" class="btn btn-md btn-success">Tambah</a>
-                    </div>
+                <div class="action-buttons mt-4 mb-3">
+                    <a href="{{ url('/createjenissurat') }}" class="btn btn-md btn-success">
+                        <div class="d-flex gap-2">
+                            <box-icon name='add-to-queue' animation='tada-hover' color='white'></box-icon>
+                            Tambah
+                        </div>
+                    </a>
+                </div>
             </div>
         </div>
         @include('tabel/tabeljenissurat',$jenissurat)
@@ -60,11 +65,11 @@
                         Apakah anda ingin menghapus data ini?
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
                         <form action="{{ url('/deletejenissurat/'.$data->id) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger">Delete</button>
+                                <button type="submit" class="btn btn-danger">Hapus</button>
                         </form>
                     </div>
                     </div>

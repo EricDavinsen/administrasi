@@ -14,7 +14,6 @@
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
             <!-- Bootstrap icons-->
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-            <!-- Core theme CSS (includes Bootstrap)-->
             <!-- Font Awesome -->
             <link
                 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
@@ -28,13 +27,12 @@
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
             <link href="{{ asset('/css/styles.css') }}" rel="stylesheet" type="text/css" />
             <link href="{{ asset('/css/sidebar.css') }}" rel="stylesheet" type="text/css" />
-            <!-- <link href="{{ asset('/timepicker/jquery-clockpicker.min.css') }}" rel="stylesheet" type="text/css" /> -->
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
             <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
             
-            <!-- <script src="{{ asset('/timepicker/jquery-clockpicker.min.js') }}"></script> -->
             <link href="{{ asset('/timepicker/bootstrap-clockpicker.min.css') }}" rel="stylesheet" type="text/css" />
-           
+            <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+            <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     </head>
 
     <body class="background-menu">
@@ -51,7 +49,7 @@
         <script src="{{asset('/js/popper.js') }}"></script>
         <script src="{{asset('/js/bootstrap.min.js')}}"></script>
         <script src="{{asset('/js/main.js')}}"></script>
-        
+        <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
         @include('sweetalert::alert')
         @notifyJs
         <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -64,6 +62,20 @@
                 $('#myTable').DataTable();
                 scrollX: true
             } );
+        </script>
+        <script>
+        var loadFile = function(event) {
+            var output = document.getElementById('output');
+            output.src = URL.createObjectURL(event.target.files[0]);
+            output.onload = function() {
+            URL.revokeObjectURL(output.src)
+            }
+        };
+        </script>
+        <script>
+            $(document).ready(function() {
+                $('.js-example-basic-multiple').select2();
+            });
         </script>
     </body>
 </html>

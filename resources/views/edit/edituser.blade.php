@@ -10,7 +10,7 @@
                         </div>
                         <div class="form-group">
                             <label for="formGroupEmail">Email</label>
-                            <input type="email" class="form-control" id="formGroupEmail" placeholder="Masukan Email" name="email" value="{{ old('email', $users->email) }}">
+                            <input type="text" class="form-control" id="formGroupEmail" placeholder="Masukan Email" name="email" value="{{ old('email', $users->email) }}">
                         </div>
                         <div class="form-group">
                             <label for="formGroupPassword">Password</label>

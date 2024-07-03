@@ -52,7 +52,7 @@ class RiwayatSkController extends Controller
 
         if ($request->hasFile('FILE_SK')) {
             $document = $request->file('FILE_SK');
-            $fileName = $request->file("FILE_SK")->getClientOriginalName();
+            $fileName =  time() . '_' .$request->file("FILE_SK")->getClientOriginalName();
             $document->move('document/', $fileName);
             $riwayatsk = RiwayatSk::create([
                 'pegawai_id' => $pegawai->id,
@@ -90,6 +90,13 @@ class RiwayatSkController extends Controller
 
     public function destroy($id)
     {
+        $deletefile = RiwayatSk::findorfail($id);
+        $file = public_path('document/'.$deletefile->FILE_SK);
+
+        if (file_exists($file)) {
+            @unlink($file);
+        }
+
         $riwayatsk = RiwayatSk::where('id', $id);
 
             if ($riwayatsk) {
@@ -136,31 +143,31 @@ class RiwayatSkController extends Controller
             "TMT_SK.required" => "TMT SK Harus Diisi",
         ]
     );
+        $oldFile = $riwayatsk->FILE_SK;
 
         $updateData = RiwayatSk::where('id', $id)
         ->limit(1)
         ->update(
             array(
-                'JABATAN' => $riwayatsk->JABATAN,
-                'NOMOR_SK' => $riwayatsk->NOMOR_SK,
-                'TANGGAL_SK' => $riwayatsk->TANGGAL_SK,
-                'TMT_SK' => $riwayatsk->TMT_SK,
-                'FILE_SK' => $riwayatsk->FILE_SK
+                'JABATAN' => $request->JABATAN,
+                'NOMOR_SK' => $request->NOMOR_SK,
+                'TANGGAL_SK' => $request->TANGGAL_SK,
+                'TMT_SK' => $request->TMT_SK,
+                'FILE_SK' => $oldFile
             ),
         );
 
         if ($request->hasFile('FILE_SK')) {
-            $updatefile = RiwayatSk::find($id);
             $document = $request->file('FILE_SK');
-            $fileName = $request->file("FILE_SK")->getClientOriginalName();
+            $fileName = time() . '_' .$document->getClientOriginalName();
             $document->move('document/', $fileName);
-            $exist_file = $updatefile['FILE_SK'];
-            $update['FILE_SK'] =  $fileName;
-            $updatefile->update($update);
-        }
-       
-        if (isset($exist_file) && file_exists($exist_file)) {
-            unlink($exist_file);
+    
+            $riwayatsk->FILE_SK = $fileName;
+            $riwayatsk->save();
+    
+            if (file_exists('document/' . $oldFile)) {
+                unlink('document/' . $oldFile);
+            }
         }
 
     if ($updateData) {
@@ -173,7 +180,9 @@ class RiwayatSkController extends Controller
 
     function export_excel($id)
     {
-        return Excel::download(new ExportRiwayatSk, 'riwayatsk.xlsx');
+        $pegawai = Pegawai::where('id', $id)->first();
+
+        return Excel::download(new ExportRiwayatSk, 'Riwayat_SK_'.$pegawai->NAMA_PEGAWAI.'.xlsx');
     }
 
 }

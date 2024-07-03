@@ -15,7 +15,7 @@ class ExportRiwayatPendidikan implements FromCollection, WithHeadings
      */
     public function collection()
     {
-        $riwayatpendidikan = RiwayatPendidikan::get();
+        $riwayatpendidikan = RiwayatPendidikan::where('pegawai_id', request('id'))->get();
         
         return $riwayatpendidikan->map(function($item, $index) {
             return [

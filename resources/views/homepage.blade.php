@@ -2,9 +2,12 @@
 <html lang="en">
 
 <head>
+    @include('vendor/laravelpwa/meta')
+    @laravelPWA
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PUSDALOPS-PB</title>
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset("img/logo.png")}}" />
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <!-- Bootstrap icons-->
@@ -16,6 +19,8 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet" type="text/css" />
+    <link rel="manifest" href="{{ asset('/manifest.json') }}">
+    
 </head>
 
 <body>
@@ -25,7 +30,7 @@
                 <div class="col-xl-10">
                     <div class="homepage card rounded-3 text-black">
                         <div class="row g-0">
-                            <div class="col-lg-6 col-sm-6">
+                            <div class="col-lg-5 col-sm-6">
                                 <div class="card-body p-md-5 mx-md-4">
                                     <div class="text-center">
                                         <img src="{{ 'img/logo.png' }}" style="width: 185px;" alt="logo">
@@ -53,17 +58,13 @@
                                         </div>
 
                                         <div class="text-center pt-1 mb-3 pb-1">
-                                            <button class="btn-login btn btn-primary btn-block fa-lg gradient-custom-4"
-                                                name="login" type="submit">Login</button>
+                                            <button class="btn-login btn btn-primary btn-success" name="login" type="submit">Login</button>
                                         </div>
                                     </form>
                                 </div>
                             </div>
-                            <div class="sidecard-login col-lg-6 col-sm-6 d-flex align-items-center gradient-custom-2">
-                                <div class="w-100">    
-                                    <h5 class="bpbd-title mb-1">SIDAPUS</h5>
-                                    <h1 class="bpbd-subtitle">PUSDALOPS-PB</h1>
-                                </div>
+                            <div class="sidecard-login col-lg-7 col-sm-6 d-flex align-items-center">
+                                <div class="content-sidecard w-100 "></div>
                             </div>
                         </div>
                     </div>

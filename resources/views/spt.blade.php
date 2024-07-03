@@ -37,32 +37,62 @@
     </nav>
 
     <div class="surat_container" data-aos="fade-up" data-aos-delay="50" data-aos-duration="2000">
-        <h1 class="h3 text-gray-800">Surat Panggilan Tugas (SPT)</h1>
+        <h1 class="h3 text-gray-800">Surat Perintah Tugas (SPT)</h1>
         <div class="d-flex w-100 justify-content-between mb-3">
                 <div class="action-buttons mt-4">
-                    <a href="{{ url('/createspt') }}" class="btn btn-md btn-success">Tambah</a>
+                    <a href="{{ url('/createspt') }}" class="btn btn-md btn-success">
+                        <div class="d-flex gap-2">
+                            <box-icon name='add-to-queue' animation='tada-hover' color='white'></box-icon>
+                            Tambah
+                        </div>
+                    </a>
                     &nbsp;
-                    <a href="{{ url('/exportspt') }}" class="btn btn-md btn-info">Export</a>
+                    <a href="{{ url('/exportspt') }}" class="btn btn-md btn-info">
+                        <div class="d-flex gap-2">
+                            <box-icon name='export' animation='tada-hover' color='white'></box-icon>
+                            Export
+                        </div>
+                    </a>
                 </div>
 
-            <form method="GET" action="/filterspt">
-                <div class="d-flex item-content-center gap-3">
-                    <div class="start_data">
-                        <label> Start Date: </label>
-                        <input type="date" name="start_date" class="form-control">
-                    </div>
-
-                    <div class="end_date">
-                        <label> End Date: </label>
-                        <div class="d-flex gap-3">
-                            <input type="date" name="end_date" class="form-control">
-                            <button type="submit" class="btn btn-primary">Filter</button>
+                <form id="filterForm" method="GET" action="/filterspt">
+                    <div class="d-flex item-content-center gap-3">
+                        <div class="month">
+                            <label> Bulan: </label>
+                            <select id="monthSelect" name="month" class="form-control" onchange="document.getElementById('filterForm').submit();">
+                                <option value="" hidden>Filter Bulan</option>
+                                @for ($m = 1; $m <= 12; $m++)
+                                    <option value="{{ $m }}">{{ date('F', mktime(0, 0, 0, $m, 1)) }}</option>
+                                @endfor
+                            </select>
+                        </div>
+                        <div class="year">
+                            <label> Tahun: </label>
+                            <select id="yearSelect" name="year" class="form-control" onchange="document.getElementById('filterForm').submit();">
+                                <option value="" hidden>Filter Tahun</option>
+                                @php $currentYear = date('Y'); @endphp
+                                @for ($year = $currentYear; $year >= 2020; $year--)
+                                    <option value="{{ $year }}">{{ $year }}</option>
+                                @endfor
+                            </select>
                         </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
-    </div>
+
+        @if(isset($noData) && $noData)
+            <div class="alert alert-warning" data-aos="fade-up" data-aos-delay="50" data-aos-duration="2000">
+                <p>Tidak ada data yang tersedia pada bulan/tahun yang dipilih.</p>
+                <button onclick="window.location.href='/spt'" class="btn btn-primary" data-aos="fade-up" data-aos-delay="50" data-aos-duration="2000">Tampil Semua Data</button>
+            </div>
+        @elseif(isset($usingfilter))
+            <div class="alert alert-warning" data-aos="fade-up" data-aos-delay="50" data-aos-duration="2000">
+                <p>Kembali ke halaman awal</p>
+                <button onclick="window.location.href='/spt'" class="btn btn-primary" data-aos="fade-up" data-aos-delay="50" data-aos-duration="2000">Tampil Semua Data</button>
+            </div>
+        @endif
+
     @include('tabel/tabelspt', $spt)
     @foreach ($spt as $data)
         <div class="modal fade" id="exampleModalCenters-{{$data->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -93,11 +123,11 @@
                     Apakah anda ingin menghapus data ini?
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
                     <form action="{{ url('/deletespt/'.$data->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger">Delete</button>
+                            <button type="submit" class="btn btn-danger">Hapus</button>
                     </form>
                 </div>
                 </div>

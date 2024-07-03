@@ -4,9 +4,10 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Disposisi extends Model
 {
@@ -46,7 +47,6 @@ class Disposisi extends Model
     protected $fillable = [
         "surat_masuk_id",
         "pegawai_id",
-        "NAMA",
         "PENERUS",
         "INSTRUKSI",
         "INFORMASI_LAINNYA",
@@ -69,6 +69,10 @@ class Disposisi extends Model
                 "Y-m-d H:i:s"
             );
         }
+    }
+
+    public function pegawais(){
+        return $this->belongsToMany(Pegawai::class, 'dispo_surat');
     }
     
 }

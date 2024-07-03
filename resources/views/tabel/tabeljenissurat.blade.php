@@ -17,8 +17,18 @@
             <td>{{ $item->JENIS_SURAT }}</td>
             <td>
                 <div class="action-buttons d-flex w-100 h-10 justify-content-center gap-2">
-                    <a href="{{ url('/editjenissurat/'.$item->id) }}" class="btn btn-info">Edit</a> 
-                    <a class="btn btn-danger text-white" data-toggle="modal" data-target="#deleteModal{{$item->id}}">Delete</a>
+                    <a href="{{ url('/editjenissurat/'.$item->id) }}" class="btn btn-info">
+                        <div class="d-flex gap-2">
+                            <box-icon type='solid' name='edit' color="white" animation='tada-hover'></box-icon>
+                            <span>Edit</span>
+                        </div>
+                    </a>
+                    <a class="btn btn-danger text-white" data-toggle="modal" data-target="#deleteModal{{$item->id}}">
+                        <div class="d-flex gap-2">
+                            <box-icon type='solid' name='trash-alt' color="white" animation='tada-hover'></box-icon>
+                            <span>Hapus</span>
+                        </div>
+                    </a>
                 </div>
             </td>
             </tr>

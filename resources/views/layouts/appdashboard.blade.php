@@ -26,6 +26,7 @@
             <link href="{{ asset('/css/sidebar.css') }}" rel="stylesheet" type="text/css" />
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
             <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+            @laravelPWA
     </head>
 
     <body class="background-dashboard">
@@ -38,6 +39,7 @@
                 @yield('content')
             </div>
         </div>
+        <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
         @include('sweetalert::alert')
         @notifyJs
         <script src="{{asset('/js/popper.js') }}"></script>

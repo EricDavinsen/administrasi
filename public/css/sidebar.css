@@ -10879,9 +10879,16 @@ a[data-toggle="collapse"] {
 
 .btn-logout {
     background-color: red;
-    padding: 18px 105px;
+    padding: 10px 20px;
     color: white;
     border-radius: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px; 
 }
 
 .btn-logout:hover {

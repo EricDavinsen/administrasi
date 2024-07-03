@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\ExportDataBpjs;
 use App\Models\Pegawai;
 use App\Models\DataBpjs;
 use App\Models\DataPribadi;
+use App\Models\DataKeluarga;
 use Illuminate\Http\Request;
+use App\Exports\ExportDataBpjs;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -15,81 +16,76 @@ class DataBpjsController extends Controller
     public function index($id){
         $databpjs = DataBpjs::where('pegawai_id', $id)->get();
         $pegawai = Pegawai::where('id', $id)->first();
+        $datakeluarga = DataKeluarga::where('pegawai_id', $id)->get();
         
         return view("databpjs")->with([
             'databpjs' => $databpjs,
             'pegawai' => $pegawai,
-            'users' => Auth::guard('users')->user() 
+            'datakeluarga' => $datakeluarga,
+            'users' => Auth::guard('users')->user()
         ]);
     }
 
     public function indexcreate($id)
     {
-        $pegawai = Pegawai::where('id', $id)->first();
-        $databpjs = DataBpjs::all();
+        $pegawai = Pegawai::findOrFail($id);
+        $usedKeluargaIds = DataBpjs::where('pegawai_id', $id)->pluck('keluarga_id')->toArray();
+        $datakeluarga = DataKeluarga::where('pegawai_id', $id)
+            ->whereNotIn('id', $usedKeluargaIds)
+            ->get();
+    
         return view("tambah/tambahdatabpjs")->with([
             'pegawai' => $pegawai,
-            'databpjs' => $databpjs,
-            'users' => Auth::guard('users')->user() 
+            'datakeluarga' => $datakeluarga,
+            'users' => Auth::guard('users')->user()
         ]);
     }
 
-    public function store( Request $request, $id)
-    {
+    public function store(Request $request, $id)
+{
+    $pegawai = Pegawai::where('id', $id)->first();
+    $this->validate($request,
+        [
+            'NOMOR_JKN' => 'required',
+            'NIK' => 'required',
+            'STATUS_KAWIN' => 'required',
+        ],
+        [
+            "NOMOR_JKN.required" => "Nomor JKN Harus Diisi",
+            "NIK.required" => "NIK Harus Diisi",
+            "STATUS_KAWIN.required" => "Status Kawin Harus Diisi",
+        ]
+    );
 
-        $pegawai = Pegawai::where('id', $id)->first();
-        $this->validate($request,
-            [
-                "NOMOR_JKN" => ["required"],
-                "NIK" => ["required"],
-                "NAMA_LENGKAP" => ["required"],
-                "JENIS_KELAMIN" => ["required"],
-                "STATUS_KAWIN" => ["required"],
-                "HUBUNGAN_KELUARGA" => ["required"],
-                "TANGGAL_LAHIR" => ["required"],
-            ],
-            [
-                "NOMOR_JKN.required" => "Nomor JKN Harus Diisi",
-                "NIK.required" => "NIK Harus Diisi",
-                "NAMA_LENGKAP.required" => "Nama Harus Diisi",
-                "JENIS_KELAMIN.required" => "Jenis Kelamin Harus Diisi",
-                "STATUS_KAWIN.required" => "Status Kawin Harus Diisi",
-                "HUBUNGAN_KELUARGA.required" => "Hubungan Keluarga Harus Diisi",
-                "TANGGAL_LAHIR.required" => "Tangal Lahir Harus Diisi",
-            ]
-        );
+    $databpjs = DataBpjs::create([
+        'pegawai_id' => $pegawai->id,
+        'keluarga_id' => $request->keluarga_id,
+        'NOMOR_JKN' => $request->NOMOR_JKN,
+        'NIK' => $request->NIK,
+        'NIP' => $request->NIP,
+        'STATUS_KAWIN' => $request->STATUS_KAWIN,
+        'TANGGAL_MULAI_TMT' => $request->TANGGAL_MULAI_TMT,
+        'TANGGAL_SELESAI_TMT' => $request->TANGGAL_SELESAI_TMT,
+        'GAJI_POKOK' => $request->GAJI_POKOK,
+        'NAMA_FASKES' => $request->NAMA_FASKES,
+    ]);
 
-            $databpjs = DataBpjs::create([
-                'pegawai_id' => $pegawai->id,
-                'NOMOR_JKN' => $request->NOMOR_JKN,
-                'NIK' => $request->NIK,
-                'NIP' => $request->NIP,
-                'NAMA_LENGKAP' => $request->NAMA_LENGKAP,
-                'JENIS_KELAMIN' => $request->JENIS_KELAMIN,
-                'STATUS_KAWIN' => $request->STATUS_KAWIN,
-                'HUBUNGAN_KELUARGA' => $request->HUBUNGAN_KELUARGA,
-                'TANGGAL_LAHIR' => $request->TANGGAL_LAHIR,
-                'TANGGAL_MULAI_TMT' => $request->TANGGAL_MULAI_TMT,
-                'TANGGAL_SELESAI_TMT' => $request->TANGGAL_SELESAI_TMT,
-                'GAJI_POKOK' => $request->GAJI_POKOK,
-                'NAMA_FASKES' => $request->NAMA_FASKES,
-                "NO_TELEPON" => $request->NO_TELEPON,
-            ]);
-
-        if ($databpjs) {
-            return redirect()
-                ->intended("/databpjs/$id")
-                ->with([
-                notify()->success('Data Bpjs Telah Ditambahkan'),
-                "success" => "Data Bpjs Telah Ditambahkan"]);
-        }
+    if ($databpjs) {
         return redirect()
-            ->intended("/createdatabpjs/$id")
+            ->intended("/databpjs/$id")
             ->with([
-                notify()->error('Gagal Menambah Data Bpjs'),
-                "error" => "Gagal Menambah Data Bpjs"]);
-    
+                notify()->success('Data Bpjs Telah Ditambahkan'),
+                "success" => "Data Bpjs Telah Ditambahkan"
+            ]);
     }
+
+    return redirect()
+        ->intended("/createdatabpjs/$id")
+        ->with([
+            notify()->error('Gagal Menambah Data Bpjs'),
+            "error" => "Gagal Menambah Data Bpjs"
+        ]);
+}
 
     public function destroy($id)
     {
@@ -112,58 +108,52 @@ class DataBpjsController extends Controller
 
     public function edit($id)
     {
-        $databpjs = DataBpjs::where('id', $id)->first();
-        $pegawai = Pegawai::where('id', $id)->first();
-
-        return view("edit/editdatabpjs")->with([
+        $databpjs = DataBpjs::findOrFail($id);
+        $pegawai = Pegawai::with('keluarga')->findOrFail($databpjs->pegawai_id);
+        $datakeluarga = DataKeluarga::where('pegawai_id', $databpjs->pegawai_id)->get();
+    
+        $usedKeluargaIds = DataBpjs::where('id', '!=', $id)->pluck('keluarga_id')->toArray();
+    
+        return view('edit.editdatabpjs', [
             'databpjs' => $databpjs,
             'pegawai' => $pegawai,
+            'datakeluarga' => $datakeluarga,
+            'usedKeluargaIds' => $usedKeluargaIds,
             'users' => Auth::guard('users')->user()
         ]);
     }
+    
 
     public function update(Request $request, $id)
     {
         $databpjs = DataBpjs::where('id', $id)->first();
 
         $this->validate($request,
-            [
-                "NOMOR_JKN" => ["required"],
-                "NIK" => ["required"],
-                "NAMA_LENGKAP" => ["required"],
-                "JENIS_KELAMIN" => ["required"],
-                "STATUS_KAWIN" => ["required"],
-                "HUBUNGAN_KELUARGA" => ["required"],
-                "TANGGAL_LAHIR" => ["required"],
-            ],
-            [
-                "NOMOR_JKN.required" => "Nomor JKN Harus Diisi",
-                "NIK.required" => "NIK Harus Diisi",
-                "NAMA_LENGKAP.required" => "Nama Harus Diisi",
-                "JENIS_KELAMIN.required" => "Jenis Kelamin Harus Diisi",
-                "STATUS_KAWIN.required" => "Status Kawin Harus Diisi",
-                "HUBUNGAN_KELUARGA.required" => "Hubungan Keluarga Harus Diisi",
-                "TANGGAL_LAHIR.required" => "Tangal Lahir Harus Diisi",
-            ]
+        [
+            'NOMOR_JKN' => 'required',
+            'NIK' => 'required',
+            'STATUS_KAWIN' => 'required',
+        ],
+        [
+            "NOMOR_JKN.required" => "Nomor JKN Harus Diisi",
+            "NIK.required" => "NIK Harus Diisi",
+            "STATUS_KAWIN.required" => "Status Kawin Harus Diisi",
+        ]
         );
 
         $updateData = DataBpjs::where('id', $id)
         ->limit(1)
         ->update(
             array(
-                'NOMOR_JKN' => $databpjs->NOMOR_JKN,
-                'NIK' => $databpjs->NIK,
-                'NIP' => $databpjs->NIP,
-                'NAMA_LENGKAP' => $databpjs->NAMA_LENGKAP,
-                'JENIS_KELAMIN' => $request->JENIS_KELAMIN,
+                'keluarga_id' => $request->keluarga_id,
+                'NOMOR_JKN' => $request->NOMOR_JKN,
+                'NIK' => $request->NIK,
+                'NIP' => $request->NIP,
                 'STATUS_KAWIN' => $request->STATUS_KAWIN,
-                'HUBUNGAN_KELUARGA' => $request->HUBUNGAN_KELUARGA,
-                'TANGGAL_LAHIR' => $databpjs->TANGGAL_LAHIR,
-                'TANGGAL_MULAI_TMT' => $databpjs->TANGGAL_MULAI_TMT,
-                'TANGGAL_SELESAI_TMT' => $databpjs->TANGGAL_SELESAI_TMT,
-                'GAJI_POKOK' => $databpjs->GAJI_POKOK,
-                'NAMA_FASKES' => $databpjs->NAMA_FASKES,
-                'NO_TELEPON' => $databpjs->NO_TELEPON,
+                'TANGGAL_MULAI_TMT' => $request->TANGGAL_MULAI_TMT,
+                'TANGGAL_SELESAI_TMT' => $request->TANGGAL_SELESAI_TMT,
+                'GAJI_POKOK' => $request->GAJI_POKOK,
+                'NAMA_FASKES' => $request->NAMA_FASKES,
             ),
         );
 
@@ -177,6 +167,7 @@ class DataBpjsController extends Controller
 
     function export_excel($id)
     {
-        return Excel::download(new ExportDataBpjs, 'databpjs.xlsx');
+        $pegawai = Pegawai::where('id', $id)->first();
+        return Excel::download(new ExportDataBpjs, 'Data_BPJS_'.$pegawai->NAMA_PEGAWAI.'.xlsx');
     }
 }

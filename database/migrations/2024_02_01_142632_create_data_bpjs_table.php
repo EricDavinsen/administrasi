@@ -16,20 +16,18 @@ return new class extends Migration
         Schema::create('data_bpjs', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('pegawai_id');
+            $table->unsignedBigInteger('keluarga_id');
             $table->string('NOMOR_JKN');
             $table->string('NIK');
             $table->string('NIP')->nullable();
-            $table->string('NAMA_LENGKAP');
             $table->string('JENIS_KELAMIN');
             $table->string('STATUS_KAWIN');
-            $table->string('HUBUNGAN_KELUARGA');
-            $table->date('TANGGAL_LAHIR');
             $table->date('TANGGAL_MULAI_TMT')->nullable();
             $table->date('TANGGAL_SELESAI_TMT')->nullable();
             $table->string('GAJI_POKOK')->nullable();
             $table->string('NAMA_FASKES')->nullable();
-            $table->string('NO_TELEPON')->nullable();
             $table->foreign('pegawai_id')->references('id')->on('pegawai')->onDelete('cascade');
+            $table->foreign('keluarga_id')->references('id')->on('data_keluarga')->onDelete('cascade');
             $table->timestamps();
         });
     }

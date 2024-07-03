@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EventController;
-use App\Http\Controllers\loginController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\DiklatController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\DataBpjsController;
@@ -19,7 +19,7 @@ use App\Http\Controllers\SuratKeluarController;
 use App\Http\Controllers\DataKeluargaController;
 use App\Http\Controllers\PenilaianTahunanController;
 use App\Http\Controllers\RiwayatPendidikanController;
-use App\Http\Controllers\SuratPanggilanTugasController;
+use App\Http\Controllers\SuratPerintahTugasController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,12 +34,11 @@ use App\Http\Controllers\SuratPanggilanTugasController;
 //HOMEPAGE
 Route::get('/', [LoginController::class, "index"]);
 Route::get('/home', [LoginController::class, "index"])->name('home');
-Route::get('/register', [LoginController::class,"regis"]);
 Route::get("/dashboardpage", [DashboardController::class, "index"])->middleware('auth:users');
 Route::get('/logout', [LoginController::class, "logout"]);
 Route::post('/login', [LoginController::class, "login"]);
 Route::get('events/list', [EventController::class, 'listEvent'])->name('events.list');
-Route::resource('events', EventController::class);
+Route::resource('events', EventController::class)->middleware('auth:users');;
 
 Route::middleware(['auth:users', 'role'])->group(function () {
    //SURAT KELUAR
@@ -65,14 +64,14 @@ Route::middleware(['auth:users', 'role'])->group(function () {
 
 
     // SPT
-    Route::get('/spt', [SuratPanggilanTugasController::class, "index"]);
-    Route::get('/createspt',[SuratPanggilanTugasController::class, "indexcreate"]);
-    Route::get('/editspt/{id}', [SuratPanggilanTugasController::class, "edit"]);
-    Route::delete("/deletespt/{id}", [SuratPanggilanTugasController::class, "destroy"]);
-    Route::post('/addspt', [SuratPanggilanTugasController::class, "store"]);
-    Route::put("/updatespt/{id}", [SuratPanggilanTugasController::class, "update"]);
-    Route::get('/exportspt', [SuratPanggilanTugasController::class, "export_excel"]);
-    Route::get("/filterspt", [SuratPanggilanTugasController::class, "filter"]);
+    Route::get('/spt', [SuratPerintahTugasController::class, "index"]);
+    Route::get('/createspt',[SuratPerintahTugasController::class, "indexcreate"]);
+    Route::get('/editspt/{id}', [SuratPerintahTugasController::class, "edit"]);
+    Route::delete("/deletespt/{id}", [SuratPerintahTugasController::class, "destroy"]);
+    Route::post('/addspt', [SuratPerintahTugasController::class, "store"]);
+    Route::put("/updatespt/{id}", [SuratPerintahTugasController::class, "update"]);
+    Route::get('/exportspt', [SuratPerintahTugasController::class, "export_excel"]);
+    Route::get("/filterspt", [SuratPerintahTugasController::class, "filter"]);
 
 
     // DISPOSISI

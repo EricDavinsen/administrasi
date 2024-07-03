@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -90,11 +91,9 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {
-        $users = User::where('id', $id)->first();
-
         $request->validate([
-            'username' => 'required|unique:users,username',
-            'email' => 'required|unique:users,email',
+            'username' => 'required',
+            'email' => 'required',
             'password' => 'required',
         ],[
             'username.required' => 'Username Harus Diisi',
@@ -108,9 +107,9 @@ class UserController extends Controller
         ->limit(1)
         ->update(
             array(
-                'username' => $users->username,
-                'email' => $users->email,
-                'password' => $users->password,
+                'username' => $request->username,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
             ),
         );
 
@@ -121,19 +120,6 @@ class UserController extends Controller
     return redirect()->intended('/edituser')->with([ notify()->error('Batal Mengupdate User'),
         'error' => 'Batal Mengupdate User']);
 
-    }
-
-    public function find(Request $request)
-    {
-        $user = User::where('username', 'like', '%' . $request->search . '%')
-            ->orWhere('email', 'like', '%' . $request->search . '%')
-            ->get();
-        $user->appends(['search' => $request->search]);
-
-        return view("daftaruser")->with([
-            'user' => $user,
-            'users' => Auth::guard('users')->user()
-        ]);
     }
 
 }

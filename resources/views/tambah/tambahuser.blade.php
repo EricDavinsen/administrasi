@@ -12,7 +12,7 @@
                         </div>
                         <div class="form-group">
                             <label for="formGroupEmail">Email</label>
-                            <input type="email" class="form-control @error('email') is-invalid @enderror" id="formGroupEmail" placeholder="Masukan Email" name="email" value="{{ old('email') }}">
+                            <input type="text" class="form-control @error('email') is-invalid @enderror" id="formGroupEmail" placeholder="Masukan Email" name="email" value="{{ old('email') }}">
                             @error('email')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror

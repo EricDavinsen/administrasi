@@ -177,18 +177,18 @@ class DataPribadiController extends Controller
         ->limit(1)
         ->update(
             array(
-                'NO_KTP' => $datapribadi->NO_KTP,
-                'NO_BPJS' => $datapribadi->NO_BPJS,
-                'NO_NPWP' => $datapribadi->NO_NPWP,
-                'TINGGI_BADAN' => $datapribadi->TINGGI_BADAN,
-                'BERAT_BADAN' => $datapribadi->BERAT_BADAN,
-                'WARNA_KULIT' => $datapribadi->WARNA_KULIT,
-                'GOLONGAN_DARAH' => $datapribadi->GOLONGAN_DARAH,
-                'ALAMAT_RUMAH' => $datapribadi->ALAMAT_RUMAH,
-                'KODE_POS' => $datapribadi->KODE_POS,
-                'TELPON_RUMAH' => $datapribadi->TELPON_RUMAH,
-                'NO_HP' => $datapribadi->NO_HP,
-                'EMAIL' => $datapribadi->EMAIL
+                'NO_KTP' => $request->NO_KTP,
+                'NO_BPJS' => $request->NO_BPJS,
+                'NO_NPWP' => $request->NO_NPWP,
+                'TINGGI_BADAN' => $request->TINGGI_BADAN,
+                'BERAT_BADAN' => $request->BERAT_BADAN,
+                'WARNA_KULIT' => $request->WARNA_KULIT,
+                'GOLONGAN_DARAH' => $request->GOLONGAN_DARAH,
+                'ALAMAT_RUMAH' => $request->ALAMAT_RUMAH,
+                'KODE_POS' => $request->KODE_POS,
+                'TELPON_RUMAH' => $request->TELPON_RUMAH,
+                'NO_HP' => $request->NO_HP,
+                'EMAIL' => $request->EMAIL
             ),
         );
 

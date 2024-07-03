@@ -84,10 +84,9 @@
                             <h5>: {{ $pegawai->STATUS_PEGAWAI }}</h5>
                             <h5>: {{ $pegawai->KEDUDUKAN }}</h5>
                         </div>
-                        <div class ="foto-pegawai" style="position:absolute; right:0; top:0;">
-                            <img src="/images/{{$pegawai->FOTO_PEGAWAI}}" alt="fotopengawai" style="width: 200px; height: 200px;">
-                        </div>
-                        
+                        <div class="foto-pegawai" style="position:absolute; right:0; top:0;">
+                            <img src="{{ asset('images/' . $pegawai->FOTO_PEGAWAI) }}" alt="fotopegawai" style="width: 200px; height: 200px;">
+                        </div> 
                     </div>
 
                     @if($riwayatsk != null && count($riwayatsk) > 0)
@@ -187,8 +186,10 @@
                                 <th scope="col">No</th>
                                 <th scope="col">Nama</th>
                                 <th scope="col">Tanggal Lahir</th>
+                                <th scope="col">Jenis Kelamin</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">Pekerjaan</th>
+                                <th scope="col">No. Telepon</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -200,8 +201,10 @@
                                 <td>{{ $no++ }}</td>
                                 <td>{{ $item->NAMA_KELUARGA }}</td>
                                 <td>{{ \Carbon\Carbon::parse($item->TANGGAL_LAHIR)->format('d-m-Y') }}</td>
+                                <td>{{ $item->JENIS_KELAMIN }}</td>
                                 <td>{{ $item->STATUS }}</td>
                                 <td>{{ $item->PEKERJAAN }}</td>
+                                <td>{{ $item->NO_TELEPON }}</td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -269,7 +272,17 @@
                     @endif
 
                     <div class="d-flex gap-3">
-                        <button type="submit" class="btn btn-info no-print" value="print" onclick="window.print()">Print</button>
-                        <a href="{{ url('/dashboardpegawai/'.$pegawai->id) }}" class="btn btn-danger no-print"> Kembali</a>
+                        <button type="submit" class="btn btn-info no-print" value="print" onclick="window.print()">
+                            <div class="d-flex gap-2">
+                                <box-icon name='printer' animation='tada-hover' color='white'></box-icon>
+                                <span>Print</span>
+                            </div>
+                        </button>
+                        <a href="{{ url('/dashboardpegawai/'.$pegawai->id) }}" class="btn btn-danger no-print">
+                        <div class="d-flex gap-2">
+                                <box-icon name='arrow-back' color="white" animation='tada-hover'></box-icon>
+                                <span>Kembali</span>
+                            </div>
+                        </a>
                     </div>
 @endsection

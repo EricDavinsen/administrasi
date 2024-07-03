@@ -41,11 +41,13 @@ class DataKeluargaController extends Controller
             [
                 "NAMA_KELUARGA" => ["required"],
                 "TANGGAL_LAHIR" => ["required"],
+                "JENIS_KELAMIN" => ["required"],
                 "STATUS" => ["required"],
             ],
             [
                 "NAMA_KELUARGA.required" => "Nama Harus Diisi",
                 "TANGGAL_LAHIR.required" => "Tangal Lahir Harus Diisi",
+                "JENIS_KELAMIN.required" => "Jenis Kelamin Harus Diisi",
                 "STATUS.required" => "Status Harus Diisi",
             ]
         );
@@ -54,8 +56,10 @@ class DataKeluargaController extends Controller
                 'pegawai_id' => $pegawai->id,
                 'NAMA_KELUARGA' => $request->NAMA_KELUARGA,
                 'TANGGAL_LAHIR' => $request->TANGGAL_LAHIR,
+                'JENIS_KELAMIN' => $request->JENIS_KELAMIN,
                 'STATUS' => $request->STATUS,
                 'PEKERJAAN' => $request->PEKERJAAN,
+                'NO_TELEPON' => $request->NO_TELEPON,
             ]);
 
         if ($datakeluarga) {
@@ -112,11 +116,13 @@ class DataKeluargaController extends Controller
             [
                 "NAMA_KELUARGA" => ["required"],
                 "TANGGAL_LAHIR" => ["required"],
+                "JENIS_KELAMIN" => ["required"],
                 "STATUS" => ["required"],
             ],
             [
                 "NAMA_KELUARGA.required" => "Nama Harus Diisi",
                 "TANGGAL_LAHIR.required" => "Tangal Lahir Harus Diisi",
+                "JENIS_KELAMIN.required" => "Jenis Kelamin Harus Diisi",
                 "STATUS.required" => "Status Harus Diisi",
             ]
         );
@@ -125,10 +131,12 @@ class DataKeluargaController extends Controller
         ->limit(1)
         ->update(
             array(
-                'NAMA_KELUARGA' => $datakeluarga->NAMA_KELUARGA,
-                'TANGGAL_LAHIR' => $datakeluarga->TANGGAL_LAHIR,
+                'NAMA_KELUARGA' => $request->NAMA_KELUARGA,
+                'TANGGAL_LAHIR' => $request->TANGGAL_LAHIR,
+                'JENIS_KELAMIN' => $request->JENIS_KELAMIN,
                 'STATUS' => $request->STATUS,
-                'PEKERJAAN' => $datakeluarga->PEKERJAAN,
+                'PEKERJAAN' => $request->PEKERJAAN,
+                'NO_TELEPON' => $request->NO_TELEPON,
             ),
         );
 
@@ -142,6 +150,7 @@ class DataKeluargaController extends Controller
 
     function export_excel($id)
     {
-        return Excel::download(new ExportDataKeluarga, 'datakeluarga.xlsx');
+        $pegawai = Pegawai::where('id', $id)->first();
+        return Excel::download(new ExportDataKeluarga, 'Data_Keluarga_'.$pegawai->NAMA_PEGAWAI.'.xlsx');
     }
 }

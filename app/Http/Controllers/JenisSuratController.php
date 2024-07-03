@@ -84,8 +84,6 @@ class JenisSuratController extends Controller
 
     public function update(Request $request, $id)
     {
-        $jenissurat = JenisSurat::where('id', $id)->first();
-
         $this->validate(
             $request,
             [
@@ -100,7 +98,7 @@ class JenisSuratController extends Controller
         ->limit(1)
         ->update(
             array(
-                'JENIS_SURAT' => $jenissurat->JENIS_SURAT,
+                'JENIS_SURAT' => $request->JENIS_SURAT,
             ),
         );
 

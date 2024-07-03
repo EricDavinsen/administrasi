@@ -48,80 +48,82 @@
     <div class="container-fluid category" data-aos="fade-right" data-aos-delay="50" data-aos-duration="2000">
         <h2 class="d-flex w-100 justify-content-center" style="font-weight: bold; color: white">Detail Pegawai : {{$pegawai->NAMA_PEGAWAI}}</h2>
         <div class="d-flex justify-content-center gap-5 w-100 mt-3 flex-wrap">
-        <div class="kategori_items">
-                <div class="card kategori_card">
-                    <a href="{{ url('/datapegawai')  }}" class="nav-link d-flex justify-content-center flex-column align-items-center">
-                    <i class="kategori_icon fa-solid fa-users"></i>
-                    <h5 class="text-center">DAFTAR PEGAWAI</h5>
-                    </a> 
-                </div>
+            <div class="kategori_items">
+                <a href="{{ url('/datapegawai')  }}" class="nav-link d-flex justify-content-center flex-column align-items-center">
+                    <div class="card kategori_card">
+                        <i class="kategori_icon fa-solid fa-users"></i>
+                        <h5 class="text-center">DAFTAR PEGAWAI</h5>
+                    </div>
+                </a> 
             </div>
             <div class="kategori_items">
-                <div class="card kategori_card">
-                    <a href="{{ url('/createdatapribadi/'.$pegawai->id)  }}" class="nav-link d-flex justify-content-center flex-column align-items-center">
-                    <i class="kategori_icon fa-solid fa-id-card"></i>
-                    <h5 class="text-center">DATA PRIBADI</h5>
-                    </a> 
-                </div>
+                <a href="{{ url('/createdatapribadi/'.$pegawai->id)  }}" class="nav-link d-flex justify-content-center flex-column align-items-center">
+                    <div class="card kategori_card">
+                        <i class="kategori_icon fa-solid fa-id-card"></i>
+                        <h5 class="text-center">DATA PRIBADI</h5>
+                    </div>
+                </a> 
             </div>
             <div class="kategori_items">
-                <div class="card kategori_card">
-                    <a href="{{ url('/riwayatsk/'.$pegawai->id) }}" class="nav-link d-flex justify-content-center flex-column align-items-center">
-                    <i class="kategori_icon fa-solid fa-user"></i>
-                    <h5 class="text-center">RIWAYAT SK</h5>
-                    </a> 
-                </div>
+                <a href="{{ url('/riwayatsk/'.$pegawai->id) }}" class="nav-link d-flex justify-content-center flex-column align-items-center">
+                    <div class="card kategori_card">
+                        <i class="kategori_icon fa-solid fa-user"></i>
+                        <h5 class="text-center">RIWAYAT SK</h5>
+                    </div>
+                </a> 
             </div>
             <div class="kategori_items">
-                <div class="card kategori_card">
-                    <a href="{{ url('/riwayatpendidikan/'.$pegawai->id) }}" class="nav-link d-flex justify-content-center flex-column align-items-center">
-                    <i class="kategori_icon fa-solid fa-user-graduate"></i>
-                    <h5 class="text-center">RIWAYAT PENDIDIKAN</h5>
-                    </a> 
-                </div>
+                <a href="{{ url('/riwayatpendidikan/'.$pegawai->id) }}" class="nav-link d-flex justify-content-center flex-column align-items-center">
+                    <div class="card kategori_card">
+                        <i class="kategori_icon fa-solid fa-user-graduate"></i>
+                        <h5 class="text-center">RIWAYAT PENDIDIKAN</h5>
+                    </div>
+                </a> 
             </div>
             <div class="kategori_items">
-                <div class="card kategori_card">
-                    <a href="{{ url('/diklat/'.$pegawai->id) }}" class="nav-link d-flex justify-content-center flex-column align-items-center">
-                    <i class="kategori_icon fa-solid fa-book"></i>
-                    <h5 class="text-center">DIKLAT</h5>
-                    </a> 
-                </div>
+                <a href="{{ url('/diklat/'.$pegawai->id) }}" class="nav-link d-flex justify-content-center flex-column align-items-center">
+                    <div class="card kategori_card">
+                        <i class="kategori_icon fa-solid fa-book"></i>
+                        <h5 class="text-center">DIKLAT</h5>
+                    </div>
+                </a> 
             </div>
 
             <div class="kategori_items">
-                <div class="card kategori_card">
-                    <a href="{{ url('/datakeluarga/'.$pegawai->id) }}" class="nav-link d-flex justify-content-center flex-column align-items-center">
-                    <i class="kategori_icon fa-solid fa-house-chimney-window"></i>
-                    <h5 class="text-center">DATA KELUARGA</h5>
-                    </a> 
-                </div>
+                <a href="{{ url('/datakeluarga/'.$pegawai->id) }}" class="nav-link d-flex justify-content-center flex-column align-items-center">
+                    <div class="card kategori_card">
+                        <i class="kategori_icon fa-solid fa-house-chimney-window"></i>
+                        <h5 class="text-center">DATA KELUARGA</h5>
+                    </div>
+                </a> 
             </div>
 
             <div class="kategori_items">
-                <div class="card kategori_card">
-                    <a href="{{ url('/databpjs/'.$pegawai->id) }}" class="nav-link d-flex justify-content-center flex-column align-items-center">
-                    <i class="kategori_icon fa-solid fa-user-doctor"></i>
-                    <h5 class="text-center">DATA BPJS</h5>
-                    </a> 
-                </div>
+                <a href="{{ url('/databpjs/'.$pegawai->id) }}" class="nav-link d-flex justify-content-center flex-column align-items-center">
+                    <div class="card kategori_card">
+                        <i class="kategori_icon fa-solid fa-user-doctor"></i>
+                        <h5 class="text-center">DATA BPJS</h5>
+                    </div>
+                </a> 
             </div>
 
             <div class="kategori_items">
-                <div class="card kategori_card">
-                    <a href="{{ url('/penilaiantahunan/'.$pegawai->id) }}" class="nav-link d-flex justify-content-center flex-column align-items-center">
-                    <i class="kategori_icon fa-solid fa-file-lines"></i>
-                    <h5 class="text-center">PENILAIAN TAHUNAN</h5>
-                    </a> 
-                </div>
+                <a href="{{ url('/penilaiantahunan/'.$pegawai->id) }}" class="nav-link d-flex justify-content-center flex-column align-items-center">
+                    <div class="card kategori_card">
+                        <i class="kategori_icon fa-solid fa-file-lines"></i>
+                        <h5 class="text-center">PENILAIAN TAHUNAN</h5>
+                    </div>
+                </a> 
             </div>
 
             <div class="kategori_items">
-                <div class="card kategori_card">
-                    <a href="{{ url('/cetakinformasi/'.$pegawai->id) }}" class="nav-link d-flex justify-content-center flex-column align-items-center">
-                    <i class="kategori_icon fa-solid fa-print"></i>
-                    <h5 class="text-center">CETAK INFORMASI</h5>
-                    </a> 
-                </div>
+                <a href="{{ url('/cetakinformasi/'.$pegawai->id) }}" class="nav-link d-flex justify-content-center flex-column align-items-center">
+                    <div class="card kategori_card">
+                        <i class="kategori_icon fa-solid fa-print"></i>
+                        <h5 class="text-center">CETAK INFORMASI</h5>
+                    </div>
+                </a> 
             </div>
+        </div>
+    </div>
 @endsection

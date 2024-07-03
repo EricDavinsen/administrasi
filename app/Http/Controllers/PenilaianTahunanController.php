@@ -46,7 +46,7 @@ class PenilaianTahunanController extends Controller
         );
 
         $file = $request->file("FILE_PENILAIAN");
-        $fileName = $request->file("FILE_PENILAIAN")->getClientOriginalName();
+        $fileName = time() . '_' .$request->file("FILE_PENILAIAN")->getClientOriginalName();
         $file->move('document/', $fileName);
         
         $penilaiantahunan = PenilaianTahunan::create([
@@ -73,6 +73,13 @@ class PenilaianTahunanController extends Controller
     public function destroy($id)
     {
       
+        $deletefile = PenilaianTahunan::findorfail($id);
+        $file = public_path('document/'.$deletefile->FILE_PENILAIAN);
+
+        if (file_exists($file)) {
+            @unlink($file);
+        }
+
         $penilaiantahunan = PenilaianTahunan::where('id', $id);
 
             if ($penilaiantahunan) {
@@ -114,27 +121,28 @@ class PenilaianTahunanController extends Controller
             ]
         );
 
+        $oldFile = $penilaiantahunan->FILE_PENILAIAN;
+
         $updateData = PenilaianTahunan::where('id', $id)
         ->limit(1)
         ->update(
             array(
-                'TAHUN_PENILAIAN' => $penilaiantahunan->TAHUN_PENILAIAN,
-                'FILE_PENILAIAN' => $penilaiantahunan->FILE_PENILAIAN,
+                'TAHUN_PENILAIAN' => $request->TAHUN_PENILAIAN,
+                'FILE_PENILAIAN' => $oldFile,
             ),
         );
 
         if ($request->hasFile('FILE_PENILAIAN')) {
-            $updatefile = PenilaianTahunan::find($id);
             $document = $request->file('FILE_PENILAIAN');
-            $fileName = $request->file("FILE_PENILAIAN")->getClientOriginalName();
+            $fileName = time() . '_' .$document->getClientOriginalName();
             $document->move('document/', $fileName);
-            $exist_file = $updatefile['FILE_PENILAIAN'];
-            $update['FILE_PENILAIAN'] =  $fileName;
-            $updatefile->update($update);
-        }
-       
-        if (isset($exist_file) && file_exists($exist_file)) {
-            unlink($exist_file);
+    
+            $penilaiantahunan->FILE_PENILAIAN = $fileName;
+            $penilaiantahunan->save();
+    
+            if (file_exists('document/' . $oldFile)) {
+                unlink('document/' . $oldFile);
+            }
         }
 
     if ($updateData) {

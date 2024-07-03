@@ -14,7 +14,7 @@ class DataKeluarga extends Model
     {
         return $this->belongsTo(Pegawai::class, 'pegawai_id', 'id');
     }
-    
+
     use HasFactory, Notifiable;
 
     protected $table = 'data_keluarga';
@@ -40,8 +40,10 @@ class DataKeluarga extends Model
         "pegawai_id",
         "NAMA_KELUARGA",
         "TANGGAL_LAHIR",
+        "JENIS_KELAMIN",
         "STATUS",
         "PEKERJAAN",
+        "NO_TELEPON",
     ];
 
     public function getCreatedAtAttribute()

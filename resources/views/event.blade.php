@@ -1,7 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-    <div id='calendar'></div>
+    <h1 class="h3 text-gray-800">Agenda</h1>
+    <div id='calendar' style="height: 100%"></div>
     <div id="modal-action" class="modal" tabindex="-1"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>

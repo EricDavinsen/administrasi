@@ -31,7 +31,6 @@ class DisposisiController extends Controller
     {
         $suratmasuk = SuratMasuk::where('id',$id)->first();
         $disposisi = Disposisi::all();
-        $pegawai = Pegawai::all();
 
         $existingDisposisi = Disposisi::where('surat_masuk_id', $id)->first();
         if ($existingDisposisi) {
@@ -49,8 +48,9 @@ class DisposisiController extends Controller
     }
     public function store( Request $request ,$id)
     {
-        $suratmasuk = SuratMasuk::where('id', $id)->first();
-        $pegawai = Pegawai::where('id', $request->pegawai_id)->first();
+        $suratmasuk = SuratMasuk::findOrFail($id);
+        $disposisi = Disposisi::find($id);
+  
         $this->validate($request,
             [
                 "pegawai_id" => ["required"],
@@ -66,12 +66,11 @@ class DisposisiController extends Controller
 
     if ($request->hasFile('HASIL_LAPORAN')) {
         $file = $request->file("HASIL_LAPORAN");
-        $fileName = $request->file("HASIL_LAPORAN")->getClientOriginalName();
+        $fileName = time() . '_' .$request->file("HASIL_LAPORAN")->getClientOriginalName();
         $file->move('document/', $fileName);
 
         $disposisi = Disposisi::create([
             'surat_masuk_id' => $suratmasuk->id,
-            'pegawai_id' => $pegawai->id,
             'PENERUS' => $request->PENERUS,
             'INSTRUKSI' => $request->INSTRUKSI,
             'INFORMASI_LAINNYA' => $request->INFORMASI_LAINNYA,
@@ -80,13 +79,14 @@ class DisposisiController extends Controller
     } else {
         $disposisi = Disposisi::create([
             'surat_masuk_id' => $suratmasuk->id,
-            'pegawai_id' => $pegawai->id,
             'PENERUS' => $request->PENERUS,
             'INSTRUKSI' => $request->INSTRUKSI,
             'INFORMASI_LAINNYA' => $request->INFORMASI_LAINNYA,
             'HASIL_LAPORAN' => $request->HASIL_LAPORAN
         ]);
     }
+    
+    $disposisi->pegawais()->attach($request->pegawai_id);
 
         if ($disposisi) {
             return redirect()
@@ -130,68 +130,57 @@ class DisposisiController extends Controller
 
     public function edit($id)
     {
-        $disposisi = Disposisi::where('id', $id)->first();
-
+        $disposisi = Disposisi::with('pegawais')->findOrFail($id);
+        $pegawai = Pegawai::all();
+    
         return view("edit/editdisposisi")->with([
             'disposisi' => $disposisi,
-            'pegawai' => Pegawai::all(),
+            'pegawai' => $pegawai,
             'users' => Auth::guard('users')->user()
         ]);
     }
 
     public function update(Request $request, $id)
     {
-        $disposisi = Disposisi::where('id', $id)->first();
-        $pegawai = Pegawai::where('id', $request->pegawai_id)->first();
+        $this->validate($request, [
+            "pegawai_id" => ["required"],
+            "PENERUS" => ["required"],
+            "INSTRUKSI" => ["required"],
+        ], [
+            "pegawai_id.required" => "Nama Harus Diisi",
+            "PENERUS.required" => "Penerus Harus Diisi",
+            "INSTRUKSI.required" => "Instruksi Harus Diisi",
+        ]);
+    
+        $disposisi = Disposisi::findOrFail($id);
+        $oldFile = $disposisi->HASIL_LAPORAN;
+    
+        $disposisi->update([
+            'PENERUS' => $request->PENERUS,
+            'INSTRUKSI' => $request->INSTRUKSI,
+            'INFORMASI_LAINNYA' => $request->INFORMASI_LAINNYA,
+            'HASIL_LAPORAN' => $oldFile
+        ]);
 
-        $this->validate($request,
-            [
-                "pegawai_id" => ["required"],
-                "PENERUS" => ["required"],
-                "INSTRUKSI" => ["required"],
-            ],
-            [
-                "pegawai_id.required" => "Nama Harus Diisi",
-                "PENERUS.required" => "Penerus Harus Diisi",
-                "INSTRUKSI.required" => "Instruksi Harus Diisi",
-            ]
-        );
-        
-        $updateDispo = Disposisi::where('id', $id)
-        ->limit(1)
-        ->update(
-            array(
-                'pegawai_id' => $pegawai->id,
-                'PENERUS' => $request->PENERUS,
-                'INSTRUKSI' => $request->INSTRUKSI,
-                'INFORMASI_LAINNYA' => $request->INFORMASI_LAINNYA,
-                'HASIL_LAPORAN' => $request->HASIL_LAPORAN,
-            ),
-        );
-
- 
+        $disposisi->pegawais()->sync($request->pegawai_id);
+    
         if ($request->hasFile('HASIL_LAPORAN')) {
-            $updatefile = Disposisi::find($id);
             $document = $request->file('HASIL_LAPORAN');
-            $fileName = $request->file("HASIL_LAPORAN")->getClientOriginalName();
+            $fileName = time() . '_' .$document->getClientOriginalName();
             $document->move('document/', $fileName);
-            $exist_file = $updatefile['HASIL_LAPORAN'];
-            $update['HASIL_LAPORAN'] =  $fileName;
-            $updatefile->update($update);
+    
+            $disposisi->HASIL_LAPORAN = $fileName;
+            $disposisi->save();
+    
+            if (file_exists('document/' . $oldFile)) {
+                unlink('document/' . $oldFile);
+            }
         }
-       
-        
-        if (isset($exist_file) && file_exists($exist_file)) {
-            unlink($exist_file);
-        }
-
-    if ($updateDispo) {
-        return redirect()->intended('/disposisi')->with([ notify()->success('Disposisi Telah Diupdate'),
-            'success' => 'Disposisi Telah Diupdate']);
-    }
-    return redirect()->intended('/editdisposisi')->with([ notify()->error('Batal Mengupdate Disposisi'),
-        'error' => 'Batal Mengupdate Disposisi']);
-
+    
+        return redirect()->intended('/disposisi')->with([
+            notify()->success('Disposisi Telah Diupdate'),
+            'success' => 'Disposisi Telah Diupdate'
+        ]);
     }
 
     public function create($id){
@@ -204,7 +193,7 @@ class DisposisiController extends Controller
 
     function export_excel()
     {
-        return Excel::download(new ExportDisposisi, 'disposisi.xlsx');
+        return Excel::download(new ExportDisposisi, 'Disposisi.xlsx');
     }
 
 }

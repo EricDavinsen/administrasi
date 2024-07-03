@@ -11336,7 +11336,26 @@ fieldset:disabled .btn {
 }
 
 .background-wall {
-    background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), #bd4b04;
+    background-image: url("../images/background_bpbd.jpeg");
+    object-fit: cover;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.sidecard-login {
+    background: #e2611b;
+    z-index: 1;
+}
+
+.content-sidecard {
+    background-image: url("../images/bpbd_bg.jpg");
+    object-fit: cover;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    z-index: 1000;
+    height: 500px;
 }
 
 .bpbd-title {
@@ -11417,15 +11436,8 @@ button:active {
 }
 
 .kategori_items :hover {
-    transform: scale(1.2);
+    transform: scale(1.1);
     cursor: pointer;
-    background-color: #6df207;
-}
-
-.kategori_card a:hover,
-.kategori_card h5:hover,
-.kategori_card img:hover {
-    transform: scale(1);
 }
 
 .kategori_card h5 {
@@ -11525,6 +11537,14 @@ button.dt-paging-button {
     color: black !important;
 }
 
-.agenda_card{
+.agenda_card {
     background-color: #949494 !important;
+}
+
+.btn-icon-text {
+    display: flex;
+    align-items: center;
+}
+.btn-icon-text box-icon {
+    margin-right: 5px;
 }

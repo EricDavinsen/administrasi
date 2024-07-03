@@ -27,9 +27,24 @@
             <td>{{ $item->STATUS_PEGAWAI }}</td>
             <td>
                 <div class="action-buttons d-flex w-100  justify-content-center gap-2">
-                <a href="{{ url('/editpegawai/'.$item->id) }}" class="btn btn-info">Edit</a> 
-                <a class="btn btn-danger text-white" data-toggle="modal" data-target="#deleteModal{{$item->id}}">Delete</a>
-                <a href="{{ url('/dashboardpegawai/'.$item->id) }}" class="btn btn-warning" style="color:white">Detail</a> 
+                    <a href="{{ url('/editpegawai/'.$item->id) }}" class="btn btn-info">
+                        <div class="d-flex gap-2">
+                            <box-icon type='solid' name='edit' color="white" animation='tada-hover'></box-icon>
+                            <span>Edit</span>
+                        </div>
+                    </a>
+                    <a class="btn btn-danger text-white" data-toggle="modal" data-target="#deleteModal{{$item->id}}">
+                        <div class="d-flex gap-2">
+                            <box-icon type='solid' name='trash-alt' color="white" animation='tada-hover'></box-icon>
+                            <span>Hapus</span>
+                        </div>
+                    </a>
+                    <a href="{{ url('/dashboardpegawai/'.$item->id) }}" class="btn btn-warning" style="color:white">
+                        <div class="d-flex gap-2">
+                            <box-icon type='solid' name='detail' color="white" animation='tada-hover'></box-icon>
+                            <span>Detail</span>
+                        </div>
+                    </a>
                 </div>
             </td>
             </tr>
