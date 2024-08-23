@@ -166,7 +166,7 @@ class RiwayatPendidikanController extends Controller
             $riwayatpendidikan->IJAZAH_SEKOLAH = $fileName;
             $riwayatpendidikan->save();
     
-            if (file_exists('document/' . $oldFile)) {
+            if ($oldFile && is_file('document/' . $oldFile)) {
                 unlink('document/' . $oldFile);
             }
         }

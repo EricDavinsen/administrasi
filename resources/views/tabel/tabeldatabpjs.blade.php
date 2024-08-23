@@ -4,7 +4,6 @@
             <tr>
                 <th scope="col" style="text-align:center">No</th>
                 <th scope="col" style="text-align:center">No JKN</th>
-                <th scope="col" style="text-align:center">No Kartu Keluarga</th>
                 <th scope="col" style="text-align:center">NIK</th>
                 <th scope="col" style="text-align:center">NIP</th>
                 <th scope="col" style="text-align:center">Nama Lengkap</th>
@@ -26,7 +25,6 @@
                 <tr>
                     <td>{{ $no++ }}</td>
                     <td>{{ $item->NOMOR_JKN }}</td>
-                    <td>{{ $item->pegawai->NO_KK }}</td>
                     <td>{{ $item->NIK }}</td>
                     <td>{{ $item->NIP }}</td>
                     <td>{{ $item->keluarga->NAMA_KELUARGA }}</td>

@@ -1,56 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-                    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                        <div class="container-fluid">
-                            <button type="button" id="sidebarCollapse" class="btn btn-primary">
-                            <i class="fa fa-bars"></i>
-                            <span class="sr-only">Toggle Menu</span>
-                            </button>
-                            <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                                <i class="fa fa-bars"></i>
-                            </button>
-
-                            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                            <ul class="nav navbar-nav ml-auto">
-                            <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('/dashboardpegawai/'.$pegawai->id) }}">Dashboard</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('/datapribadi/'.$pegawai->id) }}">Data Pribadi</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('/riwayatsk/'.$pegawai->id) }}">Riwayat SK</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('/riwayatpendidikan/'.$pegawai->id) }}">Riwayat Pendidikan</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('/diklat/'.$pegawai->id) }}">Diklat</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('/datakeluarga/'.$pegawai->id) }}">Data Keluarga</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('/databpjs/'.$pegawai->id) }}">Data BPJS</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('/penilaiantahunan/'.$pegawai->id) }}">Penilaian Tahunan</a>
-                                </li>
-                                <li class="nav-item active">
-                                    <a class="nav-link" href="{{ url('/cetakinformasi/'.$pegawai->id) }}">Cetak Informasi</a>
-                                </li>
-                            </ul>
-                            </div>
-                        </div>
-                    </nav>
-
                     <div class="surat_container"  data-aos="fade-up" data-aos-delay="50" data-aos-duration="2000">
-                    <div class="cetak-informasi w-100 text-center justify-content-center align-item-center">
-                        <h3 class="cetak-title">BIODATA PUSDALOPS</h3>
-                        <h3 class="cetak-subtitle">PEMERINTAH DAERAH DAERAH ISTIMEWA YOGYAKARTA</h3>
-                        <hr class="garis_title">
-                    </div>
+                        <div class="cetak-informasi w-100 text-center justify-content-center align-item-center">
+                            <h3 class="cetak-title">BIODATA PUSDALOPS</h3>
+                            <h3 class="cetak-subtitle">PEMERINTAH DAERAH DAERAH ISTIMEWA YOGYAKARTA</h3>
+                            <hr class="garis_title">
+                        </div>
 
                     <div class="d-flex w-100 position-relative">
                         <div class="informasi-data" style="margin-right: 60px">
@@ -179,7 +135,7 @@
                     @endif
 
                     @if($datakeluarga != null && count($datakeluarga) > 0)
-                        <h5 style="font-weight:bold">Riwayat Keluarga</h5>
+                        <h5 style="font-weight:bold">Data Keluarga</h5>
                         <table class="table table-bordered" style="margin-bottom:35px;">
                             <thead class="text-center">
                                 <tr>

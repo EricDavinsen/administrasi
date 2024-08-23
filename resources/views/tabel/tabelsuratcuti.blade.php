@@ -30,12 +30,14 @@
             <td>{{ $item->pegawai->SISA_CUTI_TAHUNAN }} hari</td>
             <td>
                 <div class="action-buttons d-flex justify-content-center gap-2" >
+                @if ($item->JENIS_CUTI != "Cuti Tahunan")
                     <a href="{{ url('/editsuratcuti/'.$item->id) }}" class="btn btn-info">
                         <div class="d-flex gap-2">
                             <box-icon type='solid' name='edit' color="white" animation='tada-hover'></box-icon>
                             <span>Edit</span>
                         </div>
                     </a>
+                @endif
                     <a class="btn btn-danger text-white" data-toggle="modal" data-target="#deleteModal{{$item->id}}">
                         <div class="d-flex gap-2">
                             <box-icon type='solid' name='trash-alt' color="white" animation='tada-hover'></box-icon>
@@ -46,12 +48,6 @@
                         <box-icon type='solid' name='file-pdf' animation='tada-hover' color='white'></box-icon>
                         File
                     </button>
-                    <button class="btn btn-dark" onclick="showConfirmationModal({{ $item->pegawai_id }})" style="color:white; width: 130px; font-size: 15px; text-center">
-                    <div class="d-flex gap-2">
-                        <box-icon name='reset' color="white" animation='tada-hover'></box-icon>
-                        <span>Reset Cuti</span>
-                    </div>
-                    </button> 
                 </div>
             </td>
             </tr>
@@ -59,36 +55,3 @@
         </tbody>
     </table>
 </div>
-
-    <div id="confirmationModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="confirmationModalLabel">Confirmation</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Apakah anda ingin mereset jumlah cuti tahunan?
-            </div>
-                <div class="modal-footer">
-            <input type="hidden" id="pegawaiIdInput">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" id="confirmResetBtn">Reset</button>
-            </div>
-            </div>
-        </div>
-    </div>
-
-<script>
-    function showConfirmationModal(pegawaiId) {
-        $('#pegawaiIdInput').val(pegawaiId);
-        $('#confirmationModal').modal('show');
-    }
-
-    $('#confirmResetBtn').click(function() {
-        var pegawaiId = $('#pegawaiIdInput').val();
-        window.location.href = "{{ url('/resetcuti/') }}" + '/' + pegawaiId;
-    });
-</script>

@@ -93,7 +93,7 @@ Route::middleware(['auth:users', 'role'])->group(function () {
     Route::post('/addsuratcuti', [SuratCutiController::class, "store"]);
     Route::put("/updatesuratcuti/{id}", [SuratCutiController::class, "update"]);
     Route::get('/exportsuratcuti', [SuratCutiController::class, "export_excel"]);
-    Route::get('/resetcuti/{id}', [SuratCutiController::class, "reset"]);
+    Route::get('/resetall', [SuratCutiController::class, "resetall"]);
 
 
     // DATA PEGAWAI

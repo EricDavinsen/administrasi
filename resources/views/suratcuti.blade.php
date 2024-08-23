@@ -53,6 +53,13 @@
                         Export
                     </div>
                 </a>
+
+                <button class="ml-2 btn btn-dark" onclick="showConfirmationModal()" style="color:white; width: 230px; font-size: 15px; text-center">
+                    <div class="d-flex gap-2">
+                        <box-icon name='reset' color="white" animation='tada-hover'></box-icon>
+                        <span>Reset Sisa Cuti Pegawai</span>
+                    </div>
+                </button> 
             </div>
         </div>
     </div>
@@ -97,5 +104,35 @@
                 </div>
             </div>
         </div>
+
+        <div id="confirmationModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmationModalLabel">Konfirmasi</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Apakah Anda ingin mereset jumlah cuti tahunan semua pegawai?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                        <button type="button" class="btn btn-primary" id="confirmResetBtn">Reset</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            function showConfirmationModal() {
+                $('#confirmationModal').modal('show');
+            }
+
+            $('#confirmResetBtn').click(function() {
+                window.location.href = "{{ url('/resetall') }}";
+            });
+        </script>
     @endforeach
 @endsection

@@ -165,7 +165,7 @@ class RiwayatSkController extends Controller
             $riwayatsk->FILE_SK = $fileName;
             $riwayatsk->save();
     
-            if (file_exists('document/' . $oldFile)) {
+            if ($oldFile && is_file('document/' . $oldFile)) {
                 unlink('document/' . $oldFile);
             }
         }

@@ -174,7 +174,7 @@ class DiklatController extends Controller
             $diklat->SERTIFIKAT = $fileName;
             $diklat->save();
     
-            if (file_exists('document/' . $oldFile)) {
+            if ($oldFile && is_file('document/' . $oldFile)) {
                 unlink('document/' . $oldFile);
             }
         }

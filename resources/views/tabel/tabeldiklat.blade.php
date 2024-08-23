@@ -21,7 +21,7 @@
             <td>{{ $item->NAMA_DIKLAT }}</td>
             <td>{{ \Carbon\Carbon::parse($item->TANGGAL_MULAI)->format('d-m-Y') }}</td>
             <td>{{ \Carbon\Carbon::parse($item->TANGGAL_SELESAI)->format('d-m-Y') }}</td>
-            <td>{{ $item->JUMLAH_JAM }}</td>
+            <td>{{ $item->JUMLAH_JAM }} jam</td>
             <td>{{ $item->PENYELENGGARA }}</td>
             <td>
                 <div class="action-buttons d-flex w-100 h-10 justify-content-center gap-2">

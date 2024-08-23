@@ -13,7 +13,6 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class DisposisiController extends Controller
 {
-
     public function index(){
         $disposisi = Disposisi::latest()->get();
         $suratmasuk = SuratMasuk::all();
@@ -43,8 +42,6 @@ class DisposisiController extends Controller
             'pegawai' => Pegawai::orderBy('NAMA_PEGAWAI', 'asc')->get(),
             'users' => Auth::guard('users')->user()
         ]);
-
-
     }
     public function store( Request $request ,$id)
     {
@@ -100,7 +97,7 @@ class DisposisiController extends Controller
             ->with([
                 notify()->error('Gagal Menambah Disposisi'),
                 "error" => "Gagal Menambah Disposisi"]);
-    
+
     }
 
     public function destroy($id)
@@ -172,7 +169,7 @@ class DisposisiController extends Controller
             $disposisi->HASIL_LAPORAN = $fileName;
             $disposisi->save();
     
-            if (file_exists('document/' . $oldFile)) {
+            if ($oldFile && is_file('document/' . $oldFile)) {
                 unlink('document/' . $oldFile);
             }
         }
